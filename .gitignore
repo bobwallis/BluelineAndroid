@@ -1,0 +1,33 @@
+## Android
+/*/build/
+com_crashlytics_export_strings.xml
+local.properties
+.signing/
+*.iml
+*.apk
+*.ap_
+*.dex
+*.class
+*.o
+*.so
+bin/
+gen/
+.idea/
+
+### Gradle ###
+.gradle
+build/
+# Ignore Gradle GUI config
+gradle-app.setting
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+## Blueline database
+app/src/main/assets/databases/blueline.db.gz
+
+# Grunt / NPM ignores
+node_modules/
+.grunt/
+.tmp/
+.lock-wscript
+app/src/main/js/main.built.js

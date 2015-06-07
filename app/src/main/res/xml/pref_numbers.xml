@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="numbers_show"
+        android:title="@string/pref_title_showNumbers"
+        android:defaultValue="true" />
+
+    <ListPreference
+        android:title="@string/pref_title_numbersLayout"
+        android:summary="Select the layout for this line view"
+        android:key="numbers_layout"
+        android:defaultValue="oneColumn"
+        android:entries="@array/pref_option_layout"
+        android:entryValues="@array/pref_option_layout_values"
+        android:dependency="numbers_show" />
+
+    <ListPreference
+        android:title="@string/pref_title_numbersSize"
+        android:summary="Select the size for this line view"
+        android:key="numbers_size"
+        android:defaultValue="medium"
+        android:entries="@array/pref_option_size"
+        android:entryValues="@array/pref_option_size_values"
+        android:dependency="numbers_show" />
+
+</PreferenceScreen>

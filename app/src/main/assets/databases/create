@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Get script directory, and cd to it
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
+d="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+cd "$d"
+
+rm "$d/blueline.db.gz"
+
+curl "https://rsw.me.uk/blueline/data/methods.csv" > "$d/methods.csv"
+
+sqlite3 "$d/blueline.db" <<IMPORT
+CREATE TABLE methods(title, url, stage INTEGER, classification, nameMetaphone, notation, notationExpanded, leadHeadCode, leadHead, fchGroups, lengthOfLead INTEGER, numberOfHunts INTEGER, little, differential, plain, trebleDodging, palindromic, doubleSym, rotational, calls, ruleOffs, callingPositions, magic INTEGER);
+.mode csv methods
+.import methods.csv methods
+DELETE FROM methods WHERE stage > 12;
+IMPORT
+
+gzip -9 "$d/blueline.db"
+
+rm "$d/methods.csv"

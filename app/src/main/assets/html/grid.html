@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-age="20150606">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Grid</title>
+		<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html, body {
+			width: 100%;
+			background-color: white;
+		}
+
+		body {
+			text-align: center;
+		}
+		body.oneRow {
+			text-align: left;
+		}
+
+		#container {
+			display: block;
+			padding: 16px;
+		}
+		body.oneRow #container {
+			white-space: nowrap;
+		}
+
+		#container div {
+			margin-bottom: 15px;
+		}
+		#container div:last-child {
+			margin-bottom: 0;
+		}
+		body.oneRow #container div {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 15px;
+			margin-bottom: 0;
+		}
+		body.oneRow #container div:last-child {
+			margin-right: 0;
+			padding-right: 16px;
+		}
+
+		h1 {
+			display: block;
+			margin-bottom: 5px;
+			font-size: 16px;
+			font-family: sans-serif;
+			font-weight: bold;
+			text-rendering: optimizeLegibility;
+		}
+		body.oneRow h1 {
+			margin-bottom: 0;
+		}
+		body.tiny h1 {
+			font-size: 11px;
+		}
+		body.small h1 {
+			font-size: 13px;
+		}
+		body.medium h1 {
+			font-size: 15px;
+		}
+		body.large h1 {
+			font-size: 18px;
+		}
+		body.xlarge h1 {
+			font-size: 25px;
+		}
+
+		canvas, img {
+			display: inline-block;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script src="../js/main.built.js" async></script>
+	</body>
+</html>

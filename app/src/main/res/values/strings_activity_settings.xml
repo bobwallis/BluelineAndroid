@@ -1,0 +1,25 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Line settings -->
+    <string name="pref_header_numbers">Numbers display</string>
+    <string name="pref_header_lines">Line display</string>
+    <string name="pref_header_grid">Grid display</string>
+
+    <string name="pref_title_showNumbers">Show \'numbers\' view</string>
+    <string name="pref_title_showLines">Show \'line\' view</string>
+    <string name="pref_title_showGrid">Show \'grid\' view</string>
+
+    <string name="pref_title_numbersLayout">Numbers layout</string>
+    <string name="pref_title_linesLayout">Line layout</string>
+    <string name="pref_title_gridLayout">Grid layout</string>
+
+    <string name="pref_title_numbersSize">Numbers size</string>
+    <string name="pref_title_linesSize">Line size</string>
+    <string name="pref_title_gridSize">Grid size</string>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <string name="pref_title_sync">Enable method data updates</string>
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+</resources>

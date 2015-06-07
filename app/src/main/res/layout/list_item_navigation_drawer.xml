@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="48dp" >
+    <ImageView
+        android:id="@+id/drawer_item_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/ic_launcher" />
+    <TextView
+        android:id="@+id/drawer_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="14sp"
+        android:paddingLeft="72dp"
+        android:gravity="left|center"
+        android:textIsSelectable="false"
+        android:textColor="@color/darkGrey" />
+</FrameLayout>

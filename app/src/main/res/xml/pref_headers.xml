@@ -1,0 +1,13 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="uk.me.rsw.bl.activities.SettingsActivity$LinePreferenceFragment"
+        android:title="@string/pref_header_lines" />
+
+    <header
+        android:fragment="uk.me.rsw.bl.activities.SettingsActivity$DataSyncPreferenceFragment"
+        android:title="@string/pref_header_data_sync" />
+
+</preference-headers>

@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="lines_show"
+        android:title="@string/pref_title_showLines"
+        android:defaultValue="false" />
+
+    <ListPreference
+        android:title="@string/pref_title_linesLayout"
+        android:summary="Select the layout for this line view"
+        android:key="lines_layout"
+        android:defaultValue="oneColumn"
+        android:entries="@array/pref_option_layout"
+        android:entryValues="@array/pref_option_layout_values"
+        android:dependency="lines_show" />
+
+    <ListPreference
+        android:title="@string/pref_title_linesSize"
+        android:summary="Select the size for this line view"
+        android:key="lines_size"
+        android:defaultValue="medium"
+        android:entries="@array/pref_option_size"
+        android:entryValues="@array/pref_option_size_values"
+        android:dependency="lines_show" />
+
+</PreferenceScreen>
