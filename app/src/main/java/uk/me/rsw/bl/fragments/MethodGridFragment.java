@@ -58,7 +58,7 @@ public class MethodGridFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_webview_in_card, container, false);
+        View view = inflater.inflate(R.layout.fragment_webview_in_card_and_scrollview2, container, false);
 
 
         TypedValue tv = new TypedValue();

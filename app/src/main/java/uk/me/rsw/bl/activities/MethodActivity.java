@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ScrollView;
@@ -44,8 +45,18 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
         setTitle(title);
 
         // Get the method data
-        Database db = new Database(this);
-        method = db.get(title);
+        Log.v("custom", title);
+        if(title.equals("Custom Method")) {
+            Log.v("custom", "Custom method!");
+            method = new Method();
+            method.setStage(intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
+            method.setNotation(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+            method.setNotationExpanded(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+        }
+        else {
+            Database db = new Database(this);
+            method = db.get(title);
+        }
 
         // Set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);

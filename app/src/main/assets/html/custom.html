@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Custom Method</title>
+		<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			-webkit-perspective: 1000px;
+			perspective: 1000px;
+			background-color: white;
+			color: black;
+			font: 14px sans-serif;
+			padding: 16px;
+		}
+		::placeholder {
+			color: #999;
+		}
+		.placeholder {
+			color: #999;
+		}
+		h3 {
+			font-size: 16px;
+			font-weight: normal;
+			color: #002856;
+			margin: 20px 0 10px 0;
+			text-transform: uppercase;
+		}
+		h4 {
+			font-size: 14px;
+			font-weight: normal;
+			color: #002856;
+			margin: 10px 0 5px 20px;
+			text-transform: uppercase;
+		}
+		p {
+			text-align: justify;
+			hyphens: auto;
+			-webkit-hyphens: auto;
+			margin-bottom: 8px;
+		}
+		ol {
+			list-style: none;
+		}
+		ol li {
+			display: block;
+			font-size: 14px;
+			height: 32px;
+			line-height: 32px;
+			padding: 0 10px;
+			box-sizing: border-box;
+			border-bottom: 1px solid #DDD;
+		}
+		span#notation-parsed {
+			display: block;
+			margin: 5px 0 0 20px;
+			font-size: 14px;
+		}
+
+		#container {
+			position: relative;
+			width: 300px;
+			margin: 0 auto;
+		}
+
+		#stage-container, #notation-container {
+			display: block;
+			position: relative;
+			margin: 0 10px;
+			width: 280px;
+			height: 32px;
+		}
+
+		#stage-container {
+			transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			-webkit-transform-style: preserve-3d;
+			transform-style: preserve-3d;
+			-webkit-transform-origin: 50% 50%;
+			transform-origin: 50% 50%;
+		}
+		#stage-container.is-open {
+			height: 120px;
+		}
+		#stage-front {
+			position: absolute;
+			display: block;
+			width: 100%;
+			height: 100%;
+			background-color: #F3F3F3;
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+			transition: background 0.15s ease, line-height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+		#stage-back {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: #F3F3F3;
+			color: #222;
+			-webkit-transform: translateZ(-1px) rotateX(180deg);
+			transform: translateZ(-1px) rotateX(180deg);
+			overflow-x: hidden;
+			overflow-y: scroll;
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+			transition: box-shadow 0.8s ease;
+		}
+		#stage-container.is-open #stage-back {
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+		#stage-container[data-direction="top"].is-open {
+			-webkit-transform: rotateX(180deg);
+			transform: rotateX(180deg);
+		}
+
+		#notation-container {
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+		#stage-text, #notation-input {
+			display: block;
+			font-size: 16px;
+			background-color: #F3F3F3;
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			padding: 0 10px;
+			line-height: 32px;
+			border: 0;
+		}
+		#submit {
+			display: block;
+			float: right;
+			background-color: #002856;
+			border: 0;
+			padding: 10px 15px;
+			margin: 10px 10px 16px 0;
+			color: white;
+			text-transform: uppercase;
+			text-align: center;
+			transition: background-color 0.5s ease, color 0.5s ease;
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+		#submit:disabled {
+			background-color: #DDD;
+			color: #AAA;
+		}
+		</style>
+	</head>
+	<body>
+		<form id="form" method="get">
+		<div id="container">
+			<p>Enter the stage and place notation of a method below. Various abbreviated place notation formats are supported.</p>
+			<h3>Stage</h3>
+			<div id="stage-container">
+				<div id="stage-back">
+					<ol>
+						<li data-stage="4">4 - Minimus</li>
+						<li data-stage="5">5 - Doubles</li>
+						<li data-stage="6">6 - Minor</li>
+						<li data-stage="7">7 - Triples</li>
+						<li data-stage="8">8 - Major</li>
+						<li data-stage="9">9 - Caters</li>
+						<li data-stage="10">10 - Royal</li>
+						<li data-stage="11">11 - Cinques</li>
+						<li data-stage="12">12 - Maximus</li>
+					</ol>
+				</div>
+				<div id="stage-front">
+					<span id="stage-text" class="placeholder">...</span>
+					<input id="stage" name="stage" type="hidden" />
+				</div>
+			</div>
+			<h3>Place Notation</h3>
+			<div id="notation-container">
+				<input id="notation-input" type="text" placeholder="..." autocomplete="off" />
+			</div>
+			<h4>Parsed</h4>
+			<span id="notation-parsed" class="placeholder">...</span>
+			<input id="notation" name="notation" type="hidden" />
+			<input id="submit" type="submit" value="View" disabled />
+		</div>
+		</form>
+		<script src="../js/custom.built.js" async></script>
+	</body>
+</html>

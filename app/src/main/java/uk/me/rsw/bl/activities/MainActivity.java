@@ -231,10 +231,14 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 searchBox.openSearch();
                 break;
             case 1:
-                intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(this, CustomActivity.class);
                 startActivity(intent);
                 break;
             case 2:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            case 3:
                 intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 break;

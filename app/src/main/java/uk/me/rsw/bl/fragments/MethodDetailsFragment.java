@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.MethodActivity;
@@ -74,50 +77,58 @@ public class MethodDetailsFragment extends Fragment {
         t.setText(method.getNotation());
         ll.addView(t, lp);
 
-        t = new TextView(getActivity());
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setText("Lead Head");
-        t.setPadding(0, 24, 0, 8);
-        t.setTypeface(null, Typeface.BOLD);
-        ll.addView(t, lp);
-        t = new TextView(getActivity());
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setText(method.getLeadHead()+" (Code: "+method.getLeadHeadCode()+")");
-        ll.addView(t, lp);
+        if( !TextUtils.isEmpty(method.getLeadHead())) {
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText("Lead Head");
+            t.setPadding(0, 24, 0, 8);
+            t.setTypeface(null, Typeface.BOLD);
+            ll.addView(t, lp);
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText(method.getLeadHead() + " (Code: " + method.getLeadHeadCode() + ")");
+            ll.addView(t, lp);
+        }
 
-        t = new TextView(getActivity());
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setText("Symmetry");
-        t.setPadding(0, 24, 0, 8);
-        t.setTypeface(null, Typeface.BOLD);
-        ll.addView(t, lp);
-        t = new TextView(getActivity());
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setText(method.getSymmetry());
-        ll.addView(t, lp);
+        if( !method.getSymmetry().equals("None")) {
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText("Symmetry");
+            t.setPadding(0, 24, 0, 8);
+            t.setTypeface(null, Typeface.BOLD);
+            ll.addView(t, lp);
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText(method.getSymmetry());
+            ll.addView(t, lp);
+        }
 
+        if (method.getLengthOfLead() != 0) {
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText("Lead Length");
+            t.setPadding(0, 24, 0, 8);
+            t.setTypeface(null, Typeface.BOLD);
+            ll.addView(t, lp);
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText(method.getLengthOfLead().toString());
+            ll.addView(t, lp);
+        }
 
-        t = new TextView(getActivity());
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setText("Lead Length");
-        t.setPadding(0, 24, 0, 8);
-        t.setTypeface(null, Typeface.BOLD);
-        ll.addView(t, lp);
-        t = new TextView(getActivity());
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setText(method.getLengthOfLead().toString());
-        ll.addView(t, lp);
+        if (method.getNumberOfHunts() != -1) {
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText("Hunt Bells");
+            t.setPadding(0, 24, 0, 8);
+            t.setTypeface(null, Typeface.BOLD);
+            ll.addView(t, lp);
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText(method.getNumberOfHunts().toString());
+            ll.addView(t, lp);
+        }
 
-        t = new TextView(getActivity());
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setText("Hunt Bells");
-        t.setPadding(0, 24, 0, 8);
-        t.setTypeface(null, Typeface.BOLD);
-        ll.addView(t, lp);
-        t = new TextView(getActivity());
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setText(method.getNumberOfHunts().toString());
-        ll.addView(t, lp);
         return view;
     }
 

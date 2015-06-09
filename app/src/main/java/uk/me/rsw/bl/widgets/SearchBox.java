@@ -181,7 +181,7 @@ public class SearchBox extends RelativeLayout {
                         InputMethodManager.SHOW_FORCED, 0);
             }
         };
-        handler.postDelayed(runnable, 180);
+        handler.postDelayed(runnable, 150);
 
         searchOpen = true;
     }
@@ -206,7 +206,7 @@ public class SearchBox extends RelativeLayout {
                 inputMethodManager.hideSoftInputFromWindow(getApplicationWindowToken(), 0);
             }
         };
-        handler.postDelayed(runnable, 200);
+        handler.postDelayed(runnable, 150);
 
         searchOpen = false;
 	}

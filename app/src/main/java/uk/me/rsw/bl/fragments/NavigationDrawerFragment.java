@@ -56,6 +56,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
         navDrawerItems = new ArrayList<NavigationDrawerItem>();
         navDrawerItems.add(new NavigationDrawerItem("Search methods",R.drawable.ic_methods));
+        navDrawerItems.add(new NavigationDrawerItem("Custom method",R.drawable.ic_custom));
         navDrawerItems.add(new NavigationDrawerItem("Settings",R.drawable.ic_settings));
         navDrawerItems.add(new NavigationDrawerItem("About",R.drawable.ic_about));
         adapter = new NavigationDrawerListAdapter(getActivity(), navDrawerItems);

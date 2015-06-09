@@ -8,30 +8,30 @@ import java.io.Serializable;
 
 public class Method implements Serializable {
 
-    private String title;
+    private String title = "";
 
-    private Boolean differential;
-    private Boolean little;
-    private String classification;
+    private Boolean differential = false;
+    private Boolean little = false;
+    private String classification = "";
 
     private Integer stage;
 
     private String notation;
     private String notationExpanded;
 
-    private String leadHead;
-    private String leadHeadCode;
+    private String leadHead = "";
+    private String leadHeadCode = "";
 
-    private Boolean doubleSym;
-    private Boolean palindromic;
-    private Boolean rotational;
+    private Boolean doubleSym = false;
+    private Boolean palindromic = false;
+    private Boolean rotational = false;
 
-    private Integer numberOfHunts;
-    private Integer lengthOfLead;
+    private Integer numberOfHunts = -1;
+    private Integer lengthOfLead = 0;
 
-    private String callingPositions;
-    private String ruleOffs;
-    private String calls;
+    private String callingPositions = "{}";
+    private String ruleOffs = "{}";
+    private String calls = "{}";
 
     public Method() {
     }
@@ -58,6 +58,9 @@ public class Method implements Serializable {
 
     public Integer getStage() {
         return stage;
+    }
+    public void setStage(Integer set_stage) {
+        stage = set_stage;
     }
 
     public String getStageText() {
@@ -109,9 +112,15 @@ public class Method implements Serializable {
     public String getNotation() {
         return notation;
     }
+    public void setNotation(String set_notation) {
+        notation = set_notation;
+    }
 
     public String getNotationExpanded() {
         return notationExpanded;
+    }
+    public void setNotationExpanded(String set_notationExpanded) {
+        notationExpanded = set_notationExpanded;
     }
 
     public String getLeadHead() {
@@ -156,7 +165,7 @@ public class Method implements Serializable {
     }
 
     public String getRuleOffs() {
-        return TextUtils.isEmpty( ruleOffs )? getLengthOfLead()+":0" : ruleOffs;
+        return ruleOffs;
     }
 
     public String getCalls() {
