@@ -45,9 +45,7 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
         setTitle(title);
 
         // Get the method data
-        Log.v("custom", title);
         if(title.equals("Custom Method")) {
-            Log.v("custom", "Custom method!");
             method = new Method();
             method.setStage(intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
             method.setNotation(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
