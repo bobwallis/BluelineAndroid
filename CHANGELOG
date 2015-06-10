@@ -1,0 +1,7 @@
+2:
+ - Offline, searchable database using CCCBR data
+ - Display blue lines in 3 different formats
+ - Basic options to adjust blue line layouts
+
+Dev:
+ - Interface to allow custom methods to be entered
