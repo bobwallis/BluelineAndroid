@@ -51,11 +51,6 @@ public class CustomFragment extends Fragment {
         webSettings.setBuiltInZoomControls(false);
 
         mWebView.loadUrl("file:///android_asset/html/custom.html");
-        mWebView.setOnLongClickListener(new View.OnLongClickListener() {
-            public boolean onLongClick(View v) {
-                return true;
-            }
-        });
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
