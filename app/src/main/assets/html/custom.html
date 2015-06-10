@@ -123,6 +123,7 @@
 		}
 		#stage-text, #notation-input {
 			display: block;
+			border-radius: 2px;
 			font-size: 16px;
 			background-color: #F3F3F3;
 			width: 100%;
@@ -132,8 +133,13 @@
 			line-height: 32px;
 			border: 0;
 		}
+		#notation-input:focus {
+			border: 0;
+			box-shadow: 0 0 2px #002856;
+		}
 		#submit {
 			display: block;
+			border-radius: 2px;
 			float: right;
 			background-color: #002856;
 			border: 0;
@@ -179,7 +185,7 @@
 			<div id="notation-container">
 				<input id="notation-input" type="text" placeholder="..." autocomplete="off" />
 			</div>
-			<h4>Parsed</h4>
+			<h4>Expanded</h4>
 			<span id="notation-parsed" class="placeholder">...</span>
 			<input id="notation" name="notation" type="hidden" />
 			<input id="submit" type="submit" value="View" disabled />

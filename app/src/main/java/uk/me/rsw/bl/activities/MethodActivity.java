@@ -61,7 +61,6 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
-        ((TextView) findViewById(R.id.title)).setText(title);
 
         // Decide which tabs to display based on preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

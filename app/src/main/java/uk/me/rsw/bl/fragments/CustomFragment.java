@@ -22,7 +22,6 @@ import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.CustomActivity;
 import uk.me.rsw.bl.activities.MainActivity;
 import uk.me.rsw.bl.activities.MethodActivity;
-import uk.me.rsw.bl.widgets.ScrollView2;
 
 public class CustomFragment extends Fragment {
 
@@ -35,7 +34,7 @@ public class CustomFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_webview_in_card_and_scrollview, container, false);
+        View view = inflater.inflate(R.layout.fragment_custom, container, false);
 
         TypedValue tv = new TypedValue();
         int actionBarHeight = 56;

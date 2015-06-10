@@ -11,7 +11,7 @@ require(['PlaceNotation'], function( PlaceNotation ) {
 		notationParsed = document.getElementById( 'notation-parsed' ),
 		submit = document.getElementById( 'submit' );
 
-	stageBack.scrollTop = 32*1.75;
+	stageBack.scrollTop = 64;
 
 	var openStageSelector = function( e ) {
 		stageContainer.setAttribute( 'data-direction', 'top' );
