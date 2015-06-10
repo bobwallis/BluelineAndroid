@@ -3,6 +3,9 @@
  - Display blue lines in 3 different formats
  - Basic options to adjust blue line layouts
 
-Dev:
+3:
  - Interface to allow custom methods to be entered
  - Composition prover using GSiril
+
+4:
+ - Fix error with initialisation of MethodActivity that caused an infinite loop.

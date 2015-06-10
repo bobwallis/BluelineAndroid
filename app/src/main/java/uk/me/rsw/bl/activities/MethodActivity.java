@@ -43,6 +43,7 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
         Intent intent = getIntent();
         title = intent.getStringExtra(MainActivity.METHOD_TITLE);
         setTitle(title);
+        ((TextView) findViewById(R.id.title)).setText(title);
 
         // Get the method data
         if(title.equals("Custom Method")) {
@@ -119,7 +120,7 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if( prefs.getBoolean("numbers_show", true) != tabs[1] ||
             prefs.getBoolean("lines_show", false) != tabs[2] ||
-            prefs.getBoolean("grid_show", false) != tabs[3] ||
+            prefs.getBoolean("grid_show", true) != tabs[3] ||
             prefs.getString("numbers_layout", "oneColumn") != layouts[0] ||
             prefs.getString("lines_layout", "oneColumn") != layouts[1] ||
             prefs.getString("grid_layout", "oneColumn") != layouts[2] ||
