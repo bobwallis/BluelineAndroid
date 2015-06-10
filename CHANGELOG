@@ -5,3 +5,4 @@
 
 Dev:
  - Interface to allow custom methods to be entered
+ - Composition prover using GSiril

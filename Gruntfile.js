@@ -33,6 +33,22 @@ module.exports = function (grunt) {
 						fs.writeFileSync(outputFile, amdclean.clean({ 'filePath': outputFile }));
 					}
 				}
+			},
+			prove: {
+				options: {
+					'findNestedDependencies': true,
+					'baseUrl': 'app/src/main/assets/js',
+					'optimize': 'none',
+					'include': ['prove'],
+					'mainConfigFile': 'app/src/main/assets/js/prove.js',
+					'out': 'app/src/main/assets/js/prove.built.js',
+					'onModuleBundleComplete': function (data) {
+						var fs = require('fs'),
+						amdclean = require('amdclean'),
+						outputFile = data.path;
+						fs.writeFileSync(outputFile, amdclean.clean({ 'filePath': outputFile }));
+					}
+				}
 			}
 		}
 	});

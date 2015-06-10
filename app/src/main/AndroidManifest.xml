@@ -49,6 +49,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.me.rsw.bl.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.ProveActivity"
+            android:label="@string/title_activity_prove"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.me.rsw.bl.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

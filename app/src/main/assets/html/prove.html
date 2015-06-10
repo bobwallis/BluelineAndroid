@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>GSiril</title>
+		<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			-webkit-perspective: 1000px;
+			perspective: 1000px;
+			background-color: white;
+			color: black;
+			font: 14px sans-serif;
+			padding: 16px;
+		}
+		a {
+			text-decoration: none;
+			color: #29404C;
+			border-bottom: 1px solid #A1C4D0;
+		}
+		a.external {
+			padding-right: 13px;
+			background: transparent url(images/external.svg) no-repeat center right;
+		}
+		.placeholder {
+			color: #999;
+		}
+		h3 {
+			font-size: 16px;
+			font-weight: normal;
+			color: #002856;
+			margin: 20px 0 15px 0;
+			text-transform: uppercase;
+		}
+		p {
+			text-align: justify;
+			hyphens: auto;
+			-webkit-hyphens: auto;
+			margin-bottom: 8px;
+		}
+		ol {
+			list-style: none;
+		}
+		ol li {
+			display: block;
+			font-size: 14px;
+			height: 32px;
+			line-height: 32px;
+			padding: 0 10px;
+			box-sizing: border-box;
+			border-bottom: 1px solid #DDD;
+		}
+
+		#container {
+			position: relative;
+			width: 300px;
+			margin: 0 auto;
+		}
+
+		#syntax-container {
+			display: block;
+			position: relative;
+			margin: 0 10px;
+			width: 280px;
+			height: 32px;
+			transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			-webkit-transform-style: preserve-3d;
+			transform-style: preserve-3d;
+			-webkit-transform-origin: 50% 50%;
+			transform-origin: 50% 50%;
+		}
+		#syntax-container.is-open {
+			height: 64px;
+		}
+		#syntax-front {
+			position: absolute;
+			display: block;
+			width: 100%;
+			height: 100%;
+			background-color: #F3F3F3;
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+			transition: background 0.15s ease, line-height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+		#syntax-back {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: #F3F3F3;
+			color: #222;
+			-webkit-transform: translateZ(-1px) rotateX(180deg);
+			transform: translateZ(-1px) rotateX(180deg);
+			overflow: hidden;
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+			transition: box-shadow 0.8s ease;
+		}
+		#syntax-container.is-open #syntax-back {
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+		#syntax-container[data-direction="top"].is-open {
+			-webkit-transform: rotateX(180deg);
+			transform: rotateX(180deg);
+		}
+		#syntax-text {
+			display: block;
+			border-radius: 2px;
+			font-size: 16px;
+			background-color: #F3F3F3;
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			padding: 0 10px;
+			line-height: 32px;
+			border: 0;
+		}
+
+		#input {
+			display: block;
+			background-color: #F3F3F3;
+			border: 0;
+			margin: 20px 10px 0;
+			padding: 5px;
+			box-sizing: border-box;
+			width: 280px;
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+
+		#submit {
+			display: block;
+			border-radius: 2px;
+			float: right;
+			background-color: #002856;
+			border: 0;
+			padding: 10px 15px;
+			margin: 20px 10px 0 0;
+			color: white;
+			text-transform: uppercase;
+			text-align: center;
+			transition: background-color 0.5s ease, color 0.5s ease;
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+		#submit:disabled {
+			background-color: #DDD;
+			color: #AAA;
+		}
+		#clear {
+			display: block;
+			border-radius: 2px;
+			float: right;
+			background-color: #DDD;
+			border: 0;
+			padding: 10px 15px;
+			margin: 20px 20px 0 0;
+			color: black;
+			text-transform: uppercase;
+			text-align: center;
+			transition: background-color 0.5s ease, color 0.5s ease;
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+		}
+		hr {
+			clear: both;
+			border: 0;
+			background: 0;
+		}
+		#output {
+			margin: 0 10px;
+			font-family: monospace;
+			white-space: pre;
+		}
+		</style>
+	</head>
+	<body>
+		<form id="form" method="get">
+		<div id="container">
+			<p>This is a simple interface for Richard Smith's <a href="http://www.ex-parrot.com/~richard/gsiril/" class="external">GSiril</a> touch proving program.</p>
+			<h3>Input</h3>
+			<div id="syntax-container">
+				<div id="syntax-back">
+					<ol>
+						<li data-syntax="microsiril">MicroSiril syntax</li>
+						<li data-syntax="gsiril">GSiril syntax</li>
+					</ol>
+				</div>
+				<div id="syntax-front">
+					<span id="syntax-text" data-syntax="microsiril">MicroSiril syntax</span>
+				</div>
+			</div>
+			<textarea id="input" placeholder="Enter code here..."></textarea>
+			<input id="submit" type="submit" value="Prove" disabled />
+			<input id="clear" type="reset" value="Clear" />
+			<hr />
+			<h3>Output</h3>
+			<p id="output" class="placeholder">...</p>
+			<hr />
+		</div>
+		</form>
+		<script src="../js/prove.built.js" async></script>
+	</body>
+</html>

@@ -14,5 +14,6 @@
     <string name="title_activity_about">About</string>
     <string name="title_activity_method">Method</string>
     <string name="title_activity_custom">Custom Method</string>
+    <string name="title_activity_prove">Composition Prover</string>
 
 </resources>
