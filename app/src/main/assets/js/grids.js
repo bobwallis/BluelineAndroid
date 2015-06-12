@@ -34,7 +34,7 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 					b[p[0]] = decodeURIComponent( p[1].replace( /\+/g, " " ) );
 			}
 			return b;
-		})( window.location.search.substr(1).split('&') );
+		})( Android.queryString().split('&') );
 		qs.id = 'blueline';
 		qs.type = (typeof qs.type == 'string' && (qs.type == 'lines' || qs.type == 'grid'))? qs.type : 'numbers';
 		qs.size = (typeof qs.size == 'string' && (qs.size == 'tiny' || qs.size == 'small' || qs.size == 'large' || qs.size == 'xlarge'))? qs.size : 'medium';

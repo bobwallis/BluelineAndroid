@@ -1,6 +1,7 @@
 package uk.me.rsw.bl.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -33,6 +35,20 @@ public class MethodGridFragment extends Fragment {
     private WebView mWebView;
 
     public MethodGridFragment() {
+    }
+
+    // Use this to workaround Android bug 17535
+    public class WebAppInterface {
+        Context mContext;
+
+        WebAppInterface(Context c) {
+            mContext = c;
+        }
+
+        @JavascriptInterface
+        public String queryString() {
+            return "size=" + size + "&layout=" + layout + "&type=" + type + "&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&calls=" + method.getCalls() + "&callingPositions=" + method.getCallingPositions() + "&ruleOffs=" + method.getRuleOffs();
+        }
     }
 
     public static MethodGridFragment newInstance(Method passedMethod, String type) {
@@ -72,12 +88,13 @@ public class MethodGridFragment extends Fragment {
         mScrollView.setOnScrollChangedListener(mActivity);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
+        mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
 
-        mWebView.loadUrl("file:///android_asset/html/grid.html?size=" + size + "&layout=" + layout + "&type=" + type + "&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&calls=" + method.getCalls() + "&callingPositions=" + method.getCallingPositions() + "&ruleOffs=" + method.getRuleOffs());
+        mWebView.loadUrl("file:///android_asset/html/grid.html");
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
                 return true;
