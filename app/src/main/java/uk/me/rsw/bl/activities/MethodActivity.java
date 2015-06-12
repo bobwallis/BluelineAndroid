@@ -55,6 +55,7 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
         else {
             Database db = new Database(this);
             method = db.get(title);
+            db.close();
         }
 
         // Set up toolbar

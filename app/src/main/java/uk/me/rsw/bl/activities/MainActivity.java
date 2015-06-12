@@ -249,4 +249,11 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if( db != null ) {
+            db.close();
+        }
+    }
 }
