@@ -74,7 +74,7 @@ public class ProveFragment extends Fragment {
             mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         }
 
-        mWebView.loadUrl("file:///android_asset/html/prove.html");
+        mWebView.loadUrl("file:///android_asset/webviews/prove.html");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ((ViewGroup) mWebView.getParent()).setTransitionGroup(true);

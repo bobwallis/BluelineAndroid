@@ -39,7 +39,7 @@ public class CopyrightFragment extends Fragment {
         mScrollView.setOnScrollChangedListener(mActivity);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
-        mWebView.loadUrl("file:///android_asset/html/copyright.html");
+        mWebView.loadUrl("file:///android_asset/webviews/copyright.html");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ((ViewGroup) mWebView.getParent()).setTransitionGroup(true);

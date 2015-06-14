@@ -94,7 +94,7 @@ public class MethodGridFragment extends Fragment {
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
 
-        mWebView.loadUrl("file:///android_asset/html/grid.html");
+        mWebView.loadUrl("file:///android_asset/webviews/grids.html");
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
                 return true;

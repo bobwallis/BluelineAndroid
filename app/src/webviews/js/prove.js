@@ -32,7 +32,7 @@ require(['autosize'], function( autosize ) {
 		else {
 			submit.disabled = false;
 		}
-		output.innerHTML = '...';
+		output.innerHTML = '…';
 		output.classList.add( 'placeholder' );
 	} );
 
@@ -62,7 +62,7 @@ require(['autosize'], function( autosize ) {
 	reset.addEventListener( 'click', function( e ) {
 		input.value = '';
 		autosize.update( input );
-		output.innerHTML = '...';
+		output.innerHTML = '…';
 		output.classList.add( 'placeholder' );
 	} );
 
@@ -72,7 +72,7 @@ require(['autosize'], function( autosize ) {
 
 
 	// Create the web worker
-	var gsirilWorker = new Worker( '../js/gsiril.worker.js' );
+	var gsirilWorker = new Worker( 'gsiril.worker.js' );
 	gsirilWorker.onmessage = function( e ) {
 		if(typeof e.data.output == 'string' ) {
 			output.innerHTML += e.data.output+"\n";

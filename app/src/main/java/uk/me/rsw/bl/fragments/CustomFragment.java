@@ -51,7 +51,7 @@ public class CustomFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(false);
 
-        mWebView.loadUrl("file:///android_asset/html/custom.html");
+        mWebView.loadUrl("file:///android_asset/webviews/custom.html");
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override

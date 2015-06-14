@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Custom Method</title>
+		<link rel="stylesheet" type="text/css" href="blueline.css">
+	</head>
+	<body>
+		<form id="form" method="get">
+		<div id="container">
+			<p>Enter the stage and place notation of a method below. Various abbreviated place notation formats are supported.</p>
+			<h3>Stage</h3>
+			<div id="stage-container" class="flipSelector">
+				<div id="stage-back" class="back">
+					<ol class="selector">
+						<li data-stage="4">4 - Minimus</li>
+						<li data-stage="5">5 - Doubles</li>
+						<li data-stage="6">6 - Minor</li>
+						<li data-stage="7">7 - Triples</li>
+						<li data-stage="8">8 - Major</li>
+						<li data-stage="9">9 - Caters</li>
+						<li data-stage="10">10 - Royal</li>
+						<li data-stage="11">11 - Cinques</li>
+						<li data-stage="12">12 - Maximus</li>
+					</ol>
+				</div>
+				<div id="stage-front" class="front">
+					<span id="stage-text" class="placeholder textInput">...</span>
+					<input id="stage" name="stage" type="hidden" />
+				</div>
+			</div>
+			<h3>Place Notation</h3>
+			<div id="notation-container" class="flipSelector">
+				<input id="notation-input" type="text" placeholder="..." autocomplete="off" autocapitalize="none" />
+			</div>
+			<h4>Expanded</h4>
+			<p id="notation-parsed" class="placeholder">...</p>
+			<input id="notation" name="notation" type="hidden" />
+			<input id="submit" type="submit" value="View" disabled />
+			<hr />
+		</div>
+		</form>
+		<!-- build:js inline custom.js -->
+		<script src="custom.js"></script>
+		<!-- /build -->
+	</body>
+</html>
