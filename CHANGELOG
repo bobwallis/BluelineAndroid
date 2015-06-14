@@ -5,7 +5,16 @@
 
 3:
  - Interface to allow custom methods to be entered
- - Composition prover using GSiril
+ - Composition prover using GSiril (KitKat and above)
 
 4:
- - Fix error with initialisation of MethodActivity that caused an infinite loop.
+ - Fix error with initialisation of MethodActivity that caused an infinite loop
+
+5:
+ - Further fixes to prevent crashes on older versions of Android
+
+6:
+ - Update database
+ - Minor visual tweaks for webview content
+ - Use Android Support Design library to implement navigation drawer
+ - Prevent use of Touch Prover on pre-KitKat devices

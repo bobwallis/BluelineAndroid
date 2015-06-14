@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -22,17 +25,17 @@ import java.util.ArrayList;
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.SearchResultsAdapter;
 import uk.me.rsw.bl.data.Database;
-import uk.me.rsw.bl.fragments.NavigationDrawerFragment;
 import uk.me.rsw.bl.widgets.SearchBox;
 
 
-public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public final static String METHOD_TITLE = "uk.me.rsw.bl.METHOD_TITLE";
     public final static String IS_SEARCHING = "uk.me.rsw.bl.IS_SEARCHING";
     public final static String SEARCH_QUERY = "uk.me.rsw.bl.SEARCH_QUERY";
 
-    private DrawerLayout drawerLayout;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
     private View toolbarBackground;
     private SearchBox searchBox;
     private RecyclerView searchResults;
@@ -58,10 +61,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         db = new Database(this);
 
         // Set up the drawer
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.darkerBlue));
-        NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         // Set up the toolbar background
         toolbarBackground = findViewById(R.id.toolbar_background);
@@ -87,7 +89,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         searchBox.setMenuListener(new SearchBox.MenuListener() {
             @Override
             public void onMenuClick() {
-                drawerLayout.openDrawer(Gravity.LEFT);
+                mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
         searchBox.setSearchListener(new SearchBox.SearchListener() {
@@ -166,7 +168,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             @Override
             public void onSearch(String searchTerm) {
                 InputMethodManager inputMethodManager = (InputMethodManager) searchBox.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(drawerLayout.getApplicationWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(mDrawerLayout.getApplicationWindowToken(), 0);
             }
 
             @Override
@@ -198,7 +200,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_MENU) {
-            drawerLayout.openDrawer(Gravity.LEFT);
+            mDrawerLayout.openDrawer(Gravity.LEFT);
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_SEARCH) {
@@ -222,30 +224,32 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
         Intent intent;
 
-        switch(position) {
-            case 0:
-                drawerLayout.closeDrawer(Gravity.LEFT);
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_search:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 searchBox.openSearch();
-                break;
-            case 1:
+                return true;
+            case R.id.navigation_custom:
                 intent = new Intent(this, CustomActivity.class);
                 startActivity(intent);
-                break;
-            case 2:
+                return true;
+            case R.id.navigation_prove:
                 intent = new Intent(this, ProveActivity.class);
                 startActivity(intent);
-                break;
-            case 3:
+                return true;
+            case R.id.navigation_settings:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
-                break;
-            case 4:
+                return true;
+            case R.id.navigation_about:
                 intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
-                break;
+                return true;
+            default:
+                return true;
         }
     }
 

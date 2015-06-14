@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/navigation_search"
+            android:icon="@drawable/ic_methods"
+            android:title="Search methods" />
+        <item android:id="@+id/navigation_custom"
+            android:icon="@drawable/ic_custom"
+            android:title="Enter custom method" />
+        <item android:id="@+id/navigation_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+        <item android:id="@+id/navigation_about"
+            android:icon="@drawable/ic_about"
+            android:title="About" />
+    </group>
+</menu>
