@@ -1,17 +1,12 @@
 package uk.me.rsw.bl.fragments;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
-import java.util.List;
-
 import uk.me.rsw.bl.R;
-import uk.me.rsw.bl.activities.SettingsActivity;
 
 public class SettingsFragment extends PreferenceFragment {
 

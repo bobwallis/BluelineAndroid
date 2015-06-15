@@ -1,6 +1,5 @@
 package uk.me.rsw.bl.fragments;
 
-import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import uk.me.rsw.bl.R;
-import uk.me.rsw.bl.activities.MethodActivity;
 import uk.me.rsw.bl.models.Method;
 
 public class MethodDetailsFragment extends Fragment {
