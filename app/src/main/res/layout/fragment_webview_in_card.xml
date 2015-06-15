@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<uk.me.rsw.bl.widgets.ScrollView2 xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scrollbar"
     android:clipToPadding="false"
-    android:fadingEdgeLength="0dp">
+    android:fadingEdgeLength="0dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -24,4 +26,4 @@
             android:scrollbars="none" />
 
     </android.support.v7.widget.CardView>
-</uk.me.rsw.bl.widgets.ScrollView2>
+</android.support.v4.widget.NestedScrollView>

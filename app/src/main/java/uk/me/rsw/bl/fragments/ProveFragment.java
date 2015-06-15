@@ -1,34 +1,23 @@
 package uk.me.rsw.bl.fragments;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.TypedValue;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ScrollView;
 
 import uk.me.rsw.bl.R;
-import uk.me.rsw.bl.activities.CustomActivity;
-import uk.me.rsw.bl.activities.MainActivity;
-import uk.me.rsw.bl.activities.MethodActivity;
-import uk.me.rsw.bl.activities.ProveActivity;
 
 public class ProveFragment extends Fragment {
 
-    private ProveActivity mActivity;
-    private ScrollView mScrollView;
+    private NestedScrollView mNestedScrollView;
     private WebView mWebView;
 
     public ProveFragment() {
@@ -43,10 +32,10 @@ public class ProveFragment extends Fragment {
 
         @JavascriptInterface
         public void scrollToBottom() {
-            mScrollView.post(new Runnable() {
+            mNestedScrollView.post(new Runnable() {
                 @Override
                 public void run() {
-                    mScrollView.fullScroll(View.FOCUS_DOWN);
+                    mNestedScrollView.fullScroll(View.FOCUS_DOWN);
                 }
             });
         }
@@ -54,16 +43,9 @@ public class ProveFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_prove, container, false);
+        View view = inflater.inflate(R.layout.fragment_webview_in_card, container, false);
 
-        TypedValue tv = new TypedValue();
-        int actionBarHeight = 56;
-        if (mActivity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-        }
-
-        mScrollView = (ScrollView) view.findViewById(R.id.scrollview);
-        mScrollView.setPadding(0, actionBarHeight, 0, 0);
+        mNestedScrollView = (NestedScrollView) view.findViewById(R.id.scrollview);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
@@ -81,12 +63,6 @@ public class ProveFragment extends Fragment {
         }
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (ProveActivity) activity;
     }
 
 }

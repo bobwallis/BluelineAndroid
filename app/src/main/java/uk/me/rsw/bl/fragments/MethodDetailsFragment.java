@@ -11,20 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.MethodActivity;
 import uk.me.rsw.bl.models.Method;
-import uk.me.rsw.bl.widgets.ScrollView2;
 
 public class MethodDetailsFragment extends Fragment {
 
     private static final String METHOD_DATA = "method_data";
     Method method;
-
-    private MethodActivity mActivity;
-    private ScrollView2 mScrollView;
 
     public MethodDetailsFragment() {
     }
@@ -45,16 +39,6 @@ public class MethodDetailsFragment extends Fragment {
         ViewGroup ll = (ViewGroup) view.findViewById(R.id.container);
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TextView t;
-
-        TypedValue tv = new TypedValue();
-        int actionBarHeight = 98;
-        if (mActivity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics()) + (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 42, getResources().getDisplayMetrics());
-        }
-
-        mScrollView = (ScrollView2) view.findViewById(R.id.scrollview);
-        mScrollView.setPadding(0, actionBarHeight, 0, 0);
-        mScrollView.setOnScrollChangedListener(mActivity);
 
         t = new TextView(getActivity());
         t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
@@ -130,12 +114,6 @@ public class MethodDetailsFragment extends Fragment {
         }
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (MethodActivity) activity;
     }
 
 }

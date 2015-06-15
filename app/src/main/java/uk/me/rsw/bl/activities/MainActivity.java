@@ -7,7 +7,7 @@ import android.speech.RecognizerIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,7 +28,7 @@ import uk.me.rsw.bl.data.Database;
 import uk.me.rsw.bl.widgets.SearchBox;
 
 
-public class MainActivity extends ActionBarActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public final static String METHOD_TITLE = "uk.me.rsw.bl.METHOD_TITLE";
     public final static String IS_SEARCHING = "uk.me.rsw.bl.IS_SEARCHING";

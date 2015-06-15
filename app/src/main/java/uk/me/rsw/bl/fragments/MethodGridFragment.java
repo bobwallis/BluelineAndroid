@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.webkit.WebView;
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.MethodActivity;
 import uk.me.rsw.bl.models.Method;
-import uk.me.rsw.bl.widgets.ScrollView2;
 
 
 public class MethodGridFragment extends Fragment {
@@ -31,7 +29,6 @@ public class MethodGridFragment extends Fragment {
     private String size;
 
     private MethodActivity mActivity;
-    private ScrollView2 mScrollView;
     private WebView mWebView;
 
     public MethodGridFragment() {
@@ -74,18 +71,7 @@ public class MethodGridFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_webview_in_card, container, false);
-
-
-        TypedValue tv = new TypedValue();
-        int actionBarHeight = 98;
-        if (mActivity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics()) + (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 42, getResources().getDisplayMetrics());
-        }
-
-        mScrollView = (ScrollView2) view.findViewById(R.id.scrollview);
-        mScrollView.setPadding(0, actionBarHeight, 0, 0);
-        mScrollView.setOnScrollChangedListener(mActivity);
+        View view = inflater.inflate(R.layout.fragment_webview_in_card2, container, false);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");

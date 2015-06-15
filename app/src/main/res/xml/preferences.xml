@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/pref_header_numbers"
+        android:key="pref_numbers_settings">
+
+        <CheckBoxPreference
+            android:key="numbers_show"
+            android:title="@string/pref_title_showNumbers"
+            android:defaultValue="true" />
+
+        <ListPreference
+            android:title="@string/pref_title_numbersLayout"
+            android:summary="Select the layout for this line view"
+            android:key="numbers_layout"
+            android:defaultValue="oneColumn"
+            android:entries="@array/pref_option_layout"
+            android:entryValues="@array/pref_option_layout_values"
+            android:dependency="numbers_show" />
+
+        <ListPreference
+            android:title="@string/pref_title_numbersSize"
+            android:summary="Select the size for this line view"
+            android:key="numbers_size"
+            android:defaultValue="medium"
+            android:entries="@array/pref_option_size"
+            android:entryValues="@array/pref_option_size_values"
+            android:dependency="numbers_show" />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        android:title="@string/pref_header_lines"
+        android:key="pref_lines_settings">
+
+        <CheckBoxPreference
+            android:key="lines_show"
+            android:title="@string/pref_title_showLines"
+            android:defaultValue="false" />
+
+        <ListPreference
+            android:title="@string/pref_title_linesLayout"
+            android:summary="Select the layout for this line view"
+            android:key="lines_layout"
+            android:defaultValue="oneColumn"
+            android:entries="@array/pref_option_layout"
+            android:entryValues="@array/pref_option_layout_values"
+            android:dependency="lines_show" />
+
+        <ListPreference
+            android:title="@string/pref_title_linesSize"
+            android:summary="Select the size for this line view"
+            android:key="lines_size"
+            android:defaultValue="medium"
+            android:entries="@array/pref_option_size"
+            android:entryValues="@array/pref_option_size_values"
+            android:dependency="lines_show" />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        android:title="@string/pref_header_grid"
+        android:key="pref_numbers_grid">
+
+        <CheckBoxPreference
+            android:key="grid_show"
+            android:title="@string/pref_title_showGrid"
+            android:defaultValue="true" />
+
+        <ListPreference
+            android:title="@string/pref_title_gridLayout"
+            android:summary="Select the layout for this line view"
+            android:key="grid_layout"
+            android:defaultValue="oneColumn"
+            android:entries="@array/pref_option_layout"
+            android:entryValues="@array/pref_option_layout_values"
+            android:dependency="grid_show" />
+
+        <ListPreference
+            android:title="@string/pref_title_gridSize"
+            android:summary="Select the size for this line view"
+            android:key="grid_size"
+            android:defaultValue="medium"
+            android:entries="@array/pref_option_size"
+            android:entryValues="@array/pref_option_size_values"
+            android:dependency="grid_show" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -4,29 +4,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
-import com.astuetz.PagerSlidingTabStrip;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.MethodPagerAdapter;
 import uk.me.rsw.bl.data.Database;
 import uk.me.rsw.bl.models.Method;
-import uk.me.rsw.bl.widgets.Toolbar;
 
 
-public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.widgets.ScrollView2.OnScrollChangedListener {
+public class MethodActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private MethodPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private PagerSlidingTabStrip mTabs;
+    private TabLayout mTabLayout;
 
     private String title;
     private Method method;
@@ -37,13 +33,12 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_method);
+        setContentView(R.layout.activity_toolbar_with_tabs);
 
         // Get the title from the intent
         Intent intent = getIntent();
         title = intent.getStringExtra(MainActivity.METHOD_TITLE);
         setTitle(title);
-        ((TextView) findViewById(R.id.title)).setText(title);
 
         // Get the method data
         if(title.equals("Custom Method")) {
@@ -83,34 +78,18 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
                 prefs.getString("grid_size", "medium")
         };
 
-        // Set up the tabs
+        // Set up the view pager
         mSectionsPagerAdapter = new MethodPagerAdapter(getSupportFragmentManager(), method, tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setCurrentItem(Math.min(1, mSectionsPagerAdapter.getCount() - 1));
 
         // Set up tab bar
-        mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        mTabs.setViewPager(mViewPager);
-        mTabs.setOnPageChangeListener(
-            new ViewPager.OnPageChangeListener() {
-                int lastPosition = Math.min(1, mSectionsPagerAdapter.getCount()-1);
-                @Override
-                public void onPageSelected(int position) {
-                }
-                @Override
-                public void onPageScrollStateChanged(int position) {
-                }
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                    float offset = (position == lastPosition)? positionOffset : 1-positionOffset;
-                    if(offset <= 0.0 || offset >= 1.0) {
-                        lastPosition = position;
-                    }
-                    mToolbar.setAmountVisible(Math.max(mToolbar.getAmountVisible(), offset * mToolbar.getHeight()));
-                }
-            }
-        );
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        // Select the relevant tab
+        mViewPager.setCurrentItem(Math.min(1, mSectionsPagerAdapter.getCount() - 1));
     }
 
     @Override
@@ -133,16 +112,6 @@ public class MethodActivity extends ActionBarActivity implements uk.me.rsw.bl.wi
             finish();
             startActivity(intent);
         };
-    }
-
-    @Override
-    public void onScrollChanged(ScrollView who, int l, int t, int oldl, int oldt) {
-        if(t <= 1) { // For some reason there's a little bit of a bounce at the top if you don't do this
-            mToolbar.setAmountVisible(mToolbar.getHeight());
-        }
-        else {
-            mToolbar.setAmountVisible(mToolbar.getAmountVisible() - t + oldt);
-        }
     }
 
     @Override

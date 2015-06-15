@@ -16,5 +16,5 @@
 6:
  - Update database
  - Minor visual tweaks for webview content
- - Use Android Support Design library to implement navigation drawer
+ - Use Android Support Design library to implement navigation drawer and tabs
  - Prevent use of Touch Prover on pre-KitKat devices
