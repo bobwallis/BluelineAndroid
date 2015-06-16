@@ -50,7 +50,7 @@ h4 {
 	font-size: 14px;
 	font-weight: normal;
 	color: #002856;
-	margin: 10px 0 5px 20px;
+	margin: 10px 0 5px 15px;
 	text-transform: uppercase;
 	text-rendering: optimizeLegibility;
 }
@@ -79,21 +79,6 @@ hr {
 
 canvas, img {
 	display: inline-block;
-}
-
-
-// Selection list
-ol.selector {
-	list-style: none;
-	li {
-		display: block;
-		font-size: 14px;
-		height: 32px;
-		line-height: 32px;
-		padding: 0 10px;
-		box-sizing: border-box;
-		border-bottom: 1px solid #DDD;
-	}
 }
 
 
@@ -132,16 +117,26 @@ textarea {
 	border-radius: 2px;
 	background-color: #F3F3F3;
 	border: 0;
-	margin: 20px 10px 0;
+	margin: 20px 5px 0;
 	padding: 5px;
 	box-sizing: border-box;
-	width: 280px;
+	width: 290px;
 	box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
 }
 
-input[type="text"], .textInput {
+.select-wrapper,.input-wrapper {
 	display: block;
+	position: relative;
 	border-radius: 2px;
+	background-color: #F3F3F3;
+	margin: 0 5px;
+	width: 290px;
+	height: 32px;
+	box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+}
+
+input[type="text"], select {
+	display: block;
 	background-color: #F3F3F3;
 	width: 100%;
 	height: 100%;
@@ -155,57 +150,10 @@ input[type="text"], .textInput {
 	}
 }
 
-
-// Flipping selectors
-.flipSelector {
-	display: block;
-	position: relative;
-	margin: 0 10px;
-	width: 280px;
-	height: 32px;
-	transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	transform-style: preserve-3d;
-	transform-origin: 50% 50%;
-	&[data-direction="top"].is-open {
-		transform: rotateX(180deg);
-	}
-	.front {
-		position: absolute;
-		display: block;
-		width: 100%;
-		height: 100%;
-		background-color: #F3F3F3;
-		backface-visibility: hidden;
-		transition: background 0.15s ease, line-height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-		box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
-	}
-	.back {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		background-color: #F3F3F3;
-		color: #222;
-		transform: translateZ(-1px) rotateX(180deg);
-		overflow-x: hidden;
-		overflow-y: scroll;
-		backface-visibility: hidden;
-		transition: box-shadow 0.8s ease;
-	}
-	&.is-open .back {
-		box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
-	}
-}
-	#stage-container.is-open {
-		height: 120px;
-	}
-	#syntax-container.is-open {
-		height: 64px;
-	}
-
 // Specific code for custom.html
 #notation-container {
 	box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
 }
 #notation-parsed {
-	margin: 5px 0 0 20px;
+	margin: 5px 0 0 15px;
 }

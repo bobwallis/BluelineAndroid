@@ -41,6 +41,16 @@ module.exports = function (grunt) {
 				files: {
 					'app/src/main/assets/webviews/copyright.css': ['app/src/main/assets/webviews/copyright.html']
 				}
+			},
+			custom: {
+				files: {
+					'app/src/main/assets/webviews/custom.css': ['app/src/main/assets/webviews/custom.html']
+				}
+			},
+			prove: {
+				files: {
+					'app/src/main/assets/webviews/prove.css': ['app/src/main/assets/webviews/prove.html']
+				}
 			}
 		},
 		requirejs: {
@@ -133,8 +143,7 @@ module.exports = function (grunt) {
 		clean: {
 			all: {
 				files: [
-					{ src: 'app/src/main/assets/webviews/about.css' },
-					{ src: 'app/src/main/assets/webviews/copyright.css' },
+					{ src: 'app/src/main/assets/webviews/*.css' },
 					{ src: 'app/src/main/assets/webviews/custom.js' },
 					{ src: 'app/src/main/assets/webviews/prove.js' }
 				]
@@ -155,7 +164,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', 'Build all.', [
 		'copy', 'less', 'uncss', 'requirejs',         // Build and copy in all assets
-		'cssmin', 'uglify', 'processhtml', 'htmlmin' // Minify everything
-		//'clean'
+		'cssmin', 'uglify', 'processhtml', 'htmlmin', // Minify everything
+		'clean'
 	]);
 };

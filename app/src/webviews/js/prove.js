@@ -1,24 +1,7 @@
 require(['autosize'], function( autosize ) {
 
-	// Set up syntax selector
-	var syntaxContainer = document.getElementById( 'syntax-container' ),
-		syntaxFront = document.getElementById( 'syntax-front' ),
-		syntaxBack = document.getElementById( 'syntax-back' ),
-		syntaxText = document.getElementById( 'syntax-text' );
-
-	var openSyntaxSelector = function( e ) {
-		syntaxContainer.setAttribute( 'data-direction', 'top' );
-		syntaxContainer.classList.add( 'is-open' );
-	};
-
-	var chooseSyntax = function( e ) {
-		syntaxText.innerHTML = e.target.innerHTML;
-		syntaxText.setAttribute( 'data-syntax', e.target.getAttribute( 'data-syntax' ) );
-		syntaxContainer.classList.remove( 'is-open' );
-	};
-	syntaxFront.addEventListener( 'click', openSyntaxSelector );
-	syntaxBack.addEventListener( 'click', chooseSyntax );
-
+	// Syntax selector
+	var syntax = document.getElementById( 'syntax' );
 
 	// Setup text area
 	var input = document.getElementById( 'input' );
@@ -47,7 +30,7 @@ require(['autosize'], function( autosize ) {
 		submit.blur();
 		gsirilWorker.postMessage( {
 			input: input.value,
-			args: (syntaxText.getAttribute( 'data-syntax' ) == 'microsiril')? ['--msiril'] : []
+			args: (syntax.value == 'microsiril')? ['--msiril'] : []
 		} );
 		autosize.update( input );
 		output.innerHTML = '';

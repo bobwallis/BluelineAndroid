@@ -3,25 +3,22 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>GSiril</title>
+		<!-- build:css inline prove.css -->
 		<link rel="stylesheet" type="text/css" href="blueline.css">
+		<!-- /build -->
 	</head>
 	<body>
 		<form id="form" method="get">
 		<div id="container">
 			<p>This is a simple interface for Richard Smith's <a href="http://www.ex-parrot.com/~richard/gsiril/" class="external">GSiril</a> touch proving program.</p>
 			<h3>Input</h3>
-			<div id="syntax-container" class="flipSelector">
-				<div id="syntax-back" class="back">
-					<ol class="selector">
-						<li data-syntax="microsiril">MicroSiril syntax</li>
-						<li data-syntax="gsiril">GSiril syntax</li>
-					</ol>
-				</div>
-				<div id="syntax-front" class="front">
-					<span id="syntax-text" class="textInput" data-syntax="microsiril">MicroSiril syntax</span>
-				</div>
+			<div class="select-wrapper">
+				<select id="syntax">
+					<option value="microsiril" selected>MicroSiril syntax</option>
+					<option value="gsiril">GSiril</option>
+				</select>
 			</div>
-			<textarea id="input" placeholder="Enter code here..." autocapitalize="none"></textarea>
+			<textarea id="input" placeholder="Enter code here…" autocapitalize="none"></textarea>
 			<input id="submit" type="submit" value="Prove" disabled />
 			<input id="clear" type="reset" value="Clear" />
 			<hr />
