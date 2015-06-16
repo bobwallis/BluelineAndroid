@@ -5,19 +5,19 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ScrollView;
 
 import uk.me.rsw.bl.R;
 
 public class ProveFragment extends Fragment {
 
-    private NestedScrollView mNestedScrollView;
+    private ScrollView mNestedScrollView;
     private WebView mWebView;
 
     public ProveFragment() {
@@ -45,7 +45,7 @@ public class ProveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_webview_in_card, container, false);
 
-        mNestedScrollView = (NestedScrollView) view.findViewById(R.id.scrollview);
+        mNestedScrollView = (ScrollView) view.findViewById(R.id.scrollview);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");

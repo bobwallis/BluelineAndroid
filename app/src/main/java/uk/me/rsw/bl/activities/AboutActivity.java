@@ -21,7 +21,7 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_toolbar_containing_tabs);
+        setContentView(R.layout.activity_about);
 
         // Set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);

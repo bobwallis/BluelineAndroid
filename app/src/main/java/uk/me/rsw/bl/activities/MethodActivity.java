@@ -33,7 +33,7 @@ public class MethodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_toolbar_with_tabs);
+        setContentView(R.layout.activity_methods);
 
         // Get the title from the intent
         Intent intent = getIntent();
