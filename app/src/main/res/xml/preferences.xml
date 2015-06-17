@@ -2,6 +2,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:title="@string/pref_header_general"
+        android:key="pref_general_settings">
+
+        <ListPreference
+            android:title="@string/pref_title_workingBell"
+            android:summary="@string/pref_summary_workingBell"
+            android:key="workingBell"
+            android:defaultValue="heaviest"
+            android:entries="@array/pref_option_workingBell"
+            android:entryValues="@array/pref_option_workingBell_values" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_header_numbers"
         android:key="pref_numbers_settings">
 
@@ -12,7 +26,7 @@
 
         <ListPreference
             android:title="@string/pref_title_numbersLayout"
-            android:summary="Select the layout for this line view"
+            android:summary="@string/pref_summary_layout"
             android:key="numbers_layout"
             android:defaultValue="oneColumn"
             android:entries="@array/pref_option_layout"
@@ -21,7 +35,7 @@
 
         <ListPreference
             android:title="@string/pref_title_numbersSize"
-            android:summary="Select the size for this line view"
+            android:summary="@string/pref_summary_size"
             android:key="numbers_size"
             android:defaultValue="medium"
             android:entries="@array/pref_option_size"
@@ -42,7 +56,7 @@
 
         <ListPreference
             android:title="@string/pref_title_linesLayout"
-            android:summary="Select the layout for this line view"
+            android:summary="@string/pref_summary_layout"
             android:key="lines_layout"
             android:defaultValue="oneColumn"
             android:entries="@array/pref_option_layout"
@@ -51,7 +65,7 @@
 
         <ListPreference
             android:title="@string/pref_title_linesSize"
-            android:summary="Select the size for this line view"
+            android:summary="@string/pref_summary_size"
             android:key="lines_size"
             android:defaultValue="medium"
             android:entries="@array/pref_option_size"
@@ -72,7 +86,7 @@
 
         <ListPreference
             android:title="@string/pref_title_gridLayout"
-            android:summary="Select the layout for this line view"
+            android:summary="@string/pref_summary_layout"
             android:key="grid_layout"
             android:defaultValue="oneColumn"
             android:entries="@array/pref_option_layout"
@@ -81,7 +95,7 @@
 
         <ListPreference
             android:title="@string/pref_title_gridSize"
-            android:summary="Select the size for this line view"
+            android:summary="@string/pref_summary_size"
             android:key="grid_size"
             android:defaultValue="medium"
             android:entries="@array/pref_option_size"

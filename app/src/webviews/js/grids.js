@@ -42,6 +42,7 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 		qs.calls = (typeof qs.calls == 'string')? JSON.parse( qs.calls ) : {};
 		qs.ruleOffs = (typeof qs.ruleOffs == 'string')? JSON.parse( qs.ruleOffs ) : {};
 		qs.callingPositions = typeof qs.callingPositions == 'string'? JSON.parse( qs.callingPositions ) : {};
+		qs.workingBell = typeof qs.workingBell == 'string' && qs.workingBell == 'lightest'? 'lightest' : 'heaviest';
 
 		document.body.className = qs.layout+' '+qs.size;
 

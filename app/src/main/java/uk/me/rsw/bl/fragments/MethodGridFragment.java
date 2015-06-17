@@ -27,6 +27,7 @@ public class MethodGridFragment extends Fragment {
     private String type;
     private String layout;
     private String size;
+    private String workingBell;
 
     private MethodActivity mActivity;
     private WebView mWebView;
@@ -44,7 +45,7 @@ public class MethodGridFragment extends Fragment {
 
         @JavascriptInterface
         public String queryString() {
-            return "size=" + size + "&layout=" + layout + "&type=" + type + "&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&calls=" + method.getCalls() + "&callingPositions=" + method.getCallingPositions() + "&ruleOffs=" + method.getRuleOffs();
+            return "size=" + size + "&layout=" + layout + "&type=" + type + "&workingBell="+ workingBell +"&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&calls=" + method.getCalls() + "&callingPositions=" + method.getCallingPositions() + "&ruleOffs=" + method.getRuleOffs();
         }
     }
 
@@ -66,6 +67,7 @@ public class MethodGridFragment extends Fragment {
             type = getArguments().getString(ARG_TYPE);
             layout = prefs.getString(type + "_layout", "oneColumn");
             size = prefs.getString(type + "_size", "medium");
+            workingBell = prefs.getString("workingBell", "heaviest");
         }
     }
 

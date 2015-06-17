@@ -29,6 +29,7 @@ public class MethodActivity extends AppCompatActivity {
     private Boolean[] tabs;
     private String[] layouts;
     private String[] sizes;
+    private String workingBell;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class MethodActivity extends AppCompatActivity {
                 prefs.getString("lines_size", "medium"),
                 prefs.getString("grid_size", "medium")
         };
+        workingBell = prefs.getString("workingBell", "heaviest");
 
         // Set up the view pager
         mSectionsPagerAdapter = new MethodPagerAdapter(getSupportFragmentManager(), method, tabs);
@@ -106,7 +108,8 @@ public class MethodActivity extends AppCompatActivity {
             prefs.getString("grid_layout", "oneColumn") != layouts[2] ||
             prefs.getString("numbers_size", "medium") != sizes[0] ||
             prefs.getString("lines_size", "medium") != sizes[1] ||
-            prefs.getString("grid_size", "medium") != sizes[2]
+            prefs.getString("grid_size", "medium") != sizes[2] ||
+            prefs.getString("workingBell", "heaviest") != workingBell
         ) {
             Intent intent = getIntent();
             finish();

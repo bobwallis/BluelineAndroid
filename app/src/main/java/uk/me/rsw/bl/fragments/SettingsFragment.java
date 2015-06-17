@@ -15,6 +15,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
+        bindPreferenceSummaryToValue(findPreference("workingBell"));
         bindPreferenceSummaryToValue(findPreference("numbers_layout"));
         bindPreferenceSummaryToValue(findPreference("lines_layout"));
         bindPreferenceSummaryToValue(findPreference("grid_layout"));

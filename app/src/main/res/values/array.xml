@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="pref_option_workingBell">
+        <item>Heaviest in group</item>
+        <item>Lightest in group</item>
+    </string-array>
+    <string-array name="pref_option_workingBell_values">
+        <item>heaviest</item>
+        <item>lightest</item>
+    </string-array>
+
     <string-array name="pref_option_layout">
         <item>Single column</item>
         <item>Single row</item>

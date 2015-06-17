@@ -28,8 +28,15 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		this.workGroups = PlaceNotation.cycles( this.leadHead );
 
 		// For the plain course image, we'll draw a line through the heaviest working bell of each type and the hunt bells
-		var toFollow = this.workGroups.map( function( g ) { return Math.max.apply( Math, g ); } ),
-			placeStarts = toFollow.filter( function( b ) { return this.huntBells.indexOf( b ) === -1; }, this );
+		var toFollow = this.workGroups.map( function( g ) {
+			if( typeof options.workingBell == 'string' && options.workingBell == 'lightest' ) {
+				return Math.min.apply( Math, g );
+			}
+			else {
+				return Math.max.apply( Math, g );
+			}
+		} );
+		var placeStarts = toFollow.filter( function( b ) { return this.huntBells.indexOf( b ) === -1; }, this );
 
 		// Calculate some sizing to help with creating default grid options objects
 		var fontSize = (typeof options.fontSize == 'number')? options.fontSize : 14,
