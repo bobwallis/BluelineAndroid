@@ -8,7 +8,7 @@
         <item name="android:windowEnterTransition">@transition/window_enter</item>
         <item name="android:windowExitTransition">@transition/window_exit</item>
         <item name="android:statusBarColor">@color/darkerBlue</item>
-        <item name="android:navigationBarColor">@color/darkerBlue</item>
+        <item name="android:navigationBarColor">@color/black</item>
     </style>
 
 </resources>
