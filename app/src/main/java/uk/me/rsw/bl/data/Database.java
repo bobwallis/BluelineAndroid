@@ -11,7 +11,7 @@ import uk.me.rsw.bl.models.Method;
 public class Database extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "blueline.db";
-    private static final int DATABASE_VERSION = 13;
+    private static final int DATABASE_VERSION = 14;
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

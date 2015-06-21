@@ -20,7 +20,7 @@ public class CopyrightFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_nonfocusable_webview_in_card, container, false);
+        View view = inflater.inflate(R.layout.fragment_nonfocusable_webview_in_card_and_nestedscrollview, container, false);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
         mWebView.loadUrl("file:///android_asset/webviews/copyright.html");

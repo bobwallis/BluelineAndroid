@@ -9,6 +9,9 @@ body {
 	font: 14px sans-serif;
 	padding: 16px;
 	perspective: 1000px;
+	&.flush {
+		padding: 0;
+	}
 }
 
 ::placeholder {
@@ -21,7 +24,8 @@ body {
 
 #container {
 	position: relative;
-	width: 300px;
+	width: 100%;
+	max-width: 600px;
 	margin: 0 auto;
 }
 

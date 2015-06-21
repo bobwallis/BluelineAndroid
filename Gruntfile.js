@@ -23,14 +23,18 @@ module.exports = function (grunt) {
 					new require('less-plugin-inline-urls')
 				]
 			},
-			all: {
-				src:  'app/src/webviews/less/blueline.less',
+			blueline: {
+				src:  ['app/src/webviews/less/blueline.less', 'app/src/webviews/less/ringingPractice.less'],
 				dest: 'app/src/main/assets/webviews/blueline.css'
+			},
+			practice: {
+				src:  ['app/src/webviews/less/blueline.less', 'app/src/webviews/less/ringingPractice.less'],
+				dest: 'app/src/main/assets/webviews/practice.css'
 			}
 		},
 		uncss: {
 			options: {
-				ignore: [':focus']
+				ignore: [/:focus/]
 			},
 			about: {
 				files: {
@@ -45,6 +49,14 @@ module.exports = function (grunt) {
 			custom: {
 				files: {
 					'app/src/main/assets/webviews/custom.css': ['app/src/main/assets/webviews/custom.html']
+				}
+			},
+			practice: {
+				options: {
+					ignore: [/\.practice_container.*/]
+				},
+				files: {
+					'app/src/main/assets/webviews/practice.css': ['app/src/main/assets/webviews/practice.html']
 				}
 			},
 			prove: {
@@ -77,6 +89,13 @@ module.exports = function (grunt) {
 					'include': ['custom'],
 					'mainConfigFile': 'app/src/webviews/js/custom.js',
 					'out': 'app/src/main/assets/webviews/custom.js'
+				}
+			},
+			practice: {
+				options: {
+					'include': ['practice'],
+					'mainConfigFile': 'app/src/webviews/js/practice.js',
+					'out': 'app/src/main/assets/webviews/practice.js'
 				}
 			},
 			prove: {
@@ -136,6 +155,7 @@ module.exports = function (grunt) {
 				files: {
 					'app/src/main/assets/webviews/custom.js': 'app/src/main/assets/webviews/custom.js',
 					'app/src/main/assets/webviews/grids.js':  'app/src/main/assets/webviews/grids.js',
+					'app/src/main/assets/webviews/practice.js':  'app/src/main/assets/webviews/practice.js',
 					'app/src/main/assets/webviews/prove.js':  'app/src/main/assets/webviews/prove.js'
 				}
 			}
@@ -145,6 +165,7 @@ module.exports = function (grunt) {
 				files: [
 					{ src: 'app/src/main/assets/webviews/*.css' },
 					{ src: 'app/src/main/assets/webviews/custom.js' },
+					{ src: 'app/src/main/assets/webviews/practice.js' },
 					{ src: 'app/src/main/assets/webviews/prove.js' }
 				]
 			}

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uk.me.rsw.bl" >
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".Blueline"
         android:allowBackup="true"

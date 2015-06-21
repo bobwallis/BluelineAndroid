@@ -1,0 +1,120 @@
+// Animations
+/* uncss:ignore */
+@keyframes button_success {
+	0%   { background-color: #DDD; }
+	10%  { background-color: #CCC; }
+	100% { background-color: #DDD; }
+}
+/* uncss:ignore */
+@keyframes button_error {
+	0%   { background-color: #DDD; }
+	10%  { background-color: #D11; }
+	100% { background-color: #DDD; }
+}
+/* uncss:ignore */
+@keyframes errorFlash {
+	0%   { opacity: 0; }
+	10%  { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+// LESS
+.practice_container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	min-height: 380px;
+	user-select: none;
+
+	canvas {
+		opacity: 0;
+		transition: opacity 0.5s ease;
+	}
+
+	.practice_controls {
+		position: absolute;
+		bottom: 0;
+		background-color: #DDD;
+		width: 100%;
+		height: 42px;
+
+		.practice_controls_left, .practice_controls_down, .practice_controls_right {
+			position: absolute;
+			bottom: 0;
+			height: 42px;
+			width: 33%;
+			background-color: #DDD;
+			background-repeat: no-repeat;
+			background-position: center center;
+			&.success {
+				animation: button_success .3s;
+			}
+			&.error {
+				animation: button_error .3s;
+			}
+		}
+		.practice_controls_left {
+			background-size: 28px;
+			background-image: url(left.svg);
+			left: 0;
+		}
+		.practice_controls_down {
+			background-size: auto 34px;
+			background-image: url(down.svg);
+			left: 34%;
+		}
+		.practice_controls_right {
+			background-size: 28px;
+			background-image: url(right.svg);
+			right: 0;
+		}
+	}
+
+	.practice_buttons {
+		position: absolute;
+		top: 20%;
+		left: 0;
+		background-color: rgba(255,255,255,0.8);
+		width: 100%;
+		height: 60px;
+		text-align: center;
+		opacity: 1;
+		transition: opacity 0.5s ease;
+		input {
+			display: inline-block;
+			height: 35px;
+			line-height: 35px;
+			background-color: #002856;
+			margin: 12.5px 10px;
+			color: white;
+			border-radius: 2px;
+			border: 0;
+			padding: 0 15px;
+			text-transform: uppercase;
+			text-align: center;
+			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+			cursor: pointer;
+		}
+	}
+
+	.practice_errorFlash_left, .practice_errorFlash_down, .practice_errorFlash_right {
+		opacity: 0;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		&.error {
+			animation: errorFlash .3s;
+		}
+	}
+	.practice_errorFlash_left {
+		background-image: radial-gradient(circle farthest-corner at 5% 100% , #D11, rgba(0,0,0,0));
+	}
+	.practice_errorFlash_down {
+		background-image: radial-gradient(circle farthest-corner at 50% 100% , #D11, rgba(0,0,0,0));
+	}
+	.practice_errorFlash_right {
+		background-image: radial-gradient(circle farthest-corner at 95% 100% , #D11, rgba(0,0,0,0));
+	}
+}
