@@ -42,6 +42,15 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 		var buttonsContainer = document.createElement( 'div' );
 		buttonsContainer.className = 'practice_buttons';
 		options.container.appendChild( buttonsContainer );
+		if( typeof options.title === 'string' && options.title !== '' ) {
+			var title = document.createElement( 'h1' );
+			title.appendChild( document.createTextNode( options.title ) );
+			buttonsContainer.appendChild( title );
+		}
+		else {
+			buttonsContainer.style.height = '60px';
+			buttonsContainer.style.paddingTop = '12.5px';
+		}
 		var button_go = document.createElement( 'input' );
 		button_go.value = 'Go';
 		button_go.type = 'button';
@@ -144,6 +153,7 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 		// Function which draws the canvas
 		var draw = function() {
 			var i, j,
+				x, y,
 				currentRowCeil = Math.ceil( currentRow ),
 				currentRowFloor = Math.floor( currentRow );
 
@@ -153,20 +163,39 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 			// Draw guides
 			context.strokeStyle = '#999';
 			context.lineWidth = 0.5;
-			context.setLineDash( [2,1] );
+			context.setLineDash( [2,2] );
 			context.lineCap = 'butt';
 			context.beginPath();
 			for( i = 0; i < stage; ++i ) {
-				context.moveTo( paddingForLeftMostPosition + (i*bellWidth), (dotY-(currentRow*rowHeight))%3 );
+				context.moveTo( paddingForLeftMostPosition + (i*bellWidth), (dotY-(currentRow*rowHeight))%4 );
 				context.lineTo( paddingForLeftMostPosition + (i*bellWidth), canvasHeight );
 			}
 			context.stroke();
 
-			// Draw the user's dot
+			// Draw rules offs
+			if( typeof options.ruleOffs === 'object' ) {
+				y = 1;
+				context.lineWidth = 1;
+				context.setLineDash( [3,1] );
+				for( i = going? currentRowFloor+1 : currentRowFloor; y > 0 && i > 0; --i ) {
+					y = dotY - (currentRowFloor-i+(currentRow%1)+0.5)*rowHeight;
+					if( (i-options.ruleOffs.from)%options.ruleOffs.every === 0 ) {
+						context.strokeStyle = (i==(currentRowFloor+1))? 'rgba(153,153,153,'+ Math.round((currentRow%1)*10)/10 +')' : '#999';
+						context.beginPath();
+						context.moveTo( paddingForLeftMostPosition - (bellWidth/4), y );
+						context.lineTo( paddingForLeftMostPosition + ((stage-1)*bellWidth) + (bellWidth/4), y );
+						context.stroke();
+					}
+				}
+			}
+
+			// Reusable position variables
 			var comingFromPosition = rows[currentRowFloor].indexOf( following ),
-				goingToPosition = rows[currentRowCeil].indexOf( following ),
-				x = paddingForLeftMostPosition + (bellWidth * ((currentRow == currentRowCeil)? goingToPosition : comingFromPosition + ((currentRow%1)*(goingToPosition - comingFromPosition)) )),
-				y = dotY;
+				goingToPosition = rows[currentRowCeil].indexOf( following );
+
+			// Draw the user's dot
+			x = paddingForLeftMostPosition + (bellWidth * ((currentRow == currentRowCeil)? goingToPosition : comingFromPosition + ((currentRow%1)*(goingToPosition - comingFromPosition)) )),
+			y = dotY;
 			context.fillStyle = options.lines[following].color;
 			context.beginPath();
 			context.arc( x, y, 4, 0, Math.PI*2, true );

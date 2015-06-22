@@ -39,7 +39,7 @@ require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, Ringi
 			lines[i] = { color: '#D11', width: 2 };
 		}
 		else {
-			lines[i] = null;
+			lines[i] = null
 		}
 	}
 	
@@ -50,7 +50,7 @@ require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, Ringi
 		stage: qs.stage,
 		following: follow,
 		lines: lines,
-		huntBells: huntBells,
+		ruleOffs: qs.ruleOffs,
 		startRow: PlaceNotation.rounds( qs.stage ),
 		finishRow: PlaceNotation.rounds( qs.stage ),
 		container: document.getElementById( 'practice' )

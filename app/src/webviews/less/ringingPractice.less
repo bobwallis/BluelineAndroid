@@ -72,20 +72,29 @@
 
 	.practice_buttons {
 		position: absolute;
-		top: 20%;
+		top: 10%;
 		left: 0;
 		background-color: rgba(255,255,255,0.8);
 		width: 100%;
-		height: 60px;
+		height: 88.5px;
+		box-sizing: border-box;
 		text-align: center;
 		opacity: 1;
 		transition: opacity 0.5s ease;
+		h1 {
+			font: normal 16px/41px sans-serif;
+			padding: 0 16px;
+			text-rendering: optimizeLegibility;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 		input {
 			display: inline-block;
 			height: 35px;
 			line-height: 35px;
 			background-color: #002856;
-			margin: 12.5px 10px;
+			margin: 0 10px 12.5px 10px;
 			color: white;
 			border-radius: 2px;
 			border: 0;

@@ -44,7 +44,7 @@ public class MethodPracticeFragment extends Fragment {
 
         @JavascriptInterface
         public String queryString() {
-            return "workingBell="+ workingBell +"&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&ruleOffs=" + method.getRuleOffs();
+            return "title=" + method.getTitle() + "&workingBell="+ workingBell +"&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&ruleOffs=" + method.getRuleOffs();
         }
 
         @JavascriptInterface
