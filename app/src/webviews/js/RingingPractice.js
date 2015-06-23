@@ -1,4 +1,4 @@
-define( ['PlaceNotation'], function( PlaceNotation ) {
+define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, MeasureCanvasTextOffset ) {
 	var RingingPractice = function( options ) {
 
 		// Key codes
@@ -13,8 +13,7 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 				if (a[i] !== b[i]) return false;
 			}
 			return true;
-		}
-
+		};
 
 		// Create the elements we need to make this all work
 		options.container.innerHTML = '';
@@ -74,7 +73,8 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 			bellWidth = Math.min( 20, (canvasWidth - 40) / stage ),
 			rowHeight = bellWidth,
 			rowsToDisplay = Math.floor((canvasHeight-20) / rowHeight),
-			paddingForLeftMostPosition = (canvasWidth - ((stage-1)*bellWidth))/2;
+			paddingForLeftMostPosition = (canvasWidth - ((stage-1)*bellWidth))/2,
+			placeStartTextMetrics = textMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', '0' );
 
 
 		// Get context for drawing
@@ -157,10 +157,14 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 				currentRowCeil = Math.ceil( currentRow ),
 				currentRowFloor = Math.floor( currentRow );
 
+			// Reusable position variables
+			var comingFromPosition = rows[currentRowFloor].indexOf( following ),
+				goingToPosition = rows[currentRowCeil].indexOf( following );
+
 			// Clear
 			context.clearRect( 0, 0, canvasWidth, canvasHeight );
 
-			// Draw guides
+			// Draw background guides
 			context.strokeStyle = '#999';
 			context.lineWidth = 0.5;
 			context.setLineDash( [2,2] );
@@ -180,7 +184,6 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 				context.fillText( PlaceNotation.bellToChar( i ), paddingForLeftMostPosition + (i*bellWidth), canvasHeight-8 );
 			}
 
-
 			// Draw rules offs
 			if( typeof options.ruleOffs === 'object' ) {
 				y = 1;
@@ -191,16 +194,37 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 					if( (i-options.ruleOffs.from)%options.ruleOffs.every === 0 ) {
 						context.strokeStyle = (i==(currentRowFloor+1))? 'rgba(153,153,153,'+ Math.round((currentRow%1)*10)/10 +')' : '#999';
 						context.beginPath();
-						context.moveTo( paddingForLeftMostPosition - (bellWidth/4), y );
-						context.lineTo( paddingForLeftMostPosition + ((stage-1)*bellWidth) + (bellWidth/4), y );
+						context.moveTo( paddingForLeftMostPosition - (bellWidth/3), y );
+						context.lineTo( paddingForLeftMostPosition + ((stage-1)*bellWidth) + (bellWidth/3), y );
 						context.stroke();
 					}
 				}
 			}
 
-			// Reusable position variables
-			var comingFromPosition = rows[currentRowFloor].indexOf( following ),
-				goingToPosition = rows[currentRowCeil].indexOf( following );
+			// Draw place starts
+			if( typeof options.placeStarts === 'object' ) {
+				x = paddingForLeftMostPosition + (stage*bellWidth) + 15;
+				y = 1;
+				context.strokeStyle = options.lines[following].color;
+				context.fillStyle = '#333';
+				context.lineWidth = 1.5;
+				context.setLineDash( [] );
+				context.font = '12px sans-serif';
+				context.textAlign = 'center';
+				context.textBaseline = 'middle';
+				for( i = going? currentRowCeil : currentRowCeil-1; y > 0 && i >= 0; --i ) {
+					y = dotY - (currentRowFloor-i+(currentRow%1)+0.5)*rowHeight;
+					if( (i-options.placeStarts.from)%options.placeStarts.every === 0 ) {
+						if( i == (currentRowFloor+1) ) { context.globalAlpha = currentRow%1; }
+						context.fillText( PlaceNotation.bellToChar( rows[i].indexOf( following ) ), x + placeStartTextMetrics.x, y + placeStartTextMetrics.y );
+						context.beginPath();
+						context.arc( x, y, 8, 0, Math.PI*2, true );
+						context.closePath();
+						context.stroke();
+						if( i == (currentRowFloor+1) ) { context.globalAlpha = 1; }
+					}
+				}
+			}
 
 			// Draw the user's dot
 			x = paddingForLeftMostPosition + (bellWidth * ((currentRow == currentRowCeil)? goingToPosition : comingFromPosition + ((currentRow%1)*(goingToPosition - comingFromPosition)) )),
