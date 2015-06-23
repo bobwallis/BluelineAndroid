@@ -81,7 +81,7 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 		var context = canvas.context;
 
 
-		// FRrack the current position within the method, and advance the row position
+		// Track the current position within the method, and advance the row position
 		var finishRow, rows, nextRow, currentPos, nextPos;
 		var going = false;
 		var advance = function() {
@@ -168,9 +168,18 @@ define( ['PlaceNotation'], function( PlaceNotation ) {
 			context.beginPath();
 			for( i = 0; i < stage; ++i ) {
 				context.moveTo( paddingForLeftMostPosition + (i*bellWidth), (dotY-(currentRow*rowHeight))%4 );
-				context.lineTo( paddingForLeftMostPosition + (i*bellWidth), canvasHeight );
+				context.lineTo( paddingForLeftMostPosition + (i*bellWidth), canvasHeight - 25 );
 			}
 			context.stroke();
+
+			// Draw place guides
+			for( i = 0; i < stage; ++i ) {
+				context.fillStyle = '#999';
+				context.textAlign = 'center';
+				context.font = '12px sans-serif';
+				context.fillText( PlaceNotation.bellToChar( i ), paddingForLeftMostPosition + (i*bellWidth), canvasHeight-8 );
+			}
+
 
 			// Draw rules offs
 			if( typeof options.ruleOffs === 'object' ) {
