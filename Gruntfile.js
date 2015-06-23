@@ -165,6 +165,7 @@ module.exports = function (grunt) {
 				files: [
 					{ src: 'app/src/main/assets/webviews/*.css' },
 					{ src: 'app/src/main/assets/webviews/custom.js' },
+					{ src: 'app/src/main/assets/webviews/grids.js' },
 					{ src: 'app/src/main/assets/webviews/practice.js' },
 					{ src: 'app/src/main/assets/webviews/prove.js' }
 				]
