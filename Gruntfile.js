@@ -26,10 +26,6 @@ module.exports = function (grunt) {
 			blueline: {
 				src:  ['app/src/webviews/less/blueline.less', 'app/src/webviews/less/ringingPractice.less'],
 				dest: 'app/src/main/assets/webviews/blueline.css'
-			},
-			practice: {
-				src:  ['app/src/webviews/less/blueline.less', 'app/src/webviews/less/ringingPractice.less'],
-				dest: 'app/src/main/assets/webviews/practice.css'
 			}
 		},
 		uncss: {
@@ -184,9 +180,13 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 
-	grunt.registerTask('default', 'Build all.', [
+	grunt.registerTask('dist', 'Build all.', [
 		'copy', 'less', 'uncss', 'requirejs',         // Build and copy in all assets
 		'cssmin', 'uglify', 'processhtml', 'htmlmin', // Minify everything
 		'clean'
+	]);
+
+	grunt.registerTask('default', 'Build for distribution.', [
+		'copy', 'less', 'requirejs', // Build and copy in all assets
 	]);
 };
