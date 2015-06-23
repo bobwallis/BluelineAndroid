@@ -172,7 +172,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			context.beginPath();
 			for( i = 0; i < stage; ++i ) {
 				context.moveTo( paddingForLeftMostPosition + (i*bellWidth), (dotY-(currentRow*rowHeight))%4 );
-				context.lineTo( paddingForLeftMostPosition + (i*bellWidth), canvasHeight - 25 );
+				context.lineTo( paddingForLeftMostPosition + (i*bellWidth), canvasHeight - 22 );
 			}
 			context.stroke();
 
@@ -180,8 +180,9 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			for( i = 0; i < stage; ++i ) {
 				context.fillStyle = '#999';
 				context.textAlign = 'center';
+				context.textBaseline = 'middle';
 				context.font = '12px sans-serif';
-				context.fillText( PlaceNotation.bellToChar( i ), paddingForLeftMostPosition + (i*bellWidth), canvasHeight-8 );
+				context.fillText( PlaceNotation.bellToChar( i ), paddingForLeftMostPosition + (i*bellWidth), canvasHeight-11 );
 			}
 
 			// Draw rules offs
