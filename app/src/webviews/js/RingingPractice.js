@@ -15,6 +15,16 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			return true;
 		};
 
+
+		// Validate and create a few options to save having to check for existence later
+		if( typeof options.score !== 'boolean' ) {
+			options.score = false;
+		}
+		if( typeof options.thatsAll !== 'boolean' ) {
+			options.thatsAll = false;
+		}
+
+
 		// Create the elements we need to make this all work
 		options.container.innerHTML = '';
 		var errorFlashes = {};
@@ -59,6 +69,9 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		button_restart.type = 'button';
 		button_restart.style.display = 'none';
 		buttonsContainer.appendChild( button_restart );
+		var scoreboard = document.createElement( 'div' );
+		scoreboard.className = 'practice_scoreboard';
+		options.container.appendChild( scoreboard );
 
 
 		// Set up method options
@@ -83,22 +96,31 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 
 		// Track the current position within the method, and advance the row position
 		var finishRow, rows, nextRow, currentPos, nextPos;
+		var errorCount;
 		var going = false;
 		var advance = function() {
 			if( !going ) {
 				return;
 			}
+			// Advance the various tracking variables
 			rows.push( nextRow.slice(0) );
 			currentPos = nextPos;
 			targetRow = rows.length - 1;
 			currentRowAtTimeOfLastTargetRowSet = currentRow;
+			// Update the scoreboard
+			if( options.score ) {
+				scoreboard.innerHTML = 'Changes: '+(rows.length-1)+'<br/>Errors: '+errorCount;
+				scoreboard.style.opacity = 1;
+			}
 			// Stop if we're at the end
 			if( rows.length > 1 && arraysEqual( nextRow, finishRow ) ) {
 				going = false;
 				button_go.style.display = 'none';
 				button_restart.style.display = 'inline-block';
 				buttonsContainer.style.opacity = 1;
+				scoreboard.style.opacity = 0;
 			}
+			// Otherwise keep going
 			else {
 				nextRow = PlaceNotation.apply( notation[(rows.length-1) % notation.length], nextRow );
 				nextPos = nextRow.indexOf( following );
@@ -147,6 +169,8 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			dotY = canvasHeight/2;
 			previousTimestamp = null;
 			currentRowAtTimeOfLastTargetRowSet = 0;
+			errorCount = 0;
+			scoreboard.innerHTML = 'Changes: 0<br/>Errors: 0';
 		};
 		setup();
 
@@ -225,6 +249,21 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 						if( i == (currentRowFloor+1) ) { context.globalAlpha = 1; }
 					}
 				}
+			}
+
+			// Messages
+			if( !going && options.thatsAll ) {
+				y = dotY + (1 - ((currentRow%1 == 0)? 1 : currentRow%1))*rowHeight + 30;
+				context.globalAlpha = (currentRow%1 == 0)? 1 : currentRow%1;
+				context.font = 'bold 14px sans-serif';
+				context.textAlign = 'center';
+				context.textBaseline = 'middle';
+				context.fillText( "That's all!", canvasWidth/2, y );
+				if( options.score ) {
+					context.font = '12px sans-serif';
+					context.fillText( 'Final score: '+Math.max(0, Math.round(100 - ((errorCount*100)/(rows.length-1))))+'%', canvasWidth/2, y+18 );
+				}
+				context.globalAlpha = 1;
 			}
 
 			// Draw the user's dot
@@ -335,6 +374,8 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		var errorFlash = function( e ) {
 			errorFlashes[e].classList.remove( 'error' );
 			setTimeout( function() { errorFlashes[e].classList.add( 'error' ); }, 50 );  // Need the timeout so the browser ticks and the removal of the previous classes actually processe
+			++errorCount;
+			scoreboard.innerHTML = 'Changes: '+(rows.length-1)+'<br/>Errors: '+errorCount;
 		};
 		// Buzz
 		var buzz = function() {

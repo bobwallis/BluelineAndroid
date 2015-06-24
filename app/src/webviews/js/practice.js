@@ -52,6 +52,8 @@ require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, Ringi
 		lines: lines,
 		ruleOffs: qs.ruleOffs,
 		placeStarts: { from: 0, every: qs.notation.length },
+		score: true,
+		thatsAll: true,
 		startRow: PlaceNotation.rounds( qs.stage ),
 		finishRow: PlaceNotation.rounds( qs.stage ),
 		container: document.getElementById( 'practice' )
