@@ -24,4 +24,5 @@
  - 'Practice' interface
 
 8:
- - Incnlude the method title, rule-offs, place starts, place guides, scoring and a "that's all" message in the 'Practice' interface
+ - Include the method title, rule-offs, place starts, place guides, scoring and a "that's all" message in the 'Practice' interface
+ - Some basic options for 'Practice' interface

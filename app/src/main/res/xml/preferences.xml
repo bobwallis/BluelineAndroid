@@ -19,7 +19,7 @@
         android:title="@string/pref_header_numbers"
         android:key="pref_numbers_settings">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="numbers_show"
             android:title="@string/pref_title_showNumbers"
             android:defaultValue="true" />
@@ -49,7 +49,7 @@
         android:title="@string/pref_header_lines"
         android:key="pref_lines_settings">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="lines_show"
             android:title="@string/pref_title_showLines"
             android:defaultValue="false" />
@@ -77,9 +77,9 @@
 
     <PreferenceCategory
         android:title="@string/pref_header_grid"
-        android:key="pref_numbers_grid">
+        android:key="pref_grid_settings">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="grid_show"
             android:title="@string/pref_title_showGrid"
             android:defaultValue="true" />
@@ -101,6 +101,24 @@
             android:entries="@array/pref_option_size"
             android:entryValues="@array/pref_option_size_values"
             android:dependency="grid_show" />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        android:title="@string/pref_header_practice"
+        android:key="pref_practice_settings">
+
+        <SwitchPreference
+            android:key="practice_show"
+            android:title="@string/pref_title_showPractice"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:key="practice_vibrate"
+            android:title="@string/pref_title_vibrate"
+            android:defaultValue="true"
+            android:dependency="practice_show"/>
 
     </PreferenceCategory>
 

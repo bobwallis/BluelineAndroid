@@ -27,6 +27,7 @@ public class MethodPracticeFragment extends Fragment {
     private static final String ARG_METHOD = "method";
     private Method method;
     private String workingBell;
+    private Boolean vibrate;
 
     private MethodActivity mActivity;
     private WebView mWebView;
@@ -49,8 +50,10 @@ public class MethodPracticeFragment extends Fragment {
 
         @JavascriptInterface
         public void buzz() {
-            Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-            v.vibrate(50);
+            if( vibrate ) {
+                Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(50);
+            }
         }
     }
 
@@ -69,6 +72,7 @@ public class MethodPracticeFragment extends Fragment {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
             method = (Method) getArguments().getSerializable(ARG_METHOD);
             workingBell = prefs.getString("workingBell", "heaviest");
+            vibrate = prefs.getBoolean("practice_vibrate", true);
         }
     }
 

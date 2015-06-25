@@ -25,4 +25,9 @@
     <string name="pref_title_gridSize">Grid size</string>
     <string name="pref_summary_size">Select the size for this line view</string>
 
+
+    <string name="pref_header_practice">Practice</string>
+    <string name="pref_title_showPractice">Show \'practice\' interface</string>
+    <string name="pref_title_vibrate">Vibrate on error</string>
+
 </resources>

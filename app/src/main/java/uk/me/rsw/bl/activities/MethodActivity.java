@@ -66,7 +66,8 @@ public class MethodActivity extends AppCompatActivity {
             true,
             prefs.getBoolean("numbers_show", true),
             prefs.getBoolean("lines_show", false),
-            prefs.getBoolean("grid_show", true)
+            prefs.getBoolean("grid_show", true),
+            prefs.getBoolean("practice_show", true)
         };
         layouts = new String[] {
             prefs.getString("numbers_layout", "oneColumn"),
@@ -103,6 +104,7 @@ public class MethodActivity extends AppCompatActivity {
         if( prefs.getBoolean("numbers_show", true) != tabs[1] ||
             prefs.getBoolean("lines_show", false) != tabs[2] ||
             prefs.getBoolean("grid_show", true) != tabs[3] ||
+            prefs.getBoolean("practice_show", true) != tabs[4] ||
             prefs.getString("numbers_layout", "oneColumn") != layouts[0] ||
             prefs.getString("lines_layout", "oneColumn") != layouts[1] ||
             prefs.getString("grid_layout", "oneColumn") != layouts[2] ||

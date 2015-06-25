@@ -42,6 +42,10 @@ public class MethodPagerAdapter extends FragmentPagerAdapter {
             TAB_PRACTICE--;
             count--;
         }
+        if(arg2[4] == false) {
+            TAB_PRACTICE = 999;
+            count--;
+        }
     }
 
     @Override
