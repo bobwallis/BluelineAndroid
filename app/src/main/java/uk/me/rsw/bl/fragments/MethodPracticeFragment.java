@@ -83,11 +83,14 @@ public class MethodPracticeFragment extends Fragment {
         ViewGroup.LayoutParams lp = mWebView.getLayoutParams();
         Configuration configuration = mActivity.getResources().getConfiguration();
         final float scale = mActivity.getResources().getDisplayMetrics().density;
-        lp.height = (int) ((configuration.screenHeightDp-128) * scale + 0.5f);
+        lp.height = (int) ((configuration.screenHeightDp-123) * scale + 0.5f);
         mWebView.setLayoutParams(lp);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        String databasePath = mActivity.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        webSettings.setDatabasePath(databasePath);
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
 
