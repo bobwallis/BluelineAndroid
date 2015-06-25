@@ -90,6 +90,38 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			placeStartTextMetrics = textMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', '0' );
 
 
+		// Cache some resuable images to avoid excessive use of fillText
+		var fillTextCache_guides = ( function() {
+			var cacheCanvas = new Canvas( {
+				id: 'cc1',
+				width: options.container.offsetWidth,
+				height: 22
+			} );
+			var context = cacheCanvas.context;
+			context.fillStyle = '#999';
+			context.textAlign = 'center';
+			context.textBaseline = 'middle';
+			context.font = '12px sans-serif';
+			for( var i = 0; i < stage; ++i ) {
+				context.fillText( PlaceNotation.bellToChar( i ), paddingForLeftMostPosition + (i*bellWidth), 11 );
+			}
+			return cacheCanvas;
+		}() );
+		var fillTextCache_thatsAll = (options.thatsAll)? ( function() {
+			var cacheCanvas = new Canvas( {
+				id: 'cc2',
+				width: options.container.offsetWidth,
+				height: 40
+			} );
+			var context = cacheCanvas.context;
+			context.font = 'bold 15px sans-serif';
+			context.textAlign = 'center';
+			context.textBaseline = 'top';
+			context.fillText( "That's all!", canvasWidth/2, 0 );
+			return cacheCanvas;
+		}()) : null;
+		var fillTextCache_thatsAllFinished = (options.score)? false : true; // We'll need to draw on the final score later
+
 		// Get context for drawing
 		var context = canvas.context;
 
@@ -201,13 +233,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			context.stroke();
 
 			// Draw place guides
-			for( i = 0; i < stage; ++i ) {
-				context.fillStyle = '#999';
-				context.textAlign = 'center';
-				context.textBaseline = 'middle';
-				context.font = '12px sans-serif';
-				context.fillText( PlaceNotation.bellToChar( i ), paddingForLeftMostPosition + (i*bellWidth), canvasHeight-11 );
-			}
+			context.drawImage( fillTextCache_guides.element, 0, canvasHeight - 22 );
 
 			// Draw rules offs
 			if( typeof options.ruleOffs === 'object' ) {
@@ -251,18 +277,16 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				}
 			}
 
-			// Messages
-			if( !going && options.thatsAll ) {
-				y = dotY + (1 - ((currentRow%1 == 0)? 1 : currentRow%1))*rowHeight + 30;
-				context.globalAlpha = (currentRow%1 == 0)? 1 : currentRow%1;
-				context.font = 'bold 14px sans-serif';
-				context.textAlign = 'center';
-				context.textBaseline = 'middle';
-				context.fillText( "That's all!", canvasWidth/2, y );
-				if( options.score ) {
-					context.font = '12px sans-serif';
-					context.fillText( 'Final score: '+Math.max(0, Math.round(100 - ((errorCount*100)/(rows.length-1))))+'%', canvasWidth/2, y+18 );
+			// That's all message
+			if( !going && currentRow > 1 && options.thatsAll ) {
+				if( !fillTextCache_thatsAllFinished && options.score ) {
+					fillTextCache_thatsAll.context.font = '13px sans-serif';
+					fillTextCache_thatsAll.context.fillText( 'Final score: '+Math.max(0, Math.round(100 - ((errorCount*100)/(rows.length-1))))+'%', canvasWidth/2, 20 );
+					fillTextCache_thatsAllFinished = true;
 				}
+				y = dotY + (1 - ((currentRow%1 == 0)? 1 : currentRow%1))*rowHeight + 20;
+				context.globalAlpha = (currentRow%1 == 0)? 1 : currentRow%1;
+				context.drawImage( fillTextCache_thatsAll.element, 0, y );
 				context.globalAlpha = 1;
 			}
 
