@@ -233,7 +233,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			context.stroke();
 
 			// Draw place guides
-			context.drawImage( fillTextCache_guides.element, 0, canvasHeight - 22 );
+			context.drawImage( fillTextCache_guides.element, 0, canvasHeight - 22, canvasWidth, 22 );
 
 			// Draw rules offs
 			if( typeof options.ruleOffs === 'object' ) {
@@ -286,7 +286,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				}
 				y = dotY + (1 - ((currentRow%1 == 0)? 1 : currentRow%1))*rowHeight + 20;
 				context.globalAlpha = (currentRow%1 == 0)? 1 : currentRow%1;
-				context.drawImage( fillTextCache_thatsAll.element, 0, y );
+				context.drawImage( fillTextCache_thatsAll.element, 0, y, canvasWidth, 40 );
 				context.globalAlpha = 1;
 			}
 
