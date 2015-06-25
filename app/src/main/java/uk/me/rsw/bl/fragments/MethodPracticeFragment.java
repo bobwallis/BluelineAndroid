@@ -3,19 +3,18 @@ package uk.me.rsw.bl.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.MethodActivity;
@@ -78,9 +77,14 @@ public class MethodPracticeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_webview_in_card_and_nestedscrollview, container, false);
+        View view = inflater.inflate(R.layout.fragment_practice, container, false);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
+        ViewGroup.LayoutParams lp = mWebView.getLayoutParams();
+        Configuration configuration = mActivity.getResources().getConfiguration();
+        final float scale = mActivity.getResources().getDisplayMetrics().density;
+        lp.height = (int) ((configuration.screenHeightDp-128) * scale + 0.5f);
+        mWebView.setLayoutParams(lp);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
