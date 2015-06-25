@@ -14,11 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.MethodActivity;
 import uk.me.rsw.bl.models.Method;
+import uk.me.rsw.bl.widgets.WebView2;
 
 
 public class MethodPracticeFragment extends Fragment {
@@ -29,7 +29,7 @@ public class MethodPracticeFragment extends Fragment {
     private Boolean vibrate;
 
     private MethodActivity mActivity;
-    private WebView mWebView;
+    private WebView2 mWebView;
 
     public MethodPracticeFragment() {
     }
@@ -79,7 +79,7 @@ public class MethodPracticeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_practice, container, false);
 
-        mWebView = (WebView) view.findViewById(R.id.webview);
+        mWebView = (WebView2) view.findViewById(R.id.webview);
         ViewGroup.LayoutParams lp = mWebView.getLayoutParams();
         Configuration configuration = mActivity.getResources().getConfiguration();
         final float scale = mActivity.getResources().getDisplayMetrics().density;
