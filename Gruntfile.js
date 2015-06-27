@@ -33,29 +33,49 @@ module.exports = function (grunt) {
 				ignore: [/:focus/]
 			},
 			about: {
+				options: {
+					ignore: [/html\.about.*/]
+				},
 				files: {
 					'app/src/main/assets/webviews/about.css': ['app/src/main/assets/webviews/about.html']
 				}
 			},
 			copyright: {
+				options: {
+					ignore: [/html\.copyright.*/]
+				},
 				files: {
 					'app/src/main/assets/webviews/copyright.css': ['app/src/main/assets/webviews/copyright.html']
 				}
 			},
 			custom: {
+				options: {
+					ignore: [/html\.custom.*/]
+				},
 				files: {
 					'app/src/main/assets/webviews/custom.css': ['app/src/main/assets/webviews/custom.html']
 				}
 			},
+			grids: {
+				options: {
+					ignore: [/html\.grids.*/]
+				},
+				files: {
+					'app/src/main/assets/webviews/grids.css': ['app/src/main/assets/webviews/grids.html']
+				}
+			},
 			practice: {
 				options: {
-					ignore: [/\.practice_container.*/]
+					ignore: [/html\.practice.*/, /\.practice_container.*/]
 				},
 				files: {
 					'app/src/main/assets/webviews/practice.css': ['app/src/main/assets/webviews/practice.html']
 				}
 			},
 			prove: {
+				options: {
+					ignore: [/html\.prove.*/]
+				},
 				files: {
 					'app/src/main/assets/webviews/prove.css': ['app/src/main/assets/webviews/prove.html']
 				}
@@ -114,6 +134,12 @@ module.exports = function (grunt) {
 			}
 		},
 		processhtml: {
+			options: {
+				process: true,
+				data: {
+					localStorage_age: '20150627'
+				}
+			},
 			all: {
 				files: [{
 					expand: true,

@@ -5,6 +5,7 @@
 
 body {
 	background-color: white;
+	box-sizing: border-box;
 	color: black;
 	font: 14px sans-serif;
 	padding: 16px;
@@ -24,11 +25,16 @@ body {
 
 #container {
 	position: relative;
-	width: 100%;
-	max-width: 600px;
-	margin: 0 auto;
+}
+.about .copyright, .custom, .prove {
+	#container {
+		max-width: 600px;
+		margin: 0 auto;
+	}
 }
 
+
+// Links
 a {
 	text-decoration: none;
 	color: #29404C;
@@ -39,6 +45,16 @@ a {
 	}
 }
 
+
+// Headers
+h1 {
+	display: block;
+	margin-bottom: 5px;
+	font-size: 16px;
+	font-family: sans-serif;
+	font-weight: bold;
+	text-rendering: optimizeLegibility;
+}
 h3 {
 	font-size: 16px;
 	font-weight: normal;
@@ -59,6 +75,8 @@ h4 {
 	text-rendering: optimizeLegibility;
 }
 
+
+// Other typography
 p, blockquote {
 	text-align: justify;
 	hyphens: auto;
@@ -79,10 +97,6 @@ hr {
 	clear: both;
 	border: 0;
 	background: 0;
-}
-
-canvas, img {
-	display: inline-block;
 }
 
 
@@ -154,10 +168,62 @@ input[type="text"], select {
 	}
 }
 
+
 // Specific code for custom.html
 #notation-container {
 	box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
 }
 #notation-parsed {
 	margin: 5px 0 0 15px;
+}
+
+
+// Specific for grids.html
+html.grids {
+	body {
+		text-align: center;
+		padding-right: 0;
+	}
+
+	#container {
+		white-space: nowrap;
+		div {
+			margin-bottom: 15px;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	body.oneRow {
+		text-align: left;
+		h1 {
+			margin-bottom: 0;
+		}
+		#container div {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 15px;
+			margin-bottom: 0;
+			&:last-child {
+				margin-right: 16px;
+			}
+		}
+	}
+
+	body.tiny h1 {
+		font-size: 11px;
+	}
+	body.small h1 {
+		font-size: 13px;
+	}
+	body.medium h1 {
+		font-size: 15px;
+	}
+	body.large h1 {
+		font-size: 18px;
+	}
+	body.xlarge h1 {
+		font-size: 25px;
+	}
 }
