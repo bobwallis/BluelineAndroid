@@ -22,9 +22,9 @@ android {
 dependencies {
     compile 'com.android.support:design:22.2.0'
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:support-v13:22.0.0'
+    compile 'com.android.support:support-v13:22.2.0'
     compile 'com.android.support:cardview-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
 }
