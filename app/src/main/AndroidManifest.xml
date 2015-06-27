@@ -3,6 +3,7 @@
     package="uk.me.rsw.bl" >
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Blueline"
