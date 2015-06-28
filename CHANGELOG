@@ -29,3 +29,4 @@
 
 9:
  - Fix URL loading in About/Copyright pages in recent Androids
+ - Go 'back' rather than 'up' from AboutActivity
