@@ -1,7 +1,9 @@
 package uk.me.rsw.bl.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
@@ -38,20 +40,44 @@ public class MethodActivity extends AppCompatActivity {
 
         // Get the title from the intent
         Intent intent = getIntent();
-        title = intent.getStringExtra(MainActivity.METHOD_TITLE);
-        setTitle(title);
 
-        // Get the method data
-        if(title.equals("Custom Method")) {
-            method = new Method();
-            method.setStage(intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
-            method.setNotation(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
-            method.setNotationExpanded(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+
+        // If we've been given a definite title from another activity
+        if( intent.getStringExtra(MainActivity.METHOD_TITLE) != null ) {
+            title = intent.getStringExtra(MainActivity.METHOD_TITLE);
+            setTitle(title);
+            if (title.equals("Custom Method")) {
+                method = new Method();
+                method.setStage(intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
+                method.setNotation(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+                method.setNotationExpanded(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+            } else {
+                Database db = new Database(this);
+                method = db.getFromTitle(title);
+                db.close();
+                if( method == null ) {
+                    setResult(Activity.RESULT_CANCELED);
+                    finish();
+                }
+            }
         }
-        else {
+        // Otherwise we've been started from the URL intent
+        else if( intent.getData() != null ) {
             Database db = new Database(this);
-            method = db.get(title);
+            method = db.getFromURL(intent.getData().getLastPathSegment());
             db.close();
+            if( method == null ) {
+                setResult(Activity.RESULT_CANCELED);
+                finish();
+            }
+            else {
+                title = method.getTitle();
+            }
+        }
+        // Otherwise fail
+        else {
+            setResult(Activity.RESULT_CANCELED);
+            finish();
         }
 
         // Set up toolbar

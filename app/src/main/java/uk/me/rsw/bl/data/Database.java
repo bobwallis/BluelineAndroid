@@ -11,7 +11,7 @@ import uk.me.rsw.bl.models.Method;
 public class Database extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "blueline.db";
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 15;
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,7 +44,7 @@ public class Database extends SQLiteAssetHelper {
 
     }
 
-    public Method get(String title) {
+    public Method getFromTitle(String title) {
         SQLiteDatabase db = getReadableDatabase();
         Method method = new Method();
 
@@ -52,11 +52,25 @@ public class Database extends SQLiteAssetHelper {
         String[] sqlSelectArgs = {title};
         Cursor c               = db.query("methods", sqlSelect, "title = ?", sqlSelectArgs, null, null, null, "1");
 
-        if (c.moveToNext()) {
+        if (c.getCount() > 0 && c.moveToNext()) {
             method.setWithCursor(c);
+            return method;
         }
-
-        return method;
+        return null;
     }
 
+    public Method getFromURL(String url) {
+        SQLiteDatabase db = getReadableDatabase();
+        Method method = new Method();
+
+        String[] sqlSelect     = {"title", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
+        String[] sqlSelectArgs = {url};
+        Cursor c               = db.query("methods", sqlSelect, "url = ?", sqlSelectArgs, null, null, null, "1");
+
+        if (c.getCount() > 0 && c.moveToNext()) {
+            method.setWithCursor(c);
+            return method;
+        }
+        return null;
+    }
 }
