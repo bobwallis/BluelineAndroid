@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Method implements Serializable {
 
     private String title = "";
+    private String url = "";
 
     private Boolean differential = false;
     private Boolean little = false;
@@ -37,6 +38,10 @@ public class Method implements Serializable {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getURL() {
+        return url;
     }
 
     public Boolean getDifferential() {
@@ -177,6 +182,7 @@ public class Method implements Serializable {
 
     public void setWithCursor(Cursor c) {
         title = c.getString(c.getColumnIndexOrThrow("title"));
+        url = c.getString(c.getColumnIndexOrThrow("url"));
 
         differential = c.getInt(c.getColumnIndexOrThrow("differential")) == 1;
         little = c.getInt(c.getColumnIndexOrThrow("little")) == 1;

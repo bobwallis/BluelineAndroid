@@ -13,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.MethodPagerAdapter;
 import uk.me.rsw.bl.data.Database;
@@ -32,6 +36,10 @@ public class MethodActivity extends AppCompatActivity {
     private String[] layouts;
     private String[] sizes;
     private String workingBell;
+
+    private Uri APP_URI = Uri.parse("android-app://uk.me.rsw.bl/blueline/methods/");
+    private Uri WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/");
+    private GoogleApiClient mClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,13 @@ public class MethodActivity extends AppCompatActivity {
             finish();
         }
 
+        // Start app indexing client if needed
+        if( !title.equals("Custom Method")) {
+            APP_URI = Uri.parse("android-app://uk.me.rsw.bl/blueline/methods/"+method.getURL());
+            WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/"+method.getURL());
+            mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        }
+
         // Set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -122,6 +137,16 @@ public class MethodActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if( !title.equals("Custom Method")) {
+            mClient.connect();
+            Action viewAction = Action.newAction(Action.TYPE_VIEW, title, WEB_URL, APP_URI);
+            AppIndex.AppIndexApi.start(mClient, viewAction);
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -143,6 +168,16 @@ public class MethodActivity extends AppCompatActivity {
             finish();
             startActivity(intent);
         };
+    }
+
+    @Override
+    public void onStop() {
+        if( !title.equals("Custom Method")) {
+            Action viewAction = Action.newAction(Action.TYPE_VIEW, title, WEB_URL, APP_URI);
+            AppIndex.AppIndexApi.end(mClient, viewAction);
+            mClient.disconnect();
+        }
+        super.onStop();
     }
 
     @Override
