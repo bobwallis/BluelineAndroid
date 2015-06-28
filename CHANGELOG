@@ -26,3 +26,6 @@
 8:
  - Include the method title, rule-offs, place starts, place guides, scoring and a "that's all" message in the 'Practice' interface
  - Some basic options for 'Practice' interface
+
+9:
+ - Fix URL loading in About/Copyright pages in recent Androids
