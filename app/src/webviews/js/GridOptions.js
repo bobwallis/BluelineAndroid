@@ -27,7 +27,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		sideNotation: {
 			show: false,
 			font: '10px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif',
-			color: '#000'
+			color: '#999'
 		},
 		verticalGuides: {
 			shading: {
@@ -47,7 +47,9 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		placeStarts: {
 			show: false,
 			font: '"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif',
-			color: '#000'
+			color: '#000',
+			size: 13,
+			from: 0
 		},
 		callingPositions: {
 			show: false,
@@ -110,6 +112,9 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					}
 					return bells;
 				} )( passedOptions.stage )
+			},
+			placeStarts: {
+				every: passedOptions.notation.exploded.length
 			}
 		};
 
@@ -139,7 +144,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			options.dimensions.bell.width = options.dimensions.row.width / options.stage;
 		}
 		else if( typeof options.dimensions.bell.width === 'number' ) {
-			options.dimensions.row.width = Math.ceil( options.dimensions.bell.width * options.stage );
+			options.dimensions.row.width = options.dimensions.bell.width * options.stage;
 		}
 		if( typeof options.dimensions.row.height !== 'number' ) {
 			options.dimensions.row.height = options.dimensions.bell.height;
@@ -157,7 +162,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			left: 0,
 			between: (typeof options.dimensions.column.padding.between === 'number' )? options.dimensions.column.padding.between : ((options.layout.numberOfColumns > 1)? 10 : 0)
 		};
-		options.dimensions.canvas.padding.top += options.title.show? Math.floor( parseInt(options.title.font)*1.2 ) : 0;
+		options.dimensions.canvas.padding.top += options.title.show? parseInt(options.title.font)*1.2 : 0;
 		options.dimensions.canvas.padding.left += options.sideNotation.show? (function() {
 			var longest = 0, text = '', i, width;
 			for( i = 0; i < options.sideNotation.text.length; ++i ) {
@@ -170,8 +175,8 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		})() : 0;
 
 		if( options.placeStarts.show ) {
-			options.dimensions.column.padding.right = Math.max( options.dimensions.column.padding.right, 10 + ( options.placeStarts.bells.length * 12 ) );
-			options.dimensions.canvas.padding.top = Math.max( options.dimensions.canvas.padding.top, 15 - options.dimensions.row.height);
+			options.dimensions.column.padding.right = Math.max( options.dimensions.column.padding.right, 10 + ( options.placeStarts.bells.length * options.placeStarts.size ) );
+			options.dimensions.canvas.padding.top = Math.max( options.dimensions.canvas.padding.top, 1 + options.placeStarts.size - options.dimensions.row.height);
 		}
 		if( options.callingPositions.show ) {
 			options.dimensions.column.padding.right = Math.max( options.dimensions.column.padding.right, 15 );

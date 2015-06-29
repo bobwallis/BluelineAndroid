@@ -75,8 +75,8 @@ define( ['Canvas', 'LocalStorage'], function( Canvas, LocalStorage ) {
 					}
 
 					padding = {
-						x: ((dim - rightOfText) - leftOfText) / (canvas.scale*2),
-						y: ((dim - bottomOfText) - topOfText) / (canvas.scale*2)
+						x: Math.round(1000*((dim - rightOfText) - leftOfText) / (canvas.scale*2))/1000,
+						y: Math.round(1000*((dim - bottomOfText) - topOfText) / (canvas.scale*2))/1000
 					};
 
 					LocalStorage.setItem( 'Metrics.'+font+text, padding );

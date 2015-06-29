@@ -137,7 +137,7 @@ module.exports = function (grunt) {
 			options: {
 				process: true,
 				data: {
-					localStorage_age: '20150627'
+					localStorage_age: '20150630'
 				}
 			},
 			all: {

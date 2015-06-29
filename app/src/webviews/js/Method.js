@@ -61,7 +61,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			notation: $.extend( true, {}, this.notation ),
 			stage: this.stage,
 			ruleOffs: $.extend( {}, this.ruleOffs ),
-			callingPositions: (this.callingPositions === false)? false: $.extend( { show: true }, this.callingPositions ),
+			callingPositions: (this.callingPositions === false)? false: $.extend( { show: true, font: (fontSize*0.75)+' sans-serif' }, this.callingPositions ),
 			dimensions: {
 				row: {
 					height: rowHeight,
@@ -79,7 +79,9 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			},
 			placeStarts: {
 				show: true,
-				bells: placeStarts
+				bells: placeStarts,
+				size: fontSize*0.9,
+				font: 'sans-serif'
 			}
 		};
 
