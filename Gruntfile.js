@@ -34,7 +34,7 @@ module.exports = function (grunt) {
 			},
 			about: {
 				options: {
-					ignore: [/html\.about.*/]
+					ignore: [/\.about.*/]
 				},
 				files: {
 					'app/src/main/assets/webviews/about.css': ['app/src/main/assets/webviews/about.html']
@@ -42,7 +42,7 @@ module.exports = function (grunt) {
 			},
 			copyright: {
 				options: {
-					ignore: [/html\.copyright.*/]
+					ignore: [/\.copyright.*/]
 				},
 				files: {
 					'app/src/main/assets/webviews/copyright.css': ['app/src/main/assets/webviews/copyright.html']
@@ -50,7 +50,7 @@ module.exports = function (grunt) {
 			},
 			custom: {
 				options: {
-					ignore: [/html\.custom.*/]
+					ignore: [/\.custom.*/]
 				},
 				files: {
 					'app/src/main/assets/webviews/custom.css': ['app/src/main/assets/webviews/custom.html']
@@ -58,7 +58,7 @@ module.exports = function (grunt) {
 			},
 			grids: {
 				options: {
-					ignore: [/html\.grids.*/]
+					ignore: [/\.grids.*/]
 				},
 				files: {
 					'app/src/main/assets/webviews/grids.css': ['app/src/main/assets/webviews/grids.html']
@@ -66,7 +66,7 @@ module.exports = function (grunt) {
 			},
 			practice: {
 				options: {
-					ignore: [/html\.practice.*/, /\.practice_container.*/]
+					ignore: [/\.practice.*/, /\.practice_container.*/]
 				},
 				files: {
 					'app/src/main/assets/webviews/practice.css': ['app/src/main/assets/webviews/practice.html']
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
 			},
 			prove: {
 				options: {
-					ignore: [/html\.prove.*/]
+					ignore: [/\.prove.*/]
 				},
 				files: {
 					'app/src/main/assets/webviews/prove.css': ['app/src/main/assets/webviews/prove.html']

@@ -32,3 +32,6 @@
  - Go 'back' rather than 'up' from AboutActivity
  - Allow loading of website URLs in the app
  - Use App Indexing API to present viewed methods in Google query autocompletion
+
+10:
+ - Tweak layouts of webviews to work better on small/big screens.
