@@ -46,6 +46,7 @@ public class MethodDetailsFragment extends Fragment {
         t = new TextView(getActivity());
         t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         t.setText(method.getFullClassification());
+        t.setTextIsSelectable(true);
         ll.addView(t, lp);
 
         t = new TextView(getActivity());
@@ -57,6 +58,7 @@ public class MethodDetailsFragment extends Fragment {
         t = new TextView(getActivity());
         t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         t.setText(method.getNotation());
+        t.setTextIsSelectable(true);
         ll.addView(t, lp);
 
         if( !TextUtils.isEmpty(method.getLeadHead())) {
@@ -69,6 +71,7 @@ public class MethodDetailsFragment extends Fragment {
             t = new TextView(getActivity());
             t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             t.setText(method.getLeadHead() + " (Code: " + method.getLeadHeadCode() + ")");
+            t.setTextIsSelectable(true);
             ll.addView(t, lp);
         }
 
@@ -82,6 +85,7 @@ public class MethodDetailsFragment extends Fragment {
             t = new TextView(getActivity());
             t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             t.setText(method.getSymmetry());
+            t.setTextIsSelectable(true);
             ll.addView(t, lp);
         }
 
@@ -95,6 +99,7 @@ public class MethodDetailsFragment extends Fragment {
             t = new TextView(getActivity());
             t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             t.setText(method.getLengthOfLead().toString());
+            t.setTextIsSelectable(true);
             ll.addView(t, lp);
         }
 
@@ -108,6 +113,7 @@ public class MethodDetailsFragment extends Fragment {
             t = new TextView(getActivity());
             t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             t.setText(method.getNumberOfHunts().toString());
+            t.setTextIsSelectable(true);
             ll.addView(t, lp);
         }
 
