@@ -84,6 +84,7 @@ public class MethodGridFragment extends Fragment {
         webSettings.setDatabasePath(databasePath);
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
+        webSettings.setMinimumFontSize(1);
 
         mWebView.loadUrl("file:///android_asset/webviews/grids.html");
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
