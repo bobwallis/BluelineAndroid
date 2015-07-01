@@ -34,5 +34,6 @@
  - Use App Indexing API to present viewed methods in Google query autocompletion
 
 10:
- - Tweak layouts of webviews to work better on small/big screens.
- - Scale place starts and calling positions with the rest of the line.
+ - Tweak layouts of webviews to work better on small/big screens
+ - Scale place starts and calling positions with the rest of the line
+ - Add Analytics
