@@ -3,6 +3,7 @@ package uk.me.rsw.bl;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.webkit.WebView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -25,6 +26,9 @@ public class Blueline extends Application {
         tracker.enableAutoActivityTracking(true);
 
         super.onCreate();
+
+        // Set default preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         // Enable WebView debugging if developing
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

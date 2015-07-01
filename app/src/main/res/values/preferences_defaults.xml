@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="default_workingBell">heaviest</string>
+
+    <string name="default_numbers_show">true</string>
+    <string name="default_numbers_layout">oneColumn</string>
+    <string name="default_numbers_size">medium</string>
+
+    <string name="default_lines_show">false</string>
+    <string name="default_lines_layout">oneColumn</string>
+    <string name="default_lines_size">medium</string>
+
+    <string name="default_grid_show">true</string>
+    <string name="default_grid_layout">oneColumn</string>
+    <string name="default_grid_size">medium</string>
+
+    <string name="default_practice_show">true</string>
+    <string name="default_practice_vibrate">true</string>
+</resources>

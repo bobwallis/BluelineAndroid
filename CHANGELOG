@@ -37,3 +37,4 @@
  - Tweak layouts of webviews to work better on small/big screens
  - Scale place starts and calling positions with the rest of the line
  - Add Analytics
+ - Different default settings dependent on screen size
