@@ -223,11 +223,11 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			// Draw background guides
 			context.strokeStyle = '#999';
 			context.lineWidth = 0.5;
-			context.setLineDash( [2,2] );
+			context.setLineDash( [4,4] );
 			context.lineCap = 'butt';
 			context.beginPath();
 			for( i = 0; i < stage; ++i ) {
-				context.moveTo( paddingForLeftMostPosition + (i*bellWidth), (dotY-(currentRow*rowHeight))%4 );
+				context.moveTo( paddingForLeftMostPosition + (i*bellWidth), (dotY-(currentRow*rowHeight))%8 );
 				context.lineTo( paddingForLeftMostPosition + (i*bellWidth), canvasHeight - 22 );
 			}
 			context.stroke();
