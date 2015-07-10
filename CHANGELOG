@@ -38,3 +38,7 @@
  - Scale place starts and calling positions with the rest of the line
  - Add Analytics
  - Different default settings dependent on screen size
+
+11:
+ - Update database
+ - Flag provisionally named methods

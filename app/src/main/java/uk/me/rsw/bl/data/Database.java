@@ -11,7 +11,7 @@ import uk.me.rsw.bl.models.Method;
 public class Database extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "blueline.db";
-    private static final int DATABASE_VERSION = 15;
+    private static final int DATABASE_VERSION = 16;
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,7 +48,7 @@ public class Database extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
         Method method = new Method();
 
-        String[] sqlSelect     = {"title", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
+        String[] sqlSelect     = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
         String[] sqlSelectArgs = {title};
         Cursor c               = db.query("methods", sqlSelect, "title = ?", sqlSelectArgs, null, null, null, "1");
 
@@ -63,7 +63,7 @@ public class Database extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
         Method method = new Method();
 
-        String[] sqlSelect     = {"title", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
+        String[] sqlSelect     = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
         String[] sqlSelectArgs = {url};
         Cursor c               = db.query("methods", sqlSelect, "url = ?", sqlSelectArgs, null, null, null, "1");
 

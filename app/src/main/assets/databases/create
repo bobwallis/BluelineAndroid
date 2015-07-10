@@ -11,7 +11,7 @@ rm "$d/blueline.db.gz"
 curl "https://rsw.me.uk/blueline/data/methods.csv" > "$d/methods.csv"
 
 sqlite3 "$d/blueline.db" <<IMPORT
-CREATE TABLE methods(title, url, stage INTEGER, classification, nameMetaphone, notation, notationExpanded, leadHeadCode, leadHead, fchGroups, lengthOfLead INTEGER, numberOfHunts INTEGER, little, differential, plain, trebleDodging, palindromic, doubleSym, rotational, calls, ruleOffs, callingPositions, magic INTEGER);
+CREATE TABLE methods(title, provisional, url, stage INTEGER, classification, nameMetaphone, notation, notationExpanded, leadHeadCode, leadHead, fchGroups, lengthOfLead INTEGER, numberOfHunts INTEGER, little, differential, plain, trebleDodging, palindromic, doubleSym, rotational, calls, ruleOffs, callingPositions, magic INTEGER);
 .mode csv methods
 .import methods.csv methods
 DELETE FROM methods WHERE stage > 12;

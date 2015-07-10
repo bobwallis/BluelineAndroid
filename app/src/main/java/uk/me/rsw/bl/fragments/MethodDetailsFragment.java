@@ -38,6 +38,19 @@ public class MethodDetailsFragment extends Fragment {
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TextView t;
 
+        if(method.getProvisional()) {
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText("Method is provisionally named");
+            t.setTypeface(null, Typeface.BOLD);
+            ll.addView(t, lp);
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText(" ");
+            t.setTextIsSelectable(true);
+            ll.addView(t, lp);
+        }
+
         t = new TextView(getActivity());
         t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         t.setText("Classification");
