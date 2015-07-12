@@ -13,6 +13,8 @@ public class Database extends SQLiteAssetHelper {
     private static final String DATABASE_NAME = "blueline.db";
     private static final int DATABASE_VERSION = 16;
 
+    private static final String[] sqlSelect = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
+
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         setForcedUpgrade(); // Database is read only so we can just throw away the old one
@@ -47,11 +49,8 @@ public class Database extends SQLiteAssetHelper {
     public Method getFromTitle(String title) {
         SQLiteDatabase db = getReadableDatabase();
         Method method = new Method();
-
-        String[] sqlSelect     = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
         String[] sqlSelectArgs = {title};
         Cursor c               = db.query("methods", sqlSelect, "title = ?", sqlSelectArgs, null, null, null, "1");
-
         if (c.getCount() > 0 && c.moveToNext()) {
             method.setWithCursor(c);
             return method;
@@ -62,11 +61,20 @@ public class Database extends SQLiteAssetHelper {
     public Method getFromURL(String url) {
         SQLiteDatabase db = getReadableDatabase();
         Method method = new Method();
-
-        String[] sqlSelect     = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
         String[] sqlSelectArgs = {url};
         Cursor c               = db.query("methods", sqlSelect, "url = ?", sqlSelectArgs, null, null, null, "1");
+        if (c.getCount() > 0 && c.moveToNext()) {
+            method.setWithCursor(c);
+            return method;
+        }
+        return null;
+    }
 
+    public Method getFromNotationExpandedAndStage(String notationExpanded, Integer stage) {
+        SQLiteDatabase db = getReadableDatabase();
+        Method method = new Method();
+        String[] sqlSelectArgs = {notationExpanded, stage.toString()};
+        Cursor c               = db.query("methods", sqlSelect, "notationExpanded = ? AND stage = ?", sqlSelectArgs, null, null, null, "1");
         if (c.getCount() > 0 && c.moveToNext()) {
             method.setWithCursor(c);
             return method;

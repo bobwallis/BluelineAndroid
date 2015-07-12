@@ -1,6 +1,7 @@
 package uk.me.rsw.bl.activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -49,18 +51,33 @@ public class MethodActivity extends AppCompatActivity {
         // Get the title from the intent
         Intent intent = getIntent();
 
+        // Get a reference to the database
+        Database db = new Database(this);
 
         // If we've been given a definite title from another activity
         if( intent.getStringExtra(MainActivity.METHOD_TITLE) != null ) {
             title = intent.getStringExtra(MainActivity.METHOD_TITLE);
-            setTitle(title);
             if (title.equals("Custom Method")) {
-                method = new Method();
-                method.setStage(intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
-                method.setNotation(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
-                method.setNotationExpanded(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+                // Check if the notation is for an existing method
+                method = db.getFromNotationExpandedAndStage(intent.getStringExtra(CustomActivity.METHOD_NOTATION), intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
+                if(method == null) {
+                    method = new Method();
+                    method.setStage(intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
+                    method.setNotation(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+                    method.setNotationExpanded(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+                }
+                else {
+                    title = method.getTitle();
+                    AlertDialog.Builder alertDialogB = new AlertDialog.Builder(this);
+                    alertDialogB.setTitle("Method Exists")
+                            .setMessage("A method with that place notation is already in the database:\n   " + title + ".\n\nPress OK to view details.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    alertDialogB.create().show();
+                }
             } else {
-                Database db = new Database(this);
                 method = db.getFromTitle(title);
                 db.close();
                 if( method == null ) {
@@ -71,7 +88,6 @@ public class MethodActivity extends AppCompatActivity {
         }
         // Otherwise we've been started from the URL intent
         else if( intent.getData() != null ) {
-            Database db = new Database(this);
             method = db.getFromURL(intent.getData().getLastPathSegment());
             db.close();
             if( method == null ) {
@@ -84,9 +100,12 @@ public class MethodActivity extends AppCompatActivity {
         }
         // Otherwise fail
         else {
+            db.close();
             setResult(Activity.RESULT_CANCELED);
             finish();
         }
+
+        setTitle(title);
 
         // Start app indexing client if needed
         if( !title.equals("Custom Method")) {
