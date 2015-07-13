@@ -24,6 +24,9 @@ public class Blueline extends Application {
         tracker.enableExceptionReporting(true);
         tracker.enableAdvertisingIdCollection(true);
         tracker.enableAutoActivityTracking(true);
+        if (0 != (getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE)) {
+            analytics.setDryRun(true);
+        }
 
         super.onCreate();
 
