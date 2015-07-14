@@ -1,14 +1,33 @@
-require(['autosize'], function( autosize ) {
+require(['autosize', 'LocalStorage'], function( autosize ) {
 
-	// Syntax selector
 	var syntax = document.getElementById( 'syntax' );
-
-	// Setup text area
 	var input = document.getElementById( 'input' );
 
 	autosize( input );
 
+	var interval;
+	var cacheStatus = function() {
+		LocalStorage.setItem( 'prove_age', Date.now() );
+		LocalStorage.setItem( 'prove_syntax', syntax.value );
+		LocalStorage.setItem( 'prove_input', input.value );
+	};
+	var restoreStatus = function() {
+		var age = LocalStorage.getItem( 'prove_age' );
+		syntax.value = LocalStorage.getItem( 'prove_syntax' ) === null? 'microsiril' : LocalStorage.getItem( 'prove_syntax' );
+		if( typeof age === 'number' && Date.now() < age + 5000 ) {
+			input.value = LocalStorage.getItem( 'prove_input' );
+		}
+		interval = setInterval( cacheStatus, 5000 );
+	};
+	window['onPause'] = function() {
+		clearInterval( interval );
+	};
+
+
+	syntax.addEventListener( 'change', cacheStatus );
+
 	input.addEventListener( 'input', function( e ) {
+		cacheStatus();
 		if( input.value === '' ) {
 			submit.disabled = true;
 		}
@@ -19,6 +38,7 @@ require(['autosize'], function( autosize ) {
 		output.classList.add( 'placeholder' );
 	} );
 
+	restoreStatus();
 
 	// Submit
 	var form = document.getElementById( 'form' ),

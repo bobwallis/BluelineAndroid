@@ -1,4 +1,4 @@
-require(['PlaceNotation'], function( PlaceNotation ) {
+require(['PlaceNotation', 'LocalStorage'], function( PlaceNotation, LocalStorage ) {
 
 	var form = document.getElementById( 'form' ),
 		stageInput = document.getElementById( 'stage' ),
@@ -7,7 +7,32 @@ require(['PlaceNotation'], function( PlaceNotation ) {
 		notationParsed = document.getElementById( 'notation-parsed' ),
 		submit = document.getElementById( 'submit' );
 
+
+	var interval;
+	var cacheStatus = function() {
+		LocalStorage.setItem( 'custom_age', Date.now() );
+		LocalStorage.setItem( 'custom_stage', stageInput.value );
+		LocalStorage.setItem( 'custom_notation', notationInput.value );
+	};
+	var restoreStatus = function() {
+		var age = LocalStorage.getItem( 'custom_age' );
+		if( typeof age === 'number' && Date.now() < age + 5000 ) {
+			stageInput.value = LocalStorage.getItem( 'custom_stage' );
+			notationInput.value = LocalStorage.getItem( 'custom_notation' );
+		}
+		interval = setInterval( cacheStatus, 5000 );
+		typeNotation();
+	};
+	window['onPause'] = function() {
+		clearInterval( interval );
+	};
+	window['onResume'] = function() {
+		interval = setInterval( cacheStatus, 5000 );
+	};
+
+
 	var typeNotation = function( e ) {
+		cacheStatus();
 		if( notationInput.value !== '' ) {
 			var stage = parseInt( stageInput.value );
 			if( isNaN( stage ) ) {
@@ -39,4 +64,6 @@ require(['PlaceNotation'], function( PlaceNotation ) {
 
 	form.addEventListener( 'submit', submitForm );
 	notationInput.addEventListener( 'input', typeNotation );
+	stageInput.addEventListener( 'change', typeNotation );
+	restoreStatus();
 } );

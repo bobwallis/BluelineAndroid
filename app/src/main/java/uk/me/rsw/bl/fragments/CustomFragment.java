@@ -1,6 +1,7 @@
 package uk.me.rsw.bl.fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import uk.me.rsw.bl.activities.MethodActivity;
 
 public class CustomFragment extends Fragment {
 
+    private CustomActivity mActivity;
     private WebView mWebView;
 
     public CustomFragment() {
@@ -34,6 +36,10 @@ public class CustomFragment extends Fragment {
         mWebView = (WebView) view.findViewById(R.id.webview);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        String databasePath = mActivity.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        webSettings.setDatabasePath(databasePath);
+        webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
 
         mWebView.loadUrl("file:///android_asset/webviews/custom.html");
@@ -58,6 +64,24 @@ public class CustomFragment extends Fragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = (CustomActivity) activity;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebView.loadUrl("javascript:onPause()");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWebView.loadUrl("javascript:onResume()");
     }
 
 }

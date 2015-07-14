@@ -1,6 +1,7 @@
 package uk.me.rsw.bl.fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,10 +15,12 @@ import android.webkit.WebView;
 import android.widget.ScrollView;
 
 import uk.me.rsw.bl.R;
+import uk.me.rsw.bl.activities.ProveActivity;
 
 public class ProveFragment extends Fragment {
 
     private ScrollView mNestedScrollView;
+    private ProveActivity mActivity;
     private WebView mWebView;
 
     public ProveFragment() {
@@ -51,7 +54,12 @@ public class ProveFragment extends Fragment {
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        String databasePath = mActivity.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        webSettings.setDatabasePath(databasePath);
+        webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         }
@@ -63,6 +71,18 @@ public class ProveFragment extends Fragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = (ProveActivity) activity;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebView.loadUrl("javascript:onPause()");
     }
 
 }
