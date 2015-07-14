@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.webkit.WebView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 
 public class Blueline extends Application {
