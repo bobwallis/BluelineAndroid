@@ -1,10 +1,13 @@
 package uk.me.rsw.bl.widgets;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -215,10 +218,22 @@ public class SearchBox extends RelativeLayout {
     // Voice input related functions
     public void startVoiceRecognitionActivity(Activity activity) {
         if (activity != null) {
-            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.speak_now));
-            activity.startActivityForResult(intent, 1234);
+            try {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.speak_now));
+                activity.startActivityForResult(intent, 1234);
+            }
+            catch(ActivityNotFoundException e) {
+                AlertDialog.Builder alertDialogB = new AlertDialog.Builder(activity);
+                alertDialogB.setTitle("Voice search unavailable")
+                        .setMessage("No app capable of recognising speech is installed on this device.")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                alertDialogB.create().show();
+            }
         }
     }
 
