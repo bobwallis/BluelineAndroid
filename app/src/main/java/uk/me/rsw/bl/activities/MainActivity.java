@@ -36,6 +36,7 @@ import uk.me.rsw.bl.data.MethodsDatabase;
 import uk.me.rsw.bl.data.UserDataDatabase;
 import uk.me.rsw.bl.models.Star;
 import uk.me.rsw.bl.widgets.SearchBox;
+import uk.me.rsw.bl.widgets.StarList;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,8 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView searchResults;
     private SearchResultsAdapter searchResults_adapter;
     private RecyclerView.LayoutManager searchResults_layoutManager;
-    private View stars;
-    private ListView stars_list;
+    private StarList stars;
     private MethodsDatabase db;
     public UserDataDatabase userDataDB;
 
@@ -99,45 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Setup stars list
         userDataDB = new UserDataDatabase(this);
-        stars = findViewById(R.id.stars);
-        stars_list = (ListView) findViewById(R.id.stars_list);
-        final StarsAdapter stars_adapter = new StarsAdapter(this, userDataDB.listStars());
-        stars_list.setAdapter(stars_adapter);
-        stars_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?>adapter, View v, int position, long id) {
-                Cursor c = ((StarsAdapter) adapter.getAdapter()).getCursor();
-                c.moveToPosition(position);
-                final Star star = new Star(c.getString(c.getColumnIndexOrThrow("title")), c.getInt(c.getColumnIndexOrThrow("stage")), c.getString(c.getColumnIndexOrThrow("notationExpanded")));
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setMessage(R.string.dialog_confirm_unstar)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                userDataDB.removeStar(star);
-                                onResume();
-                            }
-                        })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-                builder.create().show();
-                return true;
-            }
-        });
-        stars_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?>adapter, View v, int position, long id) {
-                Cursor c = ((StarsAdapter) adapter.getAdapter()).getCursor();
-                c.moveToPosition(position);
-                Intent intent = new Intent(MainActivity.this, MethodActivity.class);
-                intent.putExtra(MainActivity.METHOD_TITLE, c.getString(c.getColumnIndexOrThrow("title")));
-                intent.putExtra(CustomActivity.METHOD_STAGE, c.getInt(c.getColumnIndexOrThrow("stage")));
-                intent.putExtra(CustomActivity.METHOD_NOTATION, c.getString(c.getColumnIndexOrThrow("notationExpanded")));
-                startActivity(intent);
-            }
-        });
-        if(stars_adapter.getCount() == 0 || isSearching) {
+        stars = (StarList) findViewById(R.id.stars);
+        if(stars.getCount() == 0 || isSearching) {
             stars.setVisibility(View.GONE);
         }
 
@@ -206,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     anim_searchBox.setDuration(180);
                     anim_toolbarBackground.start();
                     anim_searchBox.start();
-                    if(stars_list.getAdapter().getCount() > 0) {
+                    if(stars.getCount() > 0) {
                         stars.setVisibility(View.VISIBLE);
                     }
                 }
@@ -317,8 +280,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onResume() {
         // Update list of stars
-        stars_list.setAdapter(new StarsAdapter(this, userDataDB.listStars()));
-        if(stars_list.getAdapter().getCount() == 0) {
+        stars.reloadList();
+        if(stars.getCount() == 0) {
             stars.setVisibility(View.GONE);
         }
         super.onResume();

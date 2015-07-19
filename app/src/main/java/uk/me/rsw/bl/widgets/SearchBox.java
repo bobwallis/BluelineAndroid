@@ -52,7 +52,7 @@ public class SearchBox extends RelativeLayout {
 
 	public SearchBox(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		inflate(context, R.layout.searchbox, this);
+		inflate(context, R.layout.widget_searchbox, this);
 		this.searchOpen = false;
 		this.isMic = true;
 		this.materialMenu = (MaterialMenuView) findViewById(R.id.material_menu_button);

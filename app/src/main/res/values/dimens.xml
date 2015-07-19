@@ -6,7 +6,7 @@
 
     <dimen name="navigation_drawer_width">260dp</dimen>
 
-    <dimen name="toolbar_height_tall">142dp</dimen>
     <dimen name="searchbox_top_margin">20dp</dimen>
+    <dimen name="toolbar_height_tall">142dp</dimen>
 
 </resources>
