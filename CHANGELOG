@@ -50,3 +50,4 @@
  - Fix loading of GSiril link in ProveActivity
  - Update database
  - Allow methods to be favourited
+ - Better layouts on wider screens
