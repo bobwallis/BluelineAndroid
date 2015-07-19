@@ -3,6 +3,8 @@ package uk.me.rsw.bl.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ScrollView;
 
 import uk.me.rsw.bl.R;
@@ -52,6 +55,7 @@ public class ProveFragment extends Fragment {
 
         mWebView = (WebView) view.findViewById(R.id.webview);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
+        mWebView.setWebViewClient(new blWebViewClient());
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDatabaseEnabled(true);
@@ -85,4 +89,13 @@ public class ProveFragment extends Fragment {
         mWebView.loadUrl("javascript:onPause()");
     }
 
+
+    private class blWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+            return true;
+        }
+    }
 }
