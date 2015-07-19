@@ -11,7 +11,7 @@ import uk.me.rsw.bl.models.Method;
 public class Database extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "blueline.db";
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 17; // Increment this each time the database is updated
 
     private static final String[] sqlSelect = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
 
