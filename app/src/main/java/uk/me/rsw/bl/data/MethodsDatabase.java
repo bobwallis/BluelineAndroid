@@ -10,12 +10,21 @@ import uk.me.rsw.bl.models.Method;
 
 public class MethodsDatabase extends SQLiteAssetHelper {
 
+    private static MethodsDatabase sInstance;
+
     private static final String DATABASE_NAME = "methods.db";
     private static final int DATABASE_VERSION = 17; // Increment this each time the database is updated
 
     private static final String[] sqlSelect = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
 
-    public MethodsDatabase(Context context) {
+    public static synchronized MethodsDatabase getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new MethodsDatabase(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+    private MethodsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         setForcedUpgrade(); // Database is read only so we can just throw away the old one
     }
@@ -52,9 +61,13 @@ public class MethodsDatabase extends SQLiteAssetHelper {
         Cursor c               = db.query("methods", sqlSelect, "title = ?", sqlSelectArgs, null, null, null, "1");
         if (c.getCount() > 0 && c.moveToNext()) {
             method.setWithCursor(c);
-            return method;
         }
-        return null;
+        else {
+            method = null;
+        }
+        c.close();
+        db.close();
+        return method;
     }
 
     public Method getFromURL(String url) {
@@ -64,9 +77,13 @@ public class MethodsDatabase extends SQLiteAssetHelper {
         Cursor c               = db.query("methods", sqlSelect, "url = ?", sqlSelectArgs, null, null, null, "1");
         if (c.getCount() > 0 && c.moveToNext()) {
             method.setWithCursor(c);
-            return method;
         }
-        return null;
+        else {
+            method = null;
+        }
+        c.close();
+        db.close();
+        return method;
     }
 
     public Method getFromNotationExpandedAndStage(String notationExpanded, Integer stage) {
@@ -76,8 +93,12 @@ public class MethodsDatabase extends SQLiteAssetHelper {
         Cursor c               = db.query("methods", sqlSelect, "notationExpanded = ? AND stage = ?", sqlSelectArgs, null, null, null, "1");
         if (c.getCount() > 0 && c.moveToNext()) {
             method.setWithCursor(c);
-            return method;
         }
-        return null;
+        else {
+            method = null;
+        }
+        c.close();
+        db.close();
+        return method;
     }
 }

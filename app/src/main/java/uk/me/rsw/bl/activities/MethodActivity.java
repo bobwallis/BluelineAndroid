@@ -47,7 +47,8 @@ public class MethodActivity extends AppCompatActivity {
     private Uri WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/");
     private GoogleApiClient mClient;
 
-    private UserDataDatabase userDataDB;
+    private MethodsDatabase db = MethodsDatabase.getInstance(this);
+    private UserDataDatabase userDataDB = UserDataDatabase.getInstance(this);
     private Star star;
 
     @Override
@@ -57,10 +58,6 @@ public class MethodActivity extends AppCompatActivity {
 
         // Get the title from the intent
         Intent intent = getIntent();
-
-        // Get a reference to the database
-        MethodsDatabase db = new MethodsDatabase(this);
-        userDataDB = new UserDataDatabase(this);
 
         // If we've been given a definite title from another activity
         if( intent.getStringExtra(MainActivity.METHOD_TITLE) != null ) {
@@ -88,7 +85,6 @@ public class MethodActivity extends AppCompatActivity {
                 }
             } else {
                 method = db.getFromTitle(title);
-                db.close();
                 if( method == null ) {
                     setResult(Activity.RESULT_CANCELED);
                     finish();
@@ -98,7 +94,6 @@ public class MethodActivity extends AppCompatActivity {
         // Otherwise we've been started from the URL intent
         else if( intent.getData() != null ) {
             method = db.getFromURL(intent.getData().getLastPathSegment());
-            db.close();
             if( method == null ) {
                 setResult(Activity.RESULT_CANCELED);
                 finish();
@@ -109,7 +104,6 @@ public class MethodActivity extends AppCompatActivity {
         }
         // Otherwise fail
         else {
-            db.close();
             setResult(Activity.RESULT_CANCELED);
             finish();
         }

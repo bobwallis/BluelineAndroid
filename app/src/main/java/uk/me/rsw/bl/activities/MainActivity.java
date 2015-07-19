@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView.LayoutManager searchResults_layoutManager;
     private StarList stars;
     private MethodsDatabase db;
-    public UserDataDatabase userDataDB;
 
     private Boolean isSearching = false;
     private String searchQuery = "";
@@ -70,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             searchQuery = savedInstanceState.getString(SEARCH_QUERY);
         }
 
-        // Initialise database helper
-        db = new MethodsDatabase(this);
+        // Get instance of database
+        db = MethodsDatabase.getInstance(this);
 
         // Set up the drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Setup stars list
-        userDataDB = new UserDataDatabase(this);
         stars = (StarList) findViewById(R.id.stars);
         if(stars.getCount() == 0 || isSearching) {
             stars.setVisibility(View.GONE);
@@ -287,14 +285,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
     }
 
-    @Override
-    protected void onDestroy() {
-        if(db != null) {
-            db.close();
-        }
-        if(userDataDB != null) {
-            userDataDB.close();
-        }
-        super.onDestroy();
-    }
 }

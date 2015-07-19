@@ -10,10 +10,19 @@ import uk.me.rsw.bl.models.Star;
 
 public class UserDataDatabase extends SQLiteAssetHelper {
 
+    private static UserDataDatabase sInstance;
+
     private static final String DATABASE_NAME = "user_data.db";
     private static final int DATABASE_VERSION = 1; // Increment this (and create a SQL upgrade file) each time the database is updated
 
-    public UserDataDatabase(Context context) {
+    public static synchronized UserDataDatabase getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new UserDataDatabase(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+    private UserDataDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -35,7 +44,9 @@ public class UserDataDatabase extends SQLiteAssetHelper {
         String[] sqlSelect = {"title"};
         String[] sqlArgs = { is_star.getTitle(), Integer.toString(is_star.getStage()), is_star.getNotationExpanded() };
         Cursor c = db.query("stars", sqlSelect, "title = ? AND stage = ? AND notationExpanded = ?", sqlArgs,  null, null, null);
-        return c.getCount() == 1;
+        Boolean iS = c.getCount() == 1;
+        c.close();
+        return iS;
     }
 
     public Cursor listStars() {

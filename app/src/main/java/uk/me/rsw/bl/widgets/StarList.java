@@ -39,7 +39,7 @@ public class StarList extends FrameLayout implements AdapterView.OnItemClickList
         inflate(context, R.layout.widget_starlist, this);
 
         mContext = context;
-        userDataDB = new UserDataDatabase(mContext);
+        userDataDB = UserDataDatabase.getInstance(mContext);
         stars_list = (ListView) findViewById(R.id.stars_list);
         stars_list.setOnItemLongClickListener(this);
         stars_list.setOnItemClickListener(this);
