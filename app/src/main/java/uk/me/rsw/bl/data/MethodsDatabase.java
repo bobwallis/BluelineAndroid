@@ -8,14 +8,14 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import uk.me.rsw.bl.models.Method;
 
-public class Database extends SQLiteAssetHelper {
+public class MethodsDatabase extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAME = "blueline.db";
+    private static final String DATABASE_NAME = "methods.db";
     private static final int DATABASE_VERSION = 17; // Increment this each time the database is updated
 
     private static final String[] sqlSelect = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
 
-    public Database(Context context) {
+    public MethodsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         setForcedUpgrade(); // Database is read only so we can just throw away the old one
     }
@@ -43,7 +43,6 @@ public class Database extends SQLiteAssetHelper {
         String[] sqlSelect     = {"rowid _id", "title"};
         String[] sqlSelectArgs = {actualQuery};
         return db.query("methods", sqlSelect, "title LIKE ?", sqlSelectArgs, null, null, "magic ASC", null);
-
     }
 
     public Method getFromTitle(String title) {

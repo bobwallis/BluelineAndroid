@@ -1,12 +1,15 @@
 package uk.me.rsw.bl.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.nineoldandroids.animation.ValueAnimator;
 
@@ -24,7 +31,10 @@ import java.util.ArrayList;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.SearchResultsAdapter;
-import uk.me.rsw.bl.data.Database;
+import uk.me.rsw.bl.adapters.StarsAdapter;
+import uk.me.rsw.bl.data.MethodsDatabase;
+import uk.me.rsw.bl.data.UserDataDatabase;
+import uk.me.rsw.bl.models.Star;
 import uk.me.rsw.bl.widgets.SearchBox;
 
 
@@ -41,7 +51,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView searchResults;
     private SearchResultsAdapter searchResults_adapter;
     private RecyclerView.LayoutManager searchResults_layoutManager;
-    private Database db;
+    private View stars;
+    private ListView stars_list;
+    private MethodsDatabase db;
+    public UserDataDatabase userDataDB;
 
     private Boolean isSearching = false;
     private String searchQuery = "";
@@ -58,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Initialise database helper
-        db = new Database(this);
+        db = new MethodsDatabase(this);
 
         // Set up the drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -82,6 +95,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(isSearching) {
             searchResults.setVisibility(View.VISIBLE);
             searchResults_adapter.changeCursor(db.search(searchQuery));
+        }
+
+        // Setup stars list
+        userDataDB = new UserDataDatabase(this);
+        stars = findViewById(R.id.stars);
+        stars_list = (ListView) findViewById(R.id.stars_list);
+        final StarsAdapter stars_adapter = new StarsAdapter(this, userDataDB.listStars());
+        stars_list.setAdapter(stars_adapter);
+        stars_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?>adapter, View v, int position, long id) {
+                Cursor c = ((StarsAdapter) adapter.getAdapter()).getCursor();
+                c.moveToPosition(position);
+                final Star star = new Star(c.getString(c.getColumnIndexOrThrow("title")), c.getInt(c.getColumnIndexOrThrow("stage")), c.getString(c.getColumnIndexOrThrow("notationExpanded")));
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage(R.string.dialog_confirm_unstar)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                userDataDB.removeStar(star);
+                                onResume();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                builder.create().show();
+                return true;
+            }
+        });
+        stars_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?>adapter, View v, int position, long id) {
+                Cursor c = ((StarsAdapter) adapter.getAdapter()).getCursor();
+                c.moveToPosition(position);
+                Intent intent = new Intent(MainActivity.this, MethodActivity.class);
+                intent.putExtra(MainActivity.METHOD_TITLE, c.getString(c.getColumnIndexOrThrow("title")));
+                intent.putExtra(CustomActivity.METHOD_STAGE, c.getInt(c.getColumnIndexOrThrow("stage")));
+                intent.putExtra(CustomActivity.METHOD_NOTATION, c.getString(c.getColumnIndexOrThrow("notationExpanded")));
+                startActivity(intent);
+            }
+        });
+        if(stars_adapter.getCount() == 0 || isSearching) {
+            stars.setVisibility(View.GONE);
         }
 
         // Set up the search box
@@ -119,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 anim_searchBox.setDuration(180);
                 anim_toolbarBackground.start();
                 anim_searchBox.start();
+                stars.setVisibility(View.GONE);
             }
 
             @Override
@@ -148,6 +206,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     anim_searchBox.setDuration(180);
                     anim_toolbarBackground.start();
                     anim_searchBox.start();
+                    if(stars_list.getAdapter().getCount() > 0) {
+                        stars.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
@@ -254,10 +315,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public void onResume() {
+        // Update list of stars
+        stars_list.setAdapter(new StarsAdapter(this, userDataDB.listStars()));
+        if(stars_list.getAdapter().getCount() == 0) {
+            stars.setVisibility(View.GONE);
+        }
+        super.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if( db != null ) {
+        if(db != null) {
             db.close();
         }
+        if(userDataDB != null) {
+            userDataDB.close();
+        }
+        super.onDestroy();
     }
 }

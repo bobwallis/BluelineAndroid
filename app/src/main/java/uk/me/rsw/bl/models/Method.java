@@ -40,6 +40,9 @@ public class Method implements Serializable {
     public String getTitle() {
         return title;
     }
+    public void setTitle(String set_title) {
+        title = set_title;
+    }
 
     public Boolean getProvisional() {
         return provisional;

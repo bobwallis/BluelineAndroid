@@ -49,3 +49,4 @@
 12:
  - Fix loading of GSiril link in ProveActivity
  - Update database
+ - Allow methods to be favourited

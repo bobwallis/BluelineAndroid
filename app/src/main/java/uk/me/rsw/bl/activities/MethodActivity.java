@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -21,8 +23,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.MethodPagerAdapter;
-import uk.me.rsw.bl.data.Database;
+import uk.me.rsw.bl.data.MethodsDatabase;
+import uk.me.rsw.bl.data.UserDataDatabase;
 import uk.me.rsw.bl.models.Method;
+import uk.me.rsw.bl.models.Star;
 
 
 public class MethodActivity extends AppCompatActivity {
@@ -43,6 +47,9 @@ public class MethodActivity extends AppCompatActivity {
     private Uri WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/");
     private GoogleApiClient mClient;
 
+    private UserDataDatabase userDataDB;
+    private Star star;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +59,8 @@ public class MethodActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         // Get a reference to the database
-        Database db = new Database(this);
+        MethodsDatabase db = new MethodsDatabase(this);
+        userDataDB = new UserDataDatabase(this);
 
         // If we've been given a definite title from another activity
         if( intent.getStringExtra(MainActivity.METHOD_TITLE) != null ) {
@@ -62,6 +70,7 @@ public class MethodActivity extends AppCompatActivity {
                 method = db.getFromNotationExpandedAndStage(intent.getStringExtra(CustomActivity.METHOD_NOTATION), intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
                 if(method == null) {
                     method = new Method();
+                    method.setTitle(title);
                     method.setStage(intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
                     method.setNotation(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
                     method.setNotationExpanded(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
@@ -106,6 +115,9 @@ public class MethodActivity extends AppCompatActivity {
         }
 
         setTitle(title);
+
+        // Create a Star object for use later
+        star = new Star(method.getTitle(), method.getStage(), method.getNotationExpanded());
 
         // Start app indexing client if needed
         if( !title.equals("Custom Method")) {
@@ -206,12 +218,52 @@ public class MethodActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Swap the "Star" action for an "Unstar" one if the method is starred
+        if(userDataDB.isStar(star)) {
+            menu.findItem(R.id.action_star).setTitle(R.string.action_unstar);
+            menu.findItem(R.id.action_star).setIcon(R.drawable.ic_star_white);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
 
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+
+            case R.id.action_star:
+                if(item.getTitle() == getResources().getString(R.string.action_star)) {
+                    userDataDB.addStar(star);
+                    Snackbar.make(findViewById(R.id.pager), R.string.snackbar_star_text, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.snackbar_star_action, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                userDataDB.removeStar(star);
+                                invalidateOptionsMenu();
+                            }
+                        })
+                        .setActionTextColor(getResources().getColor(R.color.lighterBlue))
+                        .show();
+                }
+                else if(item.getTitle() == getResources().getString(R.string.action_unstar)) {
+                    userDataDB.removeStar(star);
+                    Snackbar.make(findViewById(R.id.pager), R.string.snackbar_unstar_text, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.snackbar_unstar_action, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    userDataDB.addStar(star);
+                                    invalidateOptionsMenu();
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(R.color.lighterBlue))
+                            .show();
+                }
+                invalidateOptionsMenu();
                 return true;
 
             case R.id.action_settings:
