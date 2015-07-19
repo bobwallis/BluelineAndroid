@@ -45,3 +45,7 @@
  - Redirect 'custom method' view to the existing method if the place notation and stage matches
  - Remember what's been typed in Custom and Prove screens when rotating the screen
  - Show error message if voice search is unavailable rather than crashing
+
+12:
+ - Fix loading of GSiril link in ProveActivity
+ - Update database
