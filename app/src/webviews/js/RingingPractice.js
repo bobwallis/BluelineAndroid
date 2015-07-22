@@ -287,7 +287,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 					y = dotY - (currentRowFloor-i+(currentRow%1)+0.5)*rowHeight;
 					if( (i-options.placeStarts.from)%options.placeStarts.every === 0 ) {
 						if( i == (currentRowFloor+1) ) { context.globalAlpha = currentRow%1; }
-						context.drawImage( fillTextCache_placeStarts.element, rows[i].indexOf( following )*22, 0, 22, 22, x-11, y-11, 22, 22 );
+						context.drawImage( fillTextCache_placeStarts.element, rows[i].indexOf( following )*22*fillTextCache_placeStarts.scale, 0, 22*fillTextCache_placeStarts.scale, 22*fillTextCache_placeStarts.scale, x-11, y-11, 22, 22 );
 						if( i == (currentRowFloor+1) ) { context.globalAlpha = 1; }
 					}
 				}
@@ -317,6 +317,9 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 
 			// Draw the lines
 			if( currentRow > 0 ) {
+				context.setLineDash( [] );
+				context.lineCap = 'round';
+				context.lineJoin = 'round';
 				for( i = 0; i < options.lines.length; ++i ) {
 					if( options.lines[i] === null || typeof options.lines[i].color !== 'string' ) {
 						continue;
@@ -326,10 +329,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 					x = paddingForLeftMostPosition + (bellWidth * ((currentRow == currentRowCeil)? goingToPosition : comingFromPosition + ((currentRow%1)*(goingToPosition - comingFromPosition)) )),
 					y = dotY;
 					context.strokeStyle = options.lines[i].color;
-					context.setLineDash( [] );
 					context.lineWidth = options.lines[i].width;
-					context.lineCap = 'round';
-					context.lineJoin = 'round';
 					context.beginPath();
 					context.moveTo( x, y );
 					x = paddingForLeftMostPosition + (bellWidth * ((currentRow == currentRowCeil)? goingToPosition : comingFromPosition ));
