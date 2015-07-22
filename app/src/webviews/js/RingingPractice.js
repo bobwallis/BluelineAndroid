@@ -218,7 +218,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				goingToPosition = rows[currentRowCeil].indexOf( following );
 
 			// Clear
-			context.clearRect( 0, 0, canvasWidth, canvasHeight );
+			context.clearRect( paddingForLeftMostPosition-8, 0, (stage*bellWidth)+33, canvasHeight );
 
 			// Draw background guides
 			context.strokeStyle = '#BBB';
