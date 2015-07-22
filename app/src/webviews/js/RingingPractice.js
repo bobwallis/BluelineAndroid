@@ -91,6 +91,33 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 
 
 		// Cache some resuable images to avoid excessive use of fillText
+		var fillTextCache_placeStarts = ( function() {
+			var x, y;
+			var cacheCanvas = new Canvas( {
+				id: 'cc0',
+				width: 22*stage,
+				height: 22
+			} );
+			var context = cacheCanvas.context;
+			var placeStartTextMetrics = textMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', '0' );
+			context.strokeStyle = options.lines[following].color;
+			context.fillStyle = '#333';
+			context.lineWidth = 1.5;
+			context.setLineDash( [] );
+			context.font = '12px sans-serif';
+			context.textAlign = 'center';
+			context.textBaseline = 'middle';
+			for( var i = 0; i < stage; ++i ) {
+				x = (i+0.5)*22 + placeStartTextMetrics.x;
+				y = 11 + placeStartTextMetrics.y;
+				context.fillText( PlaceNotation.bellToChar( i ), x, y );
+				context.beginPath();
+				context.arc( x, y, 8, 0, Math.PI*2, true );
+				context.closePath();
+				context.stroke();
+			}
+			return cacheCanvas;
+		}() );
 		var fillTextCache_guides = ( function() {
 			var cacheCanvas = new Canvas( {
 				id: 'cc1',
@@ -256,22 +283,11 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			if( typeof options.placeStarts === 'object' ) {
 				x = paddingForLeftMostPosition + (stage*bellWidth) + 15;
 				y = 1;
-				context.strokeStyle = options.lines[following].color;
-				context.fillStyle = '#333';
-				context.lineWidth = 1.5;
-				context.setLineDash( [] );
-				context.font = '12px sans-serif';
-				context.textAlign = 'center';
-				context.textBaseline = 'middle';
 				for( i = going? currentRowCeil : currentRowCeil-1; y > 0 && i >= 0; --i ) {
 					y = dotY - (currentRowFloor-i+(currentRow%1)+0.5)*rowHeight;
 					if( (i-options.placeStarts.from)%options.placeStarts.every === 0 ) {
 						if( i == (currentRowFloor+1) ) { context.globalAlpha = currentRow%1; }
-						context.fillText( PlaceNotation.bellToChar( rows[i].indexOf( following ) ), x + placeStartTextMetrics.x, y + placeStartTextMetrics.y );
-						context.beginPath();
-						context.arc( x, y, 8, 0, Math.PI*2, true );
-						context.closePath();
-						context.stroke();
+						context.drawImage( fillTextCache_placeStarts.element, rows[i].indexOf( following )*22, 0, 22, 22, x-11, y-11, 22, 22 );
 						if( i == (currentRowFloor+1) ) { context.globalAlpha = 1; }
 					}
 				}
