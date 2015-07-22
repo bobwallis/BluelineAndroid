@@ -86,8 +86,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			bellWidth = Math.min( 20, (canvasWidth - 40) / stage ),
 			rowHeight = bellWidth,
 			rowsToDisplay = Math.floor((canvasHeight-20) / rowHeight),
-			paddingForLeftMostPosition = (canvasWidth - ((stage-1)*bellWidth))/2,
-			placeStartTextMetrics = textMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', '0' );
+			paddingForLeftMostPosition = (canvasWidth - ((stage-1)*bellWidth))/2;
 
 
 		// Cache some resuable images to avoid excessive use of fillText
@@ -99,7 +98,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				height: 22
 			} );
 			var context = cacheCanvas.context;
-			var placeStartTextMetrics = textMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', '0' );
+			var placeStartTextMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', '0' );
 			context.strokeStyle = options.lines[following].color;
 			context.fillStyle = '#333';
 			context.lineWidth = 1.5;
@@ -108,9 +107,9 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			context.textAlign = 'center';
 			context.textBaseline = 'middle';
 			for( var i = 0; i < stage; ++i ) {
-				x = (i+0.5)*22 + placeStartTextMetrics.x;
-				y = 11 + placeStartTextMetrics.y;
-				context.fillText( PlaceNotation.bellToChar( i ), x, y );
+				x = (i+0.5)*22;
+				y = 11;
+				context.fillText( PlaceNotation.bellToChar( i ), x + placeStartTextMetrics.x, y + placeStartTextMetrics.y );
 				context.beginPath();
 				context.arc( x, y, 8, 0, Math.PI*2, true );
 				context.closePath();
