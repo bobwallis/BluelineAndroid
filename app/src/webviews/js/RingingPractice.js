@@ -205,7 +205,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			}
 			// Scroll up the line even if the user isn't moving
 			if( dotY > canvasHeight/2 ) {
-				dotY = Math.min( canvasHeight - canvasHeight/10, Math.max( canvasHeight/2, dotY - Math.max(0.05, (timestamp - previousTimestamp)*(canvasHeight/3000)*Math.pow((dotY-(canvasHeight/2))/(canvasHeight/2), 2) ) ));
+				dotY = Math.min( canvasHeight - 28, Math.max( canvasHeight/2, dotY - Math.max(0.05, (timestamp - previousTimestamp)*(canvasHeight/3000)*Math.pow((dotY-(canvasHeight/2))/(canvasHeight/2), 2) ) ));
 				doDraw = true;
 			}
 			if( doDraw ) {
