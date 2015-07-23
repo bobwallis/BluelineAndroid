@@ -47,14 +47,18 @@ public class MethodActivity extends AppCompatActivity {
     private Uri WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/");
     private GoogleApiClient mClient;
 
-    private MethodsDatabase db = MethodsDatabase.getInstance(this);
-    private UserDataDatabase userDataDB = UserDataDatabase.getInstance(this);
+    private MethodsDatabase db;
+    private UserDataDatabase userDataDB;
     private Star star;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_methods);
+
+        // Get instances of databases
+        db = MethodsDatabase.getInstance(this);
+        userDataDB = UserDataDatabase.getInstance(this);
 
         // Get the title from the intent
         Intent intent = getIntent();

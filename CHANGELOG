@@ -55,3 +55,4 @@
 
 13:
  - Improvements to performance of practice interface
+ - Fix crash when opening app from app deep links
