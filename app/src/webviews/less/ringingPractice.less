@@ -41,6 +41,9 @@ html.practice, html.practice body, html.practice #container {
 		background-color: #DDD;
 		width: 100%;
 		height: 42px;
+		&.active:hover {
+			cursor: pointer;
+		}
 
 		.practice_controls_left, .practice_controls_down, .practice_controls_right {
 			position: absolute;
@@ -118,6 +121,23 @@ html.practice, html.practice body, html.practice #container {
 		font: 11px sans-serif;
 		opacity: 0;
 		transition: opacity 0.5s ease;
+	}
+
+	.practice_pause {
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		width: 30px;
+		height: 30px;
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: 30px;
+		background-image: url(x.svg);
+		opacity: 0;
+		transition: opacity 0.5s ease;
+		&:hover {
+			cursor: pointer;
+		}
 	}
 
 	.practice_errorFlash_left, .practice_errorFlash_down, .practice_errorFlash_right {

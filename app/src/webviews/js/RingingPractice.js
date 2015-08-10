@@ -60,18 +60,21 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			buttonsContainer.style.height = '60px';
 			buttonsContainer.style.paddingTop = '12.5px';
 		}
-		var button_go = document.createElement( 'input' );
-		button_go.value = 'Go';
-		button_go.type = 'button';
-		buttonsContainer.appendChild( button_go );
+		var button_resume = document.createElement( 'input' );
+		button_resume.value = 'Resume';
+		button_resume.type = 'button';
+		button_resume.style.display = 'none';
+		buttonsContainer.appendChild( button_resume );
 		var button_restart = document.createElement( 'input' );
-		button_restart.value = 'Restart';
+		button_restart.value = 'Go';
 		button_restart.type = 'button';
-		button_restart.style.display = 'none';
 		buttonsContainer.appendChild( button_restart );
 		var scoreboard = document.createElement( 'div' );
 		scoreboard.className = 'practice_scoreboard';
 		options.container.appendChild( scoreboard );
+		var pause = document.createElement( 'div' );
+		pause.className = 'practice_pause';
+		options.container.appendChild( pause );
 
 
 		// Set up method options
@@ -156,6 +159,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		var finishRow, rows, nextRow, currentPos, nextPos;
 		var errorCount;
 		var going = false;
+		var finished = false;
 		var advance = function() {
 			if( !going ) {
 				return;
@@ -173,10 +177,13 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			// Stop if we're at the end
 			if( rows.length > 1 && arraysEqual( nextRow, finishRow ) ) {
 				going = false;
-				button_go.style.display = 'none';
+				finished = true;
+				button_restart.value = 'Restart';
 				button_restart.style.display = 'inline-block';
+				button_resume.style.display = 'none';
 				buttonsContainer.style.opacity = 1;
 				scoreboard.style.opacity = 0;
+				pause.style.opacity = 0;
 			}
 			// Otherwise keep going
 			else {
@@ -229,6 +236,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			currentRowAtTimeOfLastTargetRowSet = 0;
 			errorCount = 0;
 			scoreboard.innerHTML = 'Changes: 0<br/>Errors: 0';
+			finished = false;
 		};
 		setup();
 
@@ -293,7 +301,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			}
 
 			// That's all message
-			if( !going && currentRow > 1 && options.thatsAll ) {
+			if( finished && currentRow > 1 && options.thatsAll ) {
 				if( !fillTextCache_thatsAllFinished && options.score ) {
 					fillTextCache_thatsAll.context.font = '13px sans-serif';
 					fillTextCache_thatsAll.context.fillText( 'Final score: '+Math.max(0, Math.round(100 - ((errorCount*100)/(rows.length-1))))+'%', canvasWidth/2, 20 );
@@ -345,11 +353,12 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		};
 
 
-		// Start/restart buttons
-		button_go.addEventListener( 'click', function() {
+		// Start/restart/oause buttons
+		button_resume.addEventListener( 'click', function() {
 			going = true;
-			button_go.blur();
+			button_resume.blur();
 			buttonsContainer.style.opacity = 0;
+			pause.style.opacity = 1;
 			canvas.element.style.opacity = 1;
 			draw();
 		} );
@@ -358,6 +367,17 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			setup();
 			button_restart.blur();
 			buttonsContainer.style.opacity = 0;
+			pause.style.opacity = 1;
+			canvas.element.style.opacity = 1;
+			draw();
+		} );
+		pause.addEventListener( 'click', function() {
+			going = false;
+			button_restart.value = 'Restart';
+			button_restart.style.display = (currentRow == 0)? 'none' : 'inline-block';
+			button_resume.style.display = 'inline-block';
+			buttonsContainer.style.opacity = 1;
+			pause.style.opacity = 0;
 		} );
 
 
