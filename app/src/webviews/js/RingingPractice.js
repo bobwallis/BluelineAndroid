@@ -49,7 +49,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		} );
 		options.container.appendChild( canvas.element );
 		var buttonsContainer = document.createElement( 'div' );
-		buttonsContainer.className = 'practice_buttons';
+		buttonsContainer.className = 'practice_buttons visible';
 		options.container.appendChild( buttonsContainer );
 		if( typeof options.title === 'string' && options.title !== '' ) {
 			var title = document.createElement( 'h1' );
@@ -172,7 +172,6 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			// Update the scoreboard
 			if( options.score ) {
 				scoreboard.innerHTML = 'Changes: '+(rows.length-1)+'<br/>Errors: '+errorCount;
-				scoreboard.style.opacity = 1;
 			}
 			// Stop if we're at the end
 			if( rows.length > 1 && arraysEqual( nextRow, finishRow ) ) {
@@ -181,9 +180,9 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				button_restart.value = 'Restart';
 				button_restart.style.display = 'inline-block';
 				button_resume.style.display = 'none';
-				buttonsContainer.style.opacity = 1;
-				scoreboard.style.opacity = 0;
-				pause.style.opacity = 0;
+				buttonsContainer.className = 'practice_buttons visible';
+				scoreboard.className = 'practice_scoreboard';
+				pause.className = 'practice_pause';
 			}
 			// Otherwise keep going
 			else {
@@ -357,18 +356,20 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		button_resume.addEventListener( 'click', function() {
 			going = true;
 			button_resume.blur();
-			buttonsContainer.style.opacity = 0;
-			pause.style.opacity = 1;
-			canvas.element.style.opacity = 1;
+			buttonsContainer.className = 'practice_buttons';
+			pause.className = 'practice_pause visible';
+			scoreboard.className = 'practice_scoreboard visible';
+			canvas.element.className = 'visible';
 			draw();
 		} );
 		button_restart.addEventListener( 'click', function() {
 			going = true;
 			setup();
 			button_restart.blur();
-			buttonsContainer.style.opacity = 0;
-			pause.style.opacity = 1;
-			canvas.element.style.opacity = 1;
+			buttonsContainer.className = 'practice_buttons';
+			pause.className = 'practice_pause visible';
+			scoreboard.className = 'practice_scoreboard visible';
+			canvas.element.className = 'visible';
 			draw();
 		} );
 		pause.addEventListener( 'click', function() {
@@ -376,8 +377,8 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			button_restart.value = 'Restart';
 			button_restart.style.display = (currentRow == 0)? 'none' : 'inline-block';
 			button_resume.style.display = 'inline-block';
-			buttonsContainer.style.opacity = 1;
-			pause.style.opacity = 0;
+			buttonsContainer.className = 'practice_buttons visible';
+			pause.className = 'practice_pause';
 		} );
 
 
