@@ -57,6 +57,10 @@
  - Improvements to performance of practice interface
  - Fix crash when opening app from app deep links
 
+14:
+ - Improvements to performance of practice interface
+ - Fix crash when opening from app deep links
+
 15:
  - Pause and restart the practice interface while in-flight
  - Update support libraries
