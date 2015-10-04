@@ -33,6 +33,8 @@ html.practice, html.practice body, html.practice #container {
 	canvas {
 		opacity: 0;
 		transition: opacity 0.5s ease;
+		display: block;
+		margin: 0 auto;
 		&.visible {
 			opacity: 1;
 		}
@@ -43,7 +45,7 @@ html.practice, html.practice body, html.practice #container {
 		bottom: -1px;
 		background-color: #DDD;
 		width: 100%;
-		height: 42px;
+		height: 30px;
 		&.active:hover {
 			cursor: pointer;
 		}
@@ -51,7 +53,7 @@ html.practice, html.practice body, html.practice #container {
 		.practice_controls_left, .practice_controls_down, .practice_controls_right {
 			position: absolute;
 			bottom: 0;
-			height: 42px;
+			height: 30px;
 			width: 33%;
 			background-color: #DDD;
 			background-repeat: no-repeat;
@@ -64,17 +66,17 @@ html.practice, html.practice body, html.practice #container {
 			}
 		}
 		.practice_controls_left {
-			background-size: 28px;
+			background-size: 20px;
 			background-image: url(left.svg);
 			left: 0;
 		}
 		.practice_controls_down {
-			background-size: auto 34px;
+			background-size: auto 22px;
 			background-image: url(down.svg);
-			left: 34%;
+			left: 33.333%;
 		}
 		.practice_controls_right {
-			background-size: 28px;
+			background-size: 20px;
 			background-image: url(right.svg);
 			right: 0;
 		}
@@ -82,30 +84,34 @@ html.practice, html.practice body, html.practice #container {
 
 	.practice_buttons {
 		position: absolute;
-		top: 10%;
+		top: 30px;
 		left: 0;
 		background-color: rgba(255,255,255,0.8);
+		backdrop-filter: blur(10px);
 		width: 100%;
-		height: 88.5px;
+		height: 90px;
 		box-sizing: border-box;
 		text-align: center;
 		opacity: 0;
 		transition: opacity 0.5s ease;
 		h1 {
-			font: normal 16px/41px sans-serif;
+			font-size: 15px;
+			font-weight: normal;
+			line-height: 30px;
 			padding: 0 16px;
-			text-rendering: optimizeLegibility;
+			margin: 15px 0 0 0;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			text-shadow: #FFF 0 0 2px;
+			text-shadow: -1px -1px 1px #FFF, 1px -1px 1px #FFF, -1px 1px 1px #FFF, 1px 1px 1px #FFF;
 		}
 		input {
 			display: inline-block;
-			height: 35px;
-			line-height: 35px;
+			font-size: 12px;
+			line-height: 30px;
+			height: 30px;
 			background-color: #002856;
-			margin: 0 10px 12.5px 10px;
+			margin: 0 10px;
 			color: white;
 			border-radius: 2px;
 			border: 0;
@@ -113,6 +119,7 @@ html.practice, html.practice body, html.practice #container {
 			text-transform: uppercase;
 			text-align: center;
 			box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+			cursor: default;
 		}
 		&.visible {
 			opacity: 1;
@@ -124,9 +131,10 @@ html.practice, html.practice body, html.practice #container {
 
 	.practice_scoreboard {
 		position: absolute;
-		top: 15px;
-		left: 15px;
-		font: 11px sans-serif;
+		top: 10px;
+		left: 10px;
+		font-size: 10px;
+		line-height: 15px;
 		opacity: 0;
 		transition: opacity 0.5s ease;
 		&.visible {
@@ -134,12 +142,25 @@ html.practice, html.practice body, html.practice #container {
 		}
 	}
 
+	.practice_messages {
+		position: absolute;
+		bottom: 75px;
+		left: 0;
+		width: 100%;
+		box-sizing: border-box;
+		text-align: center;
+		color: #333;
+		font-size: 12px;
+		line-height: 15px;
+		text-shadow: -1px -1px 1px #FFF, 1px -1px 1px #FFF, -1px 1px 1px #FFF, 1px 1px 1px #FFF;
+	}
+
 	.practice_pause {
 		position: absolute;
-		top: 15px;
-		right: 15px;
-		width: 30px;
-		height: 30px;
+		top: 10px;
+		right: 10px;
+		width: 20px;
+		height: 20px;
 		background-repeat: no-repeat;
 		background-position: center center;
 		background-size: 30px;

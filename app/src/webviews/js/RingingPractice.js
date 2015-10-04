@@ -1,4 +1,4 @@
-define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, MeasureCanvasTextOffset ) {
+define( ['PlaceNotation', 'Canvas', 'MeasureCanvasTextOffset'], function( PlaceNotation, Canvas, MeasureCanvasTextOffset ) {
 	var RingingPractice = function( options ) {
 
 		// Key codes
@@ -16,27 +16,39 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		};
 
 
-		// Validate and create a few options to save having to check for existence later
+		// Set up method options
+		var container = (typeof options.container === 'string')? document.getElementById( options.container ) : options.container,
+			stage     = parseInt( options.stage ),
+			notation  = (typeof options.notation === 'string')? PlaceNotation.parse( PlaceNotation.expand( options.notation, stage ), stage ) : options.notation,
+			startRow  = (typeof options.startRow === 'string')? options.startRow.split( '' ).map( PlaceNotation.charToBell ) : ((typeof options.startRow === 'object')? options.startRow.slice(0) : PlaceNotation.rounds( stage )),
+			finishRow = (typeof options.finishRow === 'string')? options.finishRow.split( '' ).map( PlaceNotation.charToBell ) : ((typeof options.finishRow === 'object')? options.finishRow.slice(0) : PlaceNotation.rounds( stage )),
+			following = options.following;
 		if( typeof options.score !== 'boolean' ) {
 			options.score = false;
 		}
-		if( typeof options.thatsAll !== 'boolean' ) {
+		if( typeof options.thatsAll !== 'boolean' && typeof options.thatsAll !== 'string' ) {
 			options.thatsAll = false;
+		}
+		if( typeof options.hbIndicator !== 'boolean' ) {
+			options.hbIndicator = false;
 		}
 
 
+		// Sizing
+		var canvasWidth  = (typeof options.width == 'number')? options.width : container.offsetWidth,
+			canvasHeight = ((typeof options.height == 'number')? options.height : container.offsetHeight) - 30,
+			bellWidth = Math.min( 20, (canvasWidth - 40) / stage ),
+			rowHeight = bellWidth,
+			rowsToDisplay = Math.floor((canvasHeight-20) / rowHeight),
+			paddingForLeftMostPosition = (canvasWidth - ((stage-1)*bellWidth))/2;
+
+
 		// Create the elements we need to make this all work
-		options.container.innerHTML = '';
-		var errorFlashes = {};
-		['left', 'down', 'right'].forEach( function( e ) {
-			errorFlashes[e] = document.createElement( 'div' );
-			errorFlashes[e].className = 'practice_errorFlash_'+e;
-			options.container.appendChild( errorFlashes[e] );
-		} );
+		container.innerHTML = '';
 		var control_button = {};
 		var controlsContainer = document.createElement( 'div' );
 		controlsContainer.className = 'practice_controls';
-		options.container.appendChild( controlsContainer );
+		container.appendChild( controlsContainer );
 		['left', 'down', 'right'].forEach( function( e ) {
 			control_button[e] = document.createElement( 'div' );
 			control_button[e].className = 'practice_controls_'+e;
@@ -44,13 +56,28 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		} );
 		var canvas = new Canvas( {
 			id: 'practice_canvas',
-			width: options.container.offsetWidth,
-			height: options.container.offsetHeight - controlsContainer.offsetHeight
+			width: canvasWidth,
+			height: canvasHeight
 		} );
-		options.container.appendChild( canvas.element );
+		container.appendChild( canvas.element );
+		var scoreboard = document.createElement( 'div' );
+		scoreboard.className = 'practice_scoreboard';
+		container.appendChild( scoreboard );
+		var messages = document.createElement( 'div' );
+		messages.className = 'practice_messages';
+		container.appendChild( messages );
+		var errorFlashes = {};
+		['left', 'down', 'right'].forEach( function( e ) {
+			errorFlashes[e] = document.createElement( 'div' );
+			errorFlashes[e].className = 'practice_errorFlash_'+e;
+			container.appendChild( errorFlashes[e] );
+		} );
+		var pause = document.createElement( 'div' );
+		pause.className = 'practice_pause';
+		container.appendChild( pause );
 		var buttonsContainer = document.createElement( 'div' );
 		buttonsContainer.className = 'practice_buttons visible';
-		options.container.appendChild( buttonsContainer );
+		container.appendChild( buttonsContainer );
 		if( typeof options.title === 'string' && options.title !== '' ) {
 			var title = document.createElement( 'h1' );
 			title.appendChild( document.createTextNode( options.title ) );
@@ -69,30 +96,40 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		button_restart.value = 'Go';
 		button_restart.type = 'button';
 		buttonsContainer.appendChild( button_restart );
-		var scoreboard = document.createElement( 'div' );
-		scoreboard.className = 'practice_scoreboard';
-		options.container.appendChild( scoreboard );
-		var pause = document.createElement( 'div' );
-		pause.className = 'practice_pause';
-		options.container.appendChild( pause );
-
-
-		// Set up method options
-		var stage = options.stage,
-			notation = options.notation,
-			following = options.following;
-
-
-		// Sizing
-		var canvasWidth = canvas.width,
-			canvasHeight = canvas.height,
-			bellWidth = Math.min( 20, (canvasWidth - 40) / stage ),
-			rowHeight = bellWidth,
-			rowsToDisplay = Math.floor((canvasHeight-20) / rowHeight),
-			paddingForLeftMostPosition = (canvasWidth - ((stage-1)*bellWidth))/2;
-
 
 		// Cache some resuable images to avoid excessive use of fillText
+		if( options.hbIndicator ) {
+			var fillTextCache_hIndicator = ( function() {
+				var cacheCanvas = new Canvas( {
+					id: 'cc1',
+					width: 16,
+					height: 16
+				} );
+				var context = cacheCanvas.context;
+				var hMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', 'H' );
+				context.fillStyle = '#999';
+				context.textAlign = 'center';
+				context.textBaseline = 'middle';
+				context.font = '12px sans-serif';
+				context.fillText( 'H', 8 + hMetrics.x, 8 + hMetrics.y );
+				return cacheCanvas;
+			}() );
+			var fillTextCache_bIndicator = ( function() {
+				var cacheCanvas = new Canvas( {
+					id: 'cc1',
+					width: 16,
+					height: 16
+				} );
+				var context = cacheCanvas.context;
+				var bMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', 'B' );
+				context.fillStyle = '#999';
+				context.textAlign = 'center';
+				context.textBaseline = 'middle';
+				context.font = '12px sans-serif';
+				context.fillText( 'B', 8 + bMetrics.x, 8 + bMetrics.y );
+				return cacheCanvas;
+			}() );
+		}
 		var fillTextCache_placeStarts = ( function() {
 			var x, y;
 			var cacheCanvas = new Canvas( {
@@ -123,7 +160,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		var fillTextCache_guides = ( function() {
 			var cacheCanvas = new Canvas( {
 				id: 'cc1',
-				width: options.container.offsetWidth,
+				width: canvasWidth,
 				height: 22
 			} );
 			var context = cacheCanvas.context;
@@ -139,14 +176,14 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		var fillTextCache_thatsAll = (options.thatsAll)? ( function() {
 			var cacheCanvas = new Canvas( {
 				id: 'cc2',
-				width: options.container.offsetWidth,
+				width: canvasWidth,
 				height: 40
 			} );
 			var context = cacheCanvas.context;
 			context.font = 'bold 15px sans-serif';
 			context.textAlign = 'center';
 			context.textBaseline = 'top';
-			context.fillText( "That's all!", canvasWidth/2, 0 );
+			context.fillText( (typeof options.thatsAll == 'string')? options.thatsAll : "That's all!", canvasWidth/2, 0 );
 			return cacheCanvas;
 		}()) : null;
 		var fillTextCache_thatsAllFinished = (options.score)? false : true; // We'll need to draw on the final score later
@@ -156,7 +193,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 
 
 		// Track the current position within the method, and advance the row position
-		var finishRow, rows, nextRow, currentPos, nextPos;
+		var rows, nextRow, currentPos, nextPos;
 		var errorCount;
 		var going = false;
 		var finished = false;
@@ -183,6 +220,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				buttonsContainer.className = 'practice_buttons visible';
 				scoreboard.className = 'practice_scoreboard';
 				pause.className = 'practice_pause';
+				controlsContainer.className = 'practice_controls';
 			}
 			// Otherwise keep going
 			else {
@@ -203,7 +241,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			}
 			// Animate the user's movement along the line
 			if( currentRow < targetRow ) {
-				var rowsToMove = Math.min( targetRow - currentRow, ((previousTimestamp - timestamp)/200)*(((timestamp - previousTimestamp)/200)-2) * (targetRow - currentRowAtTimeOfLastTargetRowSet) );
+				var rowsToMove = Math.min( targetRow - currentRow, ((previousTimestamp - timestamp)/250)*(((timestamp - previousTimestamp)/250)-2) * (targetRow - currentRowAtTimeOfLastTargetRowSet) );
 				currentRow = Math.min( targetRow, currentRow + rowsToMove );
 				dotY += rowsToMove*rowHeight;
 				doDraw = true;
@@ -223,8 +261,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 
 
 		var setup = function() {
-			finishRow = typeof options.finishRow === 'object'? options.finishRow.slice(0) : PlaceNotation.rounds( stage );
-			rows = [(typeof options.startRow === 'object'? options.startRow.slice(0) : PlaceNotation.rounds( stage ))];
+			rows = [startRow.slice(0)];
 			nextRow = PlaceNotation.apply( notation[0], rows[0] );
 			currentPos = rows[0].indexOf( following );
 			nextPos = nextRow.indexOf( following );
@@ -251,7 +288,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				goingToPosition = rows[currentRowCeil].indexOf( following );
 
 			// Clear
-			context.clearRect( paddingForLeftMostPosition-8, 0, (stage*bellWidth)+33, canvasHeight );
+			context.clearRect( Math.max(0,paddingForLeftMostPosition-(2*bellWidth)), 0, (stage+3)*bellWidth, canvasHeight );
 
 			// Draw background guides
 			context.strokeStyle = '#BBB';
@@ -287,13 +324,13 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 
 			// Draw place starts
 			if( typeof options.placeStarts === 'object' ) {
-				x = paddingForLeftMostPosition + (stage*bellWidth) + 15;
+				x = paddingForLeftMostPosition + (stage*bellWidth) + 5;
 				y = 1;
-				for( i = going? currentRowCeil : currentRowCeil-1; y > 0 && i >= 0; --i ) {
+				for( i = going? currentRowCeil : currentRowCeil-(options.thatsAll?1:0); y > 0 && i >= 0; --i ) {
 					y = dotY - (currentRowFloor-i+(currentRow%1)+0.5)*rowHeight;
 					if( (i-options.placeStarts.from)%options.placeStarts.every === 0 ) {
 						if( i == (currentRowFloor+1) ) { context.globalAlpha = currentRow%1; }
-						context.drawImage( fillTextCache_placeStarts.element, rows[i].indexOf( following )*22*fillTextCache_placeStarts.scale, 0, 22*fillTextCache_placeStarts.scale, 22*fillTextCache_placeStarts.scale, x-11, y-11, 22, 22 );
+						context.drawImage( fillTextCache_placeStarts.element, Math.floor(rows[i].indexOf( following )*22*fillTextCache_placeStarts.scale), 0, Math.floor(22*fillTextCache_placeStarts.scale), Math.floor(22*fillTextCache_placeStarts.scale), x-11, y-11, 22, 22 );
 						if( i == (currentRowFloor+1) ) { context.globalAlpha = 1; }
 					}
 				}
@@ -310,6 +347,32 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				context.globalAlpha = (currentRow%1 == 0)? 1 : currentRow%1;
 				context.drawImage( fillTextCache_thatsAll.element, 0, y, canvasWidth, 40 );
 				context.globalAlpha = 1;
+			}
+
+			// Handstroke/Backstroke indicator
+			if( options.hbIndicator ) {
+				var toI, fromI;
+				if( currentRowFloor%2 == 0 ) {
+					toI = fillTextCache_hIndicator.element;
+					fromI = fillTextCache_bIndicator.element;
+				}
+				else {
+					fromI = fillTextCache_hIndicator.element;
+					toI = fillTextCache_bIndicator.element;
+				}
+				if( currentRow%1 == 0 ) {
+					context.drawImage( fromI, paddingForLeftMostPosition-bellWidth-8, dotY-8, 16, 16 );
+				}
+				else if( currentRow%1 > 0.66 ) {
+					context.drawImage( toI, paddingForLeftMostPosition-bellWidth-8, dotY-8, 16, 16 );
+				}
+				else {
+					context.globalAlpha = currentRow%1;
+					context.drawImage( fromI, paddingForLeftMostPosition-bellWidth-8, dotY-8, 16, 16 );
+					context.globalAlpha = 1 - (currentRow%1);
+					context.drawImage( toI, paddingForLeftMostPosition-bellWidth-8, dotY-8, 16, 16 );
+					context.globalAlpha = 1;
+				}
 			}
 
 			// Draw the user's dot
@@ -352,25 +415,35 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		};
 
 
-		// Start/restart/oause buttons
+		// Start/restart/pause buttons
 		button_resume.addEventListener( 'click', function() {
-			going = true;
-			button_resume.blur();
-			buttonsContainer.className = 'practice_buttons';
-			pause.className = 'practice_pause visible';
-			scoreboard.className = 'practice_scoreboard visible';
-			canvas.element.className = 'visible';
-			draw();
+			if( !going ) {
+				going = true;
+				button_resume.blur();
+				buttonsContainer.className = 'practice_buttons';
+				pause.className = 'practice_pause visible';
+				controlsContainer.className = 'practice_controls active';
+				if( options.score ) {
+					scoreboard.className = 'practice_scoreboard visible';
+				}
+				canvas.element.className = 'visible';
+				draw();
+			}
 		} );
 		button_restart.addEventListener( 'click', function() {
-			going = true;
-			setup();
-			button_restart.blur();
-			buttonsContainer.className = 'practice_buttons';
-			pause.className = 'practice_pause visible';
-			scoreboard.className = 'practice_scoreboard visible';
-			canvas.element.className = 'visible';
-			draw();
+			if( !going ) {
+				going = true;
+				setup();
+				button_restart.blur();
+				buttonsContainer.className = 'practice_buttons';
+				pause.className = 'practice_pause visible';
+				controlsContainer.className = 'practice_controls active';
+				if( options.score ) {
+					scoreboard.className = 'practice_scoreboard visible';
+				}
+				canvas.element.className = 'visible';
+				draw();
+			}
 		} );
 		pause.addEventListener( 'click', function() {
 			going = false;
@@ -379,6 +452,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 			button_resume.style.display = 'inline-block';
 			buttonsContainer.className = 'practice_buttons visible';
 			pause.className = 'practice_pause';
+			controlsContainer.className = 'practice_controls';
 		} );
 
 
@@ -434,8 +508,10 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 		var errorFlash = function( e ) {
 			errorFlashes[e].classList.remove( 'error' );
 			setTimeout( function() { errorFlashes[e].classList.add( 'error' ); }, 50 );  // Need the timeout so the browser ticks and the removal of the previous classes actually processe
-			++errorCount;
-			scoreboard.innerHTML = 'Changes: '+(rows.length-1)+'<br/>Errors: '+errorCount;
+			if( options.score ) {
+				++errorCount;
+				scoreboard.innerHTML = 'Changes: '+(rows.length-1)+'<br/>Errors: '+errorCount;
+			}
 		};
 		// Buzz
 		var buzz = function() {
@@ -464,15 +540,16 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				}
 			}
 		} );
-		options.container.addEventListener( 'touchstart', function( e ) {
-			if( going ) {
+		container.addEventListener( 'touchstart', function( e ) {
+			var touch = event.touches[0],
+				containerRect = container.getBoundingClientRect(),
+				posX = (touch.clientX - containerRect.left) / containerRect.width;
+			if( going && touch.pageY - containerRect.top > 30 ) {
 				e.preventDefault(); // This prevents click emulation, so the click event below won't fire as well
-				var touch = event.touches[0],
-					pos = touch.clientX / document.body.clientWidth;
-				if( pos <= 0.33 ) {
+				if( posX <= 0.33 ) {
 					left();
 				}
-				else if( pos >= 0.66 ) {
+				else if( posX >= 0.66 ) {
 					right();
 				}
 				else {
@@ -480,7 +557,7 @@ define( ['PlaceNotation', 'MeasureCanvasTextOffset'], function( PlaceNotation, M
 				}
 			}
 		} );
-		options.container.addEventListener( 'click', function( e ) {
+		container.addEventListener( 'click', function( e ) {
 			if( e.target.classList.contains( 'practice_controls_left' ) ) {
 				left();
 			}
