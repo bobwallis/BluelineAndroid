@@ -57,10 +57,8 @@
  - Improvements to performance of practice interface
  - Fix crash when opening app from app deep links
 
-14:
- - Pause and restart the practice interface while in-flight
- - Update libraries
-
 15:
+ - Pause and restart the practice interface while in-flight
+ - Update support libraries
  - Allow installation to SD card
-
+ - Update database
