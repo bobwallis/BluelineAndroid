@@ -15,3 +15,5 @@
 -keep class android.support.design.widget.** { *; }
 -keep interface android.support.design.widget.** { *; }
 -dontwarn android.support.design.**
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.google.android.gms.**
