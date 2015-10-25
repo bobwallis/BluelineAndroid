@@ -26,13 +26,15 @@ define( ['PlaceNotation', 'Canvas', 'MeasureCanvasTextOffset'], function( PlaceN
 		if( typeof options.score !== 'boolean' ) {
 			options.score = false;
 		}
+		if( typeof options.introduction !== 'boolean' ) {
+			options.introduction = false;
+		}
 		if( typeof options.thatsAll !== 'boolean' && typeof options.thatsAll !== 'string' ) {
 			options.thatsAll = false;
 		}
 		if( typeof options.hbIndicator !== 'boolean' ) {
 			options.hbIndicator = false;
 		}
-
 
 		// Sizing
 		var canvasWidth  = (typeof options.width == 'number')? options.width : container.offsetWidth,
@@ -45,15 +47,6 @@ define( ['PlaceNotation', 'Canvas', 'MeasureCanvasTextOffset'], function( PlaceN
 
 		// Create the elements we need to make this all work
 		container.innerHTML = '';
-		var control_button = {};
-		var controlsContainer = document.createElement( 'div' );
-		controlsContainer.className = 'practice_controls';
-		container.appendChild( controlsContainer );
-		['left', 'down', 'right'].forEach( function( e ) {
-			control_button[e] = document.createElement( 'div' );
-			control_button[e].className = 'practice_controls_'+e;
-			controlsContainer.appendChild( control_button[e] );
-		} );
 		var canvas = new Canvas( {
 			id: 'practice_canvas',
 			width: canvasWidth,
@@ -96,6 +89,15 @@ define( ['PlaceNotation', 'Canvas', 'MeasureCanvasTextOffset'], function( PlaceN
 		button_restart.value = 'Go';
 		button_restart.type = 'button';
 		buttonsContainer.appendChild( button_restart );
+		var control_button = {};
+		var controlsContainer = document.createElement( 'div' );
+		controlsContainer.className = 'practice_controls';
+		container.appendChild( controlsContainer );
+		['left', 'down', 'right'].forEach( function( e ) {
+			control_button[e] = document.createElement( 'div' );
+			control_button[e].className = 'practice_controls_'+e;
+			controlsContainer.appendChild( control_button[e] );
+		} );
 
 		// Cache some resuable images to avoid excessive use of fillText
 		if( options.hbIndicator ) {
@@ -173,9 +175,24 @@ define( ['PlaceNotation', 'Canvas', 'MeasureCanvasTextOffset'], function( PlaceN
 			}
 			return cacheCanvas;
 		}() );
-		var fillTextCache_thatsAll = (options.thatsAll)? ( function() {
+		var fillTextCache_introduction = (options.introduction)? ( function() {
 			var cacheCanvas = new Canvas( {
 				id: 'cc2',
+				width: canvasWidth,
+				height: 40
+			} );
+			var context = cacheCanvas.context;
+			context.font = 'bold 12px sans-serif';
+			context.fillStyle = '#333';
+			context.textAlign = 'center';
+			context.textBaseline = 'middle';
+			context.fillText( "Use the arrow keys, or", canvasWidth/2, 40/3 );
+			context.fillText( "tap the screen, to navigate.", canvasWidth/2, 40*2/3 );
+			return cacheCanvas;
+		}()) : null;
+		var fillTextCache_thatsAll = (options.thatsAll)? ( function() {
+			var cacheCanvas = new Canvas( {
+				id: 'cc3',
 				width: canvasWidth,
 				height: 40
 			} );
@@ -334,6 +351,11 @@ define( ['PlaceNotation', 'Canvas', 'MeasureCanvasTextOffset'], function( PlaceN
 						if( i == (currentRowFloor+1) ) { context.globalAlpha = 1; }
 					}
 				}
+			}
+
+			// Introduction message
+			if( dotY - (currentRow*rowHeight) > 0 && options.introduction ) {
+				context.drawImage( fillTextCache_introduction.element, 0, dotY - (currentRow*rowHeight) - 100, canvasWidth, 40 );
 			}
 
 			// That's all message
