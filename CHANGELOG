@@ -72,3 +72,4 @@
  - Increase amount of line shown on each side of a call
  - Show introductions message on practice interface
  - Add explanatory notes to the about page regarding calls
+ - Use support library for preferences screen (fixes bugs with theme application, etc)

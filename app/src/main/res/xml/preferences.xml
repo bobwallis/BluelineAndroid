@@ -19,7 +19,7 @@
         android:title="@string/pref_header_numbers"
         android:key="pref_numbers_settings">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="numbers_show"
             android:title="@string/pref_title_showNumbers"
             android:defaultValue="@string/default_numbers_show" />
@@ -49,7 +49,7 @@
         android:title="@string/pref_header_lines"
         android:key="pref_lines_settings">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="lines_show"
             android:title="@string/pref_title_showLines"
             android:defaultValue="@string/default_lines_show" />
@@ -79,7 +79,7 @@
         android:title="@string/pref_header_grid"
         android:key="pref_grid_settings">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="grid_show"
             android:title="@string/pref_title_showGrid"
             android:defaultValue="@string/default_grid_show" />
@@ -109,12 +109,12 @@
         android:title="@string/pref_header_practice"
         android:key="pref_practice_settings">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="practice_show"
             android:title="@string/pref_title_showPractice"
             android:defaultValue="@string/default_practice_show" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="practice_vibrate"
             android:title="@string/pref_title_vibrate"
             android:defaultValue="@string/default_practice_vibrate"
