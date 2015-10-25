@@ -73,3 +73,4 @@
  - Show introductions message on practice interface
  - Add explanatory notes to the about page regarding calls
  - Use support library for preferences screen (fixes bugs with theme application, etc)
+ - Hide the "Starred Methods" title on the main screen if the last method is removed from the list by long pressing

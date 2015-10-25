@@ -49,6 +49,9 @@ public class StarList extends FrameLayout implements AdapterView.OnItemClickList
     public void reloadList() {
         StarsAdapter stars_adapter = new StarsAdapter(mContext, userDataDB.listStars());
         stars_list.setAdapter(stars_adapter);
+        if(getCount() == 0) {
+            setVisibility(View.GONE);
+        }
     }
 
     public int getCount() {
