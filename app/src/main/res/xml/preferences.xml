@@ -44,7 +44,6 @@
 
     </PreferenceCategory>
 
-
     <PreferenceCategory
         android:title="@string/pref_header_lines"
         android:key="pref_lines_settings">
@@ -74,7 +73,6 @@
 
     </PreferenceCategory>
 
-
     <PreferenceCategory
         android:title="@string/pref_header_grid"
         android:key="pref_grid_settings">
@@ -103,7 +101,6 @@
             android:dependency="grid_show" />
 
     </PreferenceCategory>
-
 
     <PreferenceCategory
         android:title="@string/pref_header_practice"

@@ -12,8 +12,17 @@
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }
--keep class android.support.design.widget.** { *; }
--keep interface android.support.design.widget.** { *; }
+
 -dontwarn android.support.design.**
--keep class com.google.android.gms.** { *; }
+-keep class android.support.design.** { *; }
+-keep interface android.support.design.** { *; }
+-keep public class android.support.design.R$* { *; }
+
+-keep class android.support.v7.widget.RoundRectDrawable { *; }
+
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
+
 -dontwarn com.google.android.gms.**
+-keep class com.google.android.gms.** { *; }
