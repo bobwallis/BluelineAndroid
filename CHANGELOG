@@ -76,3 +76,6 @@
  - Hide the "Starred Methods" title on the main screen if the last method is removed from the list by long pressing
  - Fix alignment issue with oneColumn mode
  - Update database
+
+17:
+ - Update database to fix error in Grandsire calls
