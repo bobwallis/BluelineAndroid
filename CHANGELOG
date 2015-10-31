@@ -79,3 +79,6 @@
 
 17:
  - Update database to fix error in Grandsire calls
+
+18:
+ - Add version to About page
