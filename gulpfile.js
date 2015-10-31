@@ -29,8 +29,8 @@ gulp.task( 'default', ['html', 'css', 'js', 'img'] );
 gulp.task( 'html', function() {
 	gulp.src( SRC+'html/*.html' )
 		.pipe( mustache( m ) )
-		.pipe( hypher( h_pattern ) )
 		.pipe( typogr( { only: ['amp', 'widont', 'caps', 'smartypants'] } ) )
+		.pipe( hypher( h_pattern ) )
 		.pipe( htmlmin( { removeComments: true, collapseWhitespace: true } ) )
 		.pipe( gulp.dest( DEST ) );
 } );
