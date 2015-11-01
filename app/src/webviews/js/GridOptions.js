@@ -58,7 +58,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		},
 		ruleOffs: {
 			show: true,
-			stroke: '#999',
+			stroke: 'rgba(0,0,0,0.4)',
 			dash:   [3,1],
 			width:  1,
 			cap:    'butt'
