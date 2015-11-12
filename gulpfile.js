@@ -13,6 +13,7 @@ var autoprefixer = require( 'gulp-autoprefixer' );
 var minifyCss    = require( 'gulp-minify-css' );
 var uncss        = require( 'gulp-uncss' );
 var imagemin     = require( 'gulp-imagemin' );
+var svg2png      = require( 'gulp-svg2png' );
 var requirejs    = require( 'gulp-requirejs' );
 var amdclean     = require( 'gulp-amdclean' );
 var uglify       = require( 'gulp-uglify' );
@@ -23,7 +24,7 @@ var h_pattern    = require( 'hyphenation.en-gb' );
 var htmlmin      = require( 'gulp-htmlmin' );
 
 
-gulp.task( 'default', ['html', 'css', 'js', 'img'] );
+gulp.task( 'default', ['html', 'css', 'js', 'img', 'icon', 'icon-store'] );
 
 
 gulp.task( 'html', function() {
@@ -52,6 +53,24 @@ gulp.task( 'img', function() {
 		.pipe( gulp.dest( DEST ) );
 } );
 
+
+gulp.task( 'icon', function() {
+	var tasks = [ ['mdpi',48], ['hdpi',72], ['xhdpi',96], ['xxhdpi',144], ['xxxhdpi',192] ].map( function( size ) {
+		return gulp.src( 'res/icon.svg' )
+			.pipe( svg2png( size[1]/192 ) )
+			.pipe( imagemin() )
+			.pipe( rename( 'ic_launcher.png' ) )
+			.pipe( gulp.dest( 'app/src/main/res/mipmap-'+size[0]+'/' ) );
+	} );
+	return es.merge.apply( null, tasks );
+} );
+gulp.task( 'icon-store', function() {
+	return gulp.src( 'res/icon.svg' )
+		.pipe( svg2png( 512/192 ) )
+		.pipe( imagemin() )
+		.pipe( rename( 'icon.png' ) )
+		.pipe( gulp.dest( 'res/' ) );
+} );
 
 gulp.task( 'js', function() {
 	var tasks = ['grids', 'custom', 'practice', 'prove'].map( function( s ) {
