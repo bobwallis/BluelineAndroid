@@ -24,7 +24,7 @@ var h_pattern    = require( 'hyphenation.en-gb' );
 var htmlmin      = require( 'gulp-htmlmin' );
 
 
-gulp.task( 'default', ['html', 'css', 'js', 'img', 'icon', 'icon-store'] );
+gulp.task( 'default', ['html', 'css', 'js', 'js.workers', 'img', 'icon', 'icon-store'] );
 
 
 gulp.task( 'html', function() {
@@ -86,4 +86,9 @@ gulp.task( 'js', function() {
 			.pipe( gulp.dest( DEST ) );
 	} );
 	return es.merge.apply( null, tasks );
+} );
+
+gulp.task( 'js.workers', function() {
+	gulp.src( [SRC+'js/gsiril.worker.js'] )
+		.pipe( gulp.dest( DEST ) );
 } );
