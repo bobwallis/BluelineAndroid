@@ -1,4 +1,4 @@
-require(['autosize', 'LocalStorage'], function( autosize ) {
+require(['autosize', 'LocalStorage'], function( autosize, LocalStorage ) {
 
 	var syntax = document.getElementById( 'syntax' );
 	var input = document.getElementById( 'input' );
