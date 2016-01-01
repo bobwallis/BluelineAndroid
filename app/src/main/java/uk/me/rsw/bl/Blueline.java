@@ -22,6 +22,7 @@ public class Blueline extends Application {
         tracker = analytics.newTracker("UA-11877145-9");
         tracker.enableExceptionReporting(true);
         tracker.enableAdvertisingIdCollection(true);
+        tracker.setAnonymizeIp(true);
         tracker.enableAutoActivityTracking(true);
         if (0 != (getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE)) {
             analytics.setDryRun(true);
