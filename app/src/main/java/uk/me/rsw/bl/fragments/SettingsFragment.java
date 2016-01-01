@@ -1,5 +1,7 @@
 package uk.me.rsw.bl.fragments;
 
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
@@ -21,6 +23,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         bindPreferenceSummaryToValue(findPreference("numbers_size"));
         bindPreferenceSummaryToValue(findPreference("lines_size"));
         bindPreferenceSummaryToValue(findPreference("grid_size"));
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("practice_show", false);
+            editor.commit();
+            findPreference("practice_show").setEnabled(false);
+        }
     }
 
     @Override

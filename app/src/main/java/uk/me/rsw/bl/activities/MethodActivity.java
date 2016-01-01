@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
@@ -137,7 +138,7 @@ public class MethodActivity extends AppCompatActivity {
             prefs.getBoolean("numbers_show", true),
             prefs.getBoolean("lines_show", false),
             prefs.getBoolean("grid_show", true),
-            prefs.getBoolean("practice_show", true)
+            (prefs.getBoolean("practice_show", true) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT))
         };
         layouts = new String[] {
             prefs.getString("numbers_layout", "oneColumn"),
@@ -184,7 +185,7 @@ public class MethodActivity extends AppCompatActivity {
         if( prefs.getBoolean("numbers_show", true) != tabs[1] ||
             prefs.getBoolean("lines_show", false) != tabs[2] ||
             prefs.getBoolean("grid_show", true) != tabs[3] ||
-            prefs.getBoolean("practice_show", true) != tabs[4] ||
+            (prefs.getBoolean("practice_show", true) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)) != tabs[4] ||
             prefs.getString("numbers_layout", "oneColumn") != layouts[0] ||
             prefs.getString("lines_layout", "oneColumn") != layouts[1] ||
             prefs.getString("grid_layout", "oneColumn") != layouts[2] ||
