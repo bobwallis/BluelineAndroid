@@ -82,19 +82,18 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 				},
 				reset: function() {
 					rowCount = errorCount = 0;
-					scoreboard.innerHTML = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
+					scoreboard.innerHTML = 'Changes:&nbsp;'+rowCount+'<br/>Errors:&nbsp;'+errorCount;
 				},
 				score: function() {
 					return Math.max(0, Math.round(100 - ((errorCount*100)/rowCount)))+'%';
 				},
 				correct: function() {
 					rowCount++;
-					scoreboard.innerHTML = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
+					scoreboard.innerHTML = 'Changes:&nbsp;'+rowCount+'<br/>Errors:&nbsp;'+errorCount;
 				},
 				error: function() {
 					errorCount++;
-					rowCount++;
-					scoreboard.innerHTML = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
+					scoreboard.innerHTML = 'Changes:&nbsp;'+rowCount+'<br/>Errors:&nbsp;'+errorCount;
 				}
 			};
 		})();
