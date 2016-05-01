@@ -45,7 +45,7 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 		method = new Method( qs );
 
 	// Plain course
-	var plainCourseGrid = new Grid( $.extend( true, method.gridOptions.plainCourse[qs.type], {
+	var plainCourseGrid = new Grid( $.extend( true, method.gridOptions.plainCourse[qs.type](), {
 		title: false,
 		sideNotation: {
 			show: true,
@@ -57,7 +57,7 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 			numberOfLeads: (qs.type == 'grid')? 1 : method.numberOfLeads
 		}
 	} ) ),
-		plainCourseGridImage = plainCourseGrid.draw(true);
+		plainCourseGridImage = plainCourseGrid.draw();
 	plainCourseContainer = document.createElement( 'div' );
 	plainCourseContainer.appendChild( plainCourseGridImage );
 	container.appendChild( plainCourseContainer );
@@ -69,7 +69,7 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 	}
 
 	// Calls
-	method.gridOptions.calls[qs.type].map( function(e) {
+	method.gridOptions.calls[qs.type]().map( function(e) {
 		var callContainer = document.createElement( 'div' ),
 			title = document.createElement( 'h1' ),
 			titleText = document.createTextNode( e.title.text.replace(':', '') ),
@@ -81,7 +81,7 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 				},
 				title: false
 			} ) ),
-			callGridImage = callGrid.draw(true);
+			callGridImage = callGrid.draw();
 		title.appendChild( titleText );
 		callContainer.appendChild( title );
 		callContainer.appendChild( callGridImage );

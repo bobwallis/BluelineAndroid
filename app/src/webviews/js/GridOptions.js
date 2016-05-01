@@ -46,6 +46,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		},
 		placeStarts: {
 			show: false,
+			showSmallCircle: true,
 			font: '"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif',
 			color: '#000',
 			size: 13,
@@ -57,11 +58,12 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			color: '#000'
 		},
 		ruleOffs: {
-			show: true,
+			show: false,
 			stroke: 'rgba(0,0,0,0.4)',
 			dash:   [3,1],
 			width:  1,
-			cap:    'butt'
+			cap:    'butt',
+			from:   0
 		},
 		numbers: {
 			show: true,
@@ -92,7 +94,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					var bells = [], i = 0;
 					for(; i < stage; ++i ) {
 						bells.push( {
-							lineWidth: 1,
+							width: 1,
 							stroke: 'transparent',
 							cap: 'round',
 							join: 'round',
@@ -112,6 +114,9 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					}
 					return bells;
 				} )( passedOptions.stage )
+			},
+			ruleOffs: {
+				every: passedOptions.notation.exploded.length
 			},
 			placeStarts: {
 				every: passedOptions.notation.exploded.length
@@ -164,7 +169,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		};
 		options.dimensions.canvas.padding.top += options.title.show? parseInt(options.title.font)*1.2 : 0;
 		options.dimensions.canvas.padding.left += options.sideNotation.show? (function() {
-			var longest = 0, text = '', i, width;
+			var longest = 0, text = '', i;
 			for( i = 0; i < options.sideNotation.text.length; ++i ) {
 				if( options.sideNotation.text[i].length > longest ) {
 					longest = options.sideNotation.text[i].length;

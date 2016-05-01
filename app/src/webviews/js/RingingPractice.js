@@ -82,18 +82,18 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 				},
 				reset: function() {
 					rowCount = errorCount = 0;
-					scoreboard.innerHTML = 'Changes:&nbsp;'+rowCount+'<br/>Errors:&nbsp;'+errorCount;
+					scoreboard.innerHTML = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
 				},
 				score: function() {
 					return Math.max(0, Math.round(100 - ((errorCount*100)/rowCount)))+'%';
 				},
 				correct: function() {
 					rowCount++;
-					scoreboard.innerHTML = 'Changes:&nbsp;'+rowCount+'<br/>Errors:&nbsp;'+errorCount;
+					scoreboard.innerHTML = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
 				},
 				error: function() {
 					errorCount++;
-					scoreboard.innerHTML = 'Changes:&nbsp;'+rowCount+'<br/>Errors:&nbsp;'+errorCount;
+					scoreboard.innerHTML = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
 				}
 			};
 		})();
@@ -118,12 +118,21 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			var pause = document.createElement( 'div' );
 			pause.className = 'practice_pause';
 			container.appendChild( pause );
-			pause.addEventListener( 'click', function() {
+			pauseFunction = function() {
 				going = false;
+				canvasPaused = true;
 				buttons.show();
 				pauseButton.hide();
 				controls.deactivate();
-			} );
+			};
+			pause.addEventListener( 'click', pauseFunction );
+			if( typeof document.hidden === 'boolean' ) {
+				document.addEventListener( 'visibilitychange', function() {
+					if( document.hidden == true && going ) {
+						pauseFunction();
+					}
+				}, false );
+			}
 			return {
 				element: pause,
 				show: function() { pause.className = 'practice_pause visible'; },
@@ -160,6 +169,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			button_resume.addEventListener( 'click', function() {
 				if( !going ) {
 					going = true;
+					canvasPaused = false;
 					buttons.hide();
 					pauseButton.show();
 					controls.activate();
@@ -171,6 +181,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			button_restart.addEventListener( 'click', function() {
 				if( !going ) {
 					going = true;
+					canvasPaused = false;
 					setup();
 					buttons.hide();
 					pauseButton.show();
@@ -406,10 +417,11 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 
 
 		// Variables used during drawing
-		var context  = canvas.context;
+		var context      = canvas.context;
 		var rows, nextRow, currentPos, nextPos;
-		var going    = false;
-		var finished = false;
+		var going        = false;
+		var canvasPaused = false;
+		var finished     = false;
 		var currentRow, targetRow, dotY, previousTimestamp, currentRowAtTimeOfLastTargetRowSet;
 
 		var setup = function() {
@@ -465,25 +477,28 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 		// Stepper function
 		var rowMoveDuration = 300;
 		var step = function( timestamp ) {
-			var doDraw = false;
+			var redrawNeeded = false;
 			// Do an initial draw if this is the first run
 			if( previousTimestamp === null ) {
 				previousTimestamp = timestamp;
-				doDraw = true;
+				redrawNeeded = true;
 			}
-			// Animate the user's movement along the line
-			if( currentRow < targetRow ) {
-				var rowsToMove = Math.min( targetRow - currentRow, ((previousTimestamp - timestamp)/rowMoveDuration)*(((timestamp - previousTimestamp)/rowMoveDuration)-2) * (targetRow - currentRowAtTimeOfLastTargetRowSet) );
-				currentRow = Math.min( targetRow, currentRow + rowsToMove );
-				dotY  += rowsToMove*rowHeight;
-				doDraw = true;
+			// Full pause
+			if( !canvasPaused ) {
+				// Animate the user's movement along the line
+				if( currentRow < targetRow ) {
+					var rowsToMove = Math.min( targetRow - currentRow, ((previousTimestamp - timestamp)/rowMoveDuration)*(((timestamp - previousTimestamp)/rowMoveDuration)-2) * (targetRow - currentRowAtTimeOfLastTargetRowSet) );
+					currentRow = Math.min( targetRow, currentRow + rowsToMove );
+					dotY  += rowsToMove*rowHeight;
+					redrawNeeded = true;
+				}
+				// Scroll up the line even if the user isn't moving
+				if( dotY > canvasHeight/2 ) {
+					dotY   = Math.min( canvasHeight - 28 - (fillTextCache_messagesText.byRow.length>0? 20 : 0), Math.max( canvasHeight/2, dotY - Math.max(0.05, (timestamp - previousTimestamp)*(canvasHeight/(rowMoveDuration*10))*Math.pow((dotY-(canvasHeight/2))/(canvasHeight/2), 2) ) ));
+					redrawNeeded = true;
+				}
+				if( redrawNeeded ) { draw(); }
 			}
-			// Scroll up the line even if the user isn't moving
-			if( dotY > canvasHeight/2 ) {
-				dotY   = Math.min( canvasHeight - 28 - (fillTextCache_messagesText.byRow.length>0? 20 : 0), Math.max( canvasHeight/2, dotY - Math.max(0.05, (timestamp - previousTimestamp)*(canvasHeight/(rowMoveDuration*10))*Math.pow((dotY-(canvasHeight/2))/(canvasHeight/2), 2) ) ));
-				doDraw = true;
-			}
-			if( doDraw ) { draw(); }
 			previousTimestamp = timestamp;
 			window.requestAnimationFrame( step );
 		};

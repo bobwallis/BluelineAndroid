@@ -36,7 +36,7 @@ require(['PlaceNotation', 'LocalStorage'], function( PlaceNotation, LocalStorage
 		if( notationInput.value !== '' ) {
 			var stage = parseInt( stageInput.value );
 			if( isNaN( stage ) ) {
-				stage = Math.max.apply( Math, notationInput.value.split( '' ).map( PlaceNotation.charToBell ) ) + 1;
+				stage = Math.max.apply( Math, notation.toUpperCase().replace( /X/g, 'x' ).replace( /[\[{<].*[\]}>]/, '' ).replace( / FCH.*$/, '' ).replace( /\.?x\.?/g, 'x' ).trim().replace( /( HL |LH|LE)/g , '' ).split( '' ).map( PlaceNotation.charToBell ) ) + 1;
 			}
 
 			var longNotation = PlaceNotation.expand( notationInput.value, isNaN( stage )? undefined : stage );
@@ -55,7 +55,7 @@ require(['PlaceNotation', 'LocalStorage'], function( PlaceNotation, LocalStorage
 
 	var submitForm = function( e ) {
 		if( isNaN( parseInt( stageInput.value ) ) ) {
-			stage.value = Math.max.apply( Math, notationInput.value.split( '' ).map( PlaceNotation.charToBell ) ) + 1;
+			stage.value = Math.max.apply( Math, notation.toUpperCase().replace( /X/g, 'x' ).replace( /[\[{<].*[\]}>]/, '' ).replace( / FCH.*$/, '' ).replace( /\.?x\.?/g, 'x' ).trim().replace( /( HL |LH|LE)/g , '' ).split( '' ).map( PlaceNotation.charToBell ) ) + 1;
 		}
 		notationInput.blur();
 		submit.blur();
