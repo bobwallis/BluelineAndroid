@@ -13,7 +13,7 @@ public class MethodsDatabase extends SQLiteAssetHelper {
     private static MethodsDatabase sInstance;
 
     private static final String DATABASE_NAME = "methods.db";
-    private static final int DATABASE_VERSION = 22; // Increment this each time the database is updated
+    private static final int DATABASE_VERSION = 23; // Increment this each time the database is updated
 
     private static final String[] sqlSelect = {"title", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationExpanded", "leadHeadCode", "leadHead", "palindromic", "rotational", "doubleSym", "fchGroups", "numberOfHunts", "lengthOfLead", "callingPositions", "ruleOffs", "calls"};
 
