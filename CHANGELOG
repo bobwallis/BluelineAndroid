@@ -94,3 +94,5 @@
 
 20:
  - Update database
+ - Update support libraries
+ - Performance improvements and other small fixes
