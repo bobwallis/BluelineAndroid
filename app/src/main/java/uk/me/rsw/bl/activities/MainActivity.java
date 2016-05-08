@@ -1,15 +1,12 @@
 package uk.me.rsw.bl.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.nineoldandroids.animation.ValueAnimator;
 
@@ -31,10 +24,7 @@ import java.util.ArrayList;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.SearchResultsAdapter;
-import uk.me.rsw.bl.adapters.StarsAdapter;
 import uk.me.rsw.bl.data.MethodsDatabase;
-import uk.me.rsw.bl.data.UserDataDatabase;
-import uk.me.rsw.bl.models.Star;
 import uk.me.rsw.bl.widgets.SearchBox;
 import uk.me.rsw.bl.widgets.StarList;
 

@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
@@ -39,9 +38,9 @@ public class MethodActivity extends AppCompatActivity {
 
     private String title;
     private Method method;
-    private Boolean[] tabs;
-    private String[] layouts;
-    private String[] sizes;
+    private String line_style;
+    private String line_layout;
+    private String line_size;
     private String workingBell;
 
     private Uri APP_URI = Uri.parse("android-app://uk.me.rsw.bl/blueline/methods/");
@@ -131,27 +130,15 @@ public class MethodActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
 
-        // Decide which tabs to display based on preferences
+        // Cache the current layout options so we can reload the activity should they change
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        tabs = new Boolean[]{
-            true,
-            prefs.getBoolean("numbers_show", true),
-            prefs.getBoolean("lines_show", false),
-            true,
-            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        };
-        layouts = new String[] {
-            prefs.getString("numbers_layout", "oneColumn"),
-            prefs.getString("lines_layout", "oneColumn")
-        };
-        sizes = new String[] {
-                prefs.getString("numbers_size", "medium"),
-                prefs.getString("lines_size", "medium")
-        };
+        line_style = prefs.getString("line_style", "numbers");
+        line_layout = prefs.getString("line_layout", "oneRow");
+        line_size = prefs.getString("line_size", "medium");
         workingBell = prefs.getString("workingBell", "heaviest");
 
         // Set up the view pager
-        mSectionsPagerAdapter = new MethodPagerAdapter(getSupportFragmentManager(), method, tabs);
+        mSectionsPagerAdapter = new MethodPagerAdapter(getSupportFragmentManager(), method);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -180,12 +167,9 @@ public class MethodActivity extends AppCompatActivity {
 
         // Check for changes to the preferences deciding which tabs to show and restart the activity if needed
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if( prefs.getBoolean("numbers_show", true) != tabs[1] ||
-            prefs.getBoolean("lines_show", false) != tabs[2] ||
-            prefs.getString("numbers_layout", "oneColumn") != layouts[0] ||
-            prefs.getString("lines_layout", "oneColumn") != layouts[1] ||
-            prefs.getString("numbers_size", "medium") != sizes[0] ||
-            prefs.getString("lines_size", "medium") != sizes[1] ||
+        if( prefs.getString("line_style", "numbers") != line_style ||
+            prefs.getString("line_layout", "oneRow") != line_layout ||
+            prefs.getString("line_size", "medium") != line_size ||
             prefs.getString("workingBell", "heaviest") != workingBell
         ) {
             Intent intent = getIntent();

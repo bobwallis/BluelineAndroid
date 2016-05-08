@@ -3,13 +3,9 @@
 
     <string name="default_workingBell">heaviest</string>
 
-    <string name="default_numbers_show">true</string>
-    <string name="default_numbers_layout">oneColumn</string>
-    <string name="default_numbers_size">medium</string>
-
-    <string name="default_lines_show">false</string>
-    <string name="default_lines_layout">oneColumn</string>
-    <string name="default_lines_size">medium</string>
+    <string name="default_line_style">numbers</string>
+    <string name="default_line_layout">oneRow</string>
+    <string name="default_line_size">medium</string>
 
     <string name="default_practice_vibrate">true</string>
 </resources>

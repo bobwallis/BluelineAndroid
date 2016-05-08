@@ -16,60 +16,32 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_header_numbers"
-        android:key="pref_numbers_settings">
-
-        <CheckBoxPreference
-            android:key="numbers_show"
-            android:title="@string/pref_title_showNumbers"
-            android:defaultValue="@string/default_numbers_show" />
+        android:title="@string/pref_header_line"
+        android:key="pref_line_settings">
 
         <ListPreference
-            android:title="@string/pref_title_numbersLayout"
-            android:summary="@string/pref_summary_layout"
-            android:key="numbers_layout"
-            android:defaultValue="@string/default_numbers_layout"
+            android:title="@string/pref_title_line_style"
+            android:summary="@string/pref_summary_line_style"
+            android:key="line_style"
+            android:defaultValue="@string/default_line_style"
+            android:entries="@array/pref_option_style"
+            android:entryValues="@array/pref_option_style_values" />
+
+        <ListPreference
+            android:title="@string/pref_title_line_layout"
+            android:summary="@string/pref_summary_line_layout"
+            android:key="line_layout"
+            android:defaultValue="@string/default_line_layout"
             android:entries="@array/pref_option_layout"
-            android:entryValues="@array/pref_option_layout_values"
-            android:dependency="numbers_show" />
+            android:entryValues="@array/pref_option_layout_values" />
 
         <ListPreference
-            android:title="@string/pref_title_numbersSize"
-            android:summary="@string/pref_summary_size"
-            android:key="numbers_size"
-            android:defaultValue="@string/default_numbers_size"
+            android:title="@string/pref_title_line_size"
+            android:summary="@string/pref_summary_line_size"
+            android:key="line_size"
+            android:defaultValue="@string/default_line_size"
             android:entries="@array/pref_option_size"
-            android:entryValues="@array/pref_option_size_values"
-            android:dependency="numbers_show" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/pref_header_lines"
-        android:key="pref_lines_settings">
-
-        <CheckBoxPreference
-            android:key="lines_show"
-            android:title="@string/pref_title_showLines"
-            android:defaultValue="@string/default_lines_show" />
-
-        <ListPreference
-            android:title="@string/pref_title_linesLayout"
-            android:summary="@string/pref_summary_layout"
-            android:key="lines_layout"
-            android:defaultValue="@string/default_lines_layout"
-            android:entries="@array/pref_option_layout"
-            android:entryValues="@array/pref_option_layout_values"
-            android:dependency="lines_show" />
-
-        <ListPreference
-            android:title="@string/pref_title_linesSize"
-            android:summary="@string/pref_summary_size"
-            android:key="lines_size"
-            android:defaultValue="@string/default_lines_size"
-            android:entries="@array/pref_option_size"
-            android:entryValues="@array/pref_option_size_values"
-            android:dependency="lines_show" />
+            android:entryValues="@array/pref_option_size_values" />
 
     </PreferenceCategory>
 

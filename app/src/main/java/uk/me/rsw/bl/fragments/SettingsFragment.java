@@ -1,6 +1,5 @@
 package uk.me.rsw.bl.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.preference.ListPreference;
@@ -17,10 +16,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.preferences);
 
         bindPreferenceSummaryToValue(findPreference("workingBell"));
-        bindPreferenceSummaryToValue(findPreference("numbers_layout"));
-        bindPreferenceSummaryToValue(findPreference("lines_layout"));
-        bindPreferenceSummaryToValue(findPreference("numbers_size"));
-        bindPreferenceSummaryToValue(findPreference("lines_size"));
+        bindPreferenceSummaryToValue(findPreference("line_style"));
+        bindPreferenceSummaryToValue(findPreference("line_layout"));
+        bindPreferenceSummaryToValue(findPreference("line_size"));
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             findPreference("practice_vibrate").setEnabled(false);

@@ -10,9 +10,20 @@
         <item>lightest</item>
     </string-array>
 
+    <string-array name="pref_option_style">
+        <item>Numbers</item>
+        <item>Lines</item>
+        <item>Diagrams</item>
+    </string-array>
+    <string-array name="pref_option_style_values">
+        <item>numbers</item>
+        <item>lines</item>
+        <item>diagrams</item>
+    </string-array>
+
     <string-array name="pref_option_layout">
-        <item>Single column</item>
-        <item>Single row</item>
+        <item>Vertical</item>
+        <item>Horizontal</item>
     </string-array>
     <string-array name="pref_option_layout_values">
         <item>oneColumn</item>

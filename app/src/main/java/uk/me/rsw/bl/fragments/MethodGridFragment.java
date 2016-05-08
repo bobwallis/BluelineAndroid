@@ -65,8 +65,11 @@ public class MethodGridFragment extends Fragment {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
             method = (Method) getArguments().getSerializable(ARG_METHOD);
             type = getArguments().getString(ARG_TYPE);
-            layout = prefs.getString(type + "_layout", "oneColumn");
-            size = prefs.getString(type + "_size", "medium");
+            if (type != "grid") {
+                type = prefs.getString("line_style", "numbers");
+            }
+            layout = prefs.getString("line_layout", "oneRow");
+            size = prefs.getString("line_size", "medium");
             workingBell = prefs.getString("workingBell", "heaviest");
         }
     }

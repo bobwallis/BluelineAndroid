@@ -7,27 +7,19 @@
     <string name="pref_summary_workingBell">Select the default working bell in a group</string>
 
 
-    <string name="pref_header_numbers">Numbers display</string>
-    <string name="pref_header_lines">Line display</string>
-    <string name="pref_header_grid">Grid display</string>
+    <string name="pref_header_line">Blue line display</string>
 
-    <string name="pref_title_showNumbers">Show \'numbers\' view</string>
-    <string name="pref_title_showLines">Show \'line\' view</string>
-    <string name="pref_title_showGrid">Show \'grid\' view</string>
+    <string name="pref_title_line_style">Line style</string>
+    <string name="pref_summary_line_style">Select the style of image to display</string>
 
-    <string name="pref_title_numbersLayout">Numbers layout</string>
-    <string name="pref_title_linesLayout">Line layout</string>
-    <string name="pref_title_gridLayout">Grid layout</string>
-    <string name="pref_summary_layout">Select the default working bell in a group</string>
+    <string name="pref_title_line_layout">Overflow direction</string>
+    <string name="pref_summary_line_layout">Select the direction that the line will overflow when too large to fit on screen</string>
 
-    <string name="pref_title_numbersSize">Numbers size</string>
-    <string name="pref_title_linesSize">Line size</string>
-    <string name="pref_title_gridSize">Grid size</string>
-    <string name="pref_summary_size">Select the size for this line view</string>
+    <string name="pref_title_line_size">Size</string>
+    <string name="pref_summary_line_size">Select the size for the line view</string>
 
 
     <string name="pref_header_practice">Practice</string>
-    <string name="pref_title_showPractice">Show \'practice\' interface</string>
     <string name="pref_title_vibrate">Vibrate on error</string>
 
 </resources>
