@@ -41,17 +41,18 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 			break;
 	}
 
+	// Overrides for grid type
+	if( qs.type === 'grid' ) {
+		qs.layout = 'oneColumn';
+		qs.fontSize = 16;
+	}
+
 	var container = document.getElementById( 'container' ),
 		method = new Method( qs );
 
 	// Plain course
 	var plainCourseGrid = new Grid( $.extend( true, method.gridOptions.plainCourse[qs.type](), {
 		title: false,
-		sideNotation: {
-			show: true,
-			color: '#999',
-			font: (qs.fontSize*0.75)+'px sans-serif'
-		},
 		layout: {
 			numberOfColumns: (qs.layout == 'oneRow')? method.numberOfLeads: 1,
 			numberOfLeads: (qs.type == 'grid')? 1 : method.numberOfLeads
@@ -74,11 +75,6 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 			title = document.createElement( 'h1' ),
 			titleText = document.createTextNode( e.title.text.replace(':', '') ),
 			callGrid = new Grid( $.extend( e, {
-				sideNotation: {
-					show: true,
-					color: '#999',
-					font: (qs.fontSize*0.75)+'px sans-serif'
-				},
 				title: false
 			} ) ),
 			callGridImage = callGrid.draw();

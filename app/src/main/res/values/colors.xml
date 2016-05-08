@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="white"    type="color">#FFFFFF</item>
-    <item name="black"    type="color">#000000</item>
+    <item name="white" type="color">#FFFFFF</item>
+    <item name="black" type="color">#000000</item>
 
-    <item name="darkBlue"    type="color">#002856</item>
-    <item name="darkerBlue"  type="color">#000F3D</item>
-    <item name="lightBlue"   type="color">#29404C</item>
-    <item name="lighterBlue"   type="color">#C2D9E5</item>
+    <item name="darkBlue" type="color">#002856</item>
+    <item name="darkerBlue" type="color">#000F3D</item>
+    <item name="lightBlue" type="color">#29404C</item>
+    <item name="lighterBlue" type="color">#C2D9E5</item>
 
-    <item name="borderGrey"  type="color">#E0DED9</item>
-    <item name="iconGrey"    type="color">#757575</item>
-    <item name="darkGrey"    type="color">#DE000000</item>
+    <item name="borderGrey" type="color">#E0DED9</item>
+    <item name="iconGrey" type="color">#757575</item>
+    <item name="darkGrey" type="color">#DE000000</item>
 </resources>

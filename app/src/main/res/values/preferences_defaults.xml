@@ -11,10 +11,6 @@
     <string name="default_lines_layout">oneColumn</string>
     <string name="default_lines_size">medium</string>
 
-    <string name="default_grid_show">true</string>
-    <string name="default_grid_layout">oneColumn</string>
-    <string name="default_grid_size">medium</string>
-
     <string name="default_practice_show">true</string>
     <string name="default_practice_vibrate">true</string>
 </resources>

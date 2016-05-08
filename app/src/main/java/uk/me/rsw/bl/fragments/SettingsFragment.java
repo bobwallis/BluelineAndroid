@@ -19,10 +19,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         bindPreferenceSummaryToValue(findPreference("workingBell"));
         bindPreferenceSummaryToValue(findPreference("numbers_layout"));
         bindPreferenceSummaryToValue(findPreference("lines_layout"));
-        bindPreferenceSummaryToValue(findPreference("grid_layout"));
         bindPreferenceSummaryToValue(findPreference("numbers_size"));
         bindPreferenceSummaryToValue(findPreference("lines_size"));
-        bindPreferenceSummaryToValue(findPreference("grid_size"));
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());

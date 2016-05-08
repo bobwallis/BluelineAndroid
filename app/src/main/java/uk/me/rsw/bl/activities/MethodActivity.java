@@ -137,18 +137,16 @@ public class MethodActivity extends AppCompatActivity {
             true,
             prefs.getBoolean("numbers_show", true),
             prefs.getBoolean("lines_show", false),
-            prefs.getBoolean("grid_show", true),
+            true,
             (prefs.getBoolean("practice_show", true) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT))
         };
         layouts = new String[] {
             prefs.getString("numbers_layout", "oneColumn"),
-            prefs.getString("lines_layout", "oneColumn"),
-            prefs.getString("grid_layout", "oneColumn")
+            prefs.getString("lines_layout", "oneColumn")
         };
         sizes = new String[] {
                 prefs.getString("numbers_size", "medium"),
-                prefs.getString("lines_size", "medium"),
-                prefs.getString("grid_size", "medium")
+                prefs.getString("lines_size", "medium")
         };
         workingBell = prefs.getString("workingBell", "heaviest");
 
@@ -184,14 +182,11 @@ public class MethodActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if( prefs.getBoolean("numbers_show", true) != tabs[1] ||
             prefs.getBoolean("lines_show", false) != tabs[2] ||
-            prefs.getBoolean("grid_show", true) != tabs[3] ||
             (prefs.getBoolean("practice_show", true) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)) != tabs[4] ||
             prefs.getString("numbers_layout", "oneColumn") != layouts[0] ||
             prefs.getString("lines_layout", "oneColumn") != layouts[1] ||
-            prefs.getString("grid_layout", "oneColumn") != layouts[2] ||
             prefs.getString("numbers_size", "medium") != sizes[0] ||
             prefs.getString("lines_size", "medium") != sizes[1] ||
-            prefs.getString("grid_size", "medium") != sizes[2] ||
             prefs.getString("workingBell", "heaviest") != workingBell
         ) {
             Intent intent = getIntent();
