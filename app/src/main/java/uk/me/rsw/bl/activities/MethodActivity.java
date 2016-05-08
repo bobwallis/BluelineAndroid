@@ -138,7 +138,7 @@ public class MethodActivity extends AppCompatActivity {
             prefs.getBoolean("numbers_show", true),
             prefs.getBoolean("lines_show", false),
             true,
-            (prefs.getBoolean("practice_show", true) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT))
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         };
         layouts = new String[] {
             prefs.getString("numbers_layout", "oneColumn"),
@@ -182,7 +182,6 @@ public class MethodActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if( prefs.getBoolean("numbers_show", true) != tabs[1] ||
             prefs.getBoolean("lines_show", false) != tabs[2] ||
-            (prefs.getBoolean("practice_show", true) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)) != tabs[4] ||
             prefs.getString("numbers_layout", "oneColumn") != layouts[0] ||
             prefs.getString("lines_layout", "oneColumn") != layouts[1] ||
             prefs.getString("numbers_size", "medium") != sizes[0] ||

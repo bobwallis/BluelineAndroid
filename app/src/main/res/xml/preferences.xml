@@ -78,15 +78,9 @@
         android:key="pref_practice_settings">
 
         <CheckBoxPreference
-            android:key="practice_show"
-            android:title="@string/pref_title_showPractice"
-            android:defaultValue="@string/default_practice_show" />
-
-        <CheckBoxPreference
             android:key="practice_vibrate"
             android:title="@string/pref_title_vibrate"
-            android:defaultValue="@string/default_practice_vibrate"
-            android:dependency="practice_show"/>
+            android:defaultValue="@string/default_practice_vibrate" />
 
     </PreferenceCategory>
 

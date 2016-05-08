@@ -23,11 +23,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         bindPreferenceSummaryToValue(findPreference("lines_size"));
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("practice_show", false);
-            editor.commit();
-            findPreference("practice_show").setEnabled(false);
+            findPreference("practice_vibrate").setEnabled(false);
         }
     }
 
