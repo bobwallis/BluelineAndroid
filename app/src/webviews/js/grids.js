@@ -41,8 +41,9 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 
 	// Overrides for grid type
 	if( qs.type === 'grid' ) {
+		qs.size = 'medium';
 		qs.layout = 'oneColumn';
-		qs.fontSize = 16;
+		qs.fontSize = 15;
 	}
 
 	document.body.className = qs.layout+' '+qs.size;

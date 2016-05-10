@@ -258,6 +258,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				},
 				ruleOffs: {
 					stroke: '#002856',
+					width: fontSize/20,
 					dash: [0,0]
 				}
 			} );
@@ -267,7 +268,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				isHuntBell = that.huntBells.indexOf( i ) !== -1;
 				isWorkingBell = toFollow.indexOf( i ) !== -1;
 				thisgridOptionsplainCoursediagrams.lines.bells.push( {
-					width: 1,
+					width: fontSize/15,
 					stroke: isHuntBell? huntBellColor : (isWorkingBell? '#002856' : 'transparent')
 				} );
 			}
@@ -287,6 +288,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				thisgridOptionscallsdiagrams[callIndex].id += '_diagrams';
 				thisgridOptionscallsdiagrams[callIndex].sideNotation = false;
 				thisgridOptionscallsdiagrams[callIndex].ruleOffs.stroke = '#002856';
+				thisgridOptionscallsdiagrams[callIndex].ruleOffs.width = fontSize/20;
 				thisgridOptionscallsdiagrams[callIndex].ruleOffs.dash = [0,0];
 				thisgridOptionscallsdiagrams[callIndex].numbers = { show: true, font: (fontSize*0.8)+'px '+fontFace, bells: rounds.map( function( b ) { return { color: '#002856' }; } ) };
 				// Set line colors
@@ -294,7 +296,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					isHuntBell = that.huntBells.indexOf( i ) !== -1;
 					isAffected = call.affected.indexOf( i ) !== -1;
 					thisgridOptionscallsdiagrams[callIndex].lines.bells.push( {
-						width: 1,
+						width: fontSize/15,
 						stroke: isHuntBell? huntBellColor : (isAffected? '#002856' : 'transparent')
 					} );
 				}
