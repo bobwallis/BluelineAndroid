@@ -2,15 +2,15 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/navigation_search"
             android:icon="@drawable/ic_methods"
-            android:title="Search methods" />
+            android:title="@string/title_activity_main" />
         <item android:id="@+id/navigation_custom"
             android:icon="@drawable/ic_custom"
-            android:title="Enter custom method" />
+            android:title="@string/title_activity_custom" />
         <item android:id="@+id/navigation_settings"
             android:icon="@drawable/ic_settings"
-            android:title="Settings" />
+            android:title="@string/title_activity_settings" />
         <item android:id="@+id/navigation_about"
             android:icon="@drawable/ic_about"
-            android:title="About" />
+            android:title="@string/title_activity_about" />
     </group>
 </menu>

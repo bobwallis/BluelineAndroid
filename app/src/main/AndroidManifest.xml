@@ -65,7 +65,7 @@
                 <data
                     android:scheme="blueline"
                     android:host="methods"
-                    android:path="" />
+                    android:path="/" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>

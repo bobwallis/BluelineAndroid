@@ -55,7 +55,8 @@
             android:gravity="center_vertical"
             android:ellipsize="start"
             android:imeOptions="actionSearch"
-            android:visibility="gone" >
+            android:visibility="gone"
+            android:inputType="text">
             <requestFocus />
         </EditText>
 
@@ -67,7 +68,8 @@
             android:layout_centerVertical="true"
             android:onClick="mic"
             android:layout_marginRight="13dp"
-            android:src="@drawable/ic_mic" />
+            android:src="@drawable/ic_mic"
+            android:contentDescription="Voice Search" />
 
     </RelativeLayout>
 

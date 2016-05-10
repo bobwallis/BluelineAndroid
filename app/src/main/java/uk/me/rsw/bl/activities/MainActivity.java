@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_MENU) {
-            mDrawerLayout.openDrawer(Gravity.LEFT);
+            mDrawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_SEARCH) {
