@@ -11,15 +11,88 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/darkBlue </item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="preferenceTheme">@style/BluelinePreferenceThemeOverlay</item>
         <item name="alertDialogTheme">@style/BluelineAlertDialogStyle</item>
 
     </style>
 
+    <!-- Alert Dialog -->
     <style name="BluelineAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/lightBlue</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
         <item name="android:background">@color/white</item>
+    </style>
+
+    <!-- Preferences -->
+    <style name="BluelinePreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
+        <item name="preferenceFragmentStyle">@style/PreferenceFragment.Material</item>
+        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen.Material</item>
+        <item name="preferenceCategoryStyle">@style/Preference.Category.Material</item>
+        <item name="preferenceStyle">@style/Preference.Material</item>
+        <item name="preferenceInformationStyle">@style/Preference.Information.Material</item>
+        <item name="checkBoxPreferenceStyle">@style/Preference.CheckBoxPreference.Material</item>
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Material</item>
+        <item name="dialogPreferenceStyle">@style/Preference.DialogPreference.Material</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference.Material</item>
+        <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList.Material</item>
+    </style>
+
+    <style name="PreferenceFragment.Material">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+    </style>
+
+    <style name="Preference.Material">
+        <item name="android:layout">@layout/preference_material</item>
+    </style>
+
+    <style name="Preference.Information.Material">
+        <item name="android:layout">@layout/preference_information_material</item>
+        <item name="android:enabled">false</item>
+        <item name="android:shouldDisableView">false</item>
+    </style>
+
+    <style name="Preference.Category.Material">
+        <item name="android:layout">@layout/preference_category_material</item>
+    </style>
+
+    <style name="Preference.CheckBoxPreference.Material">
+        <item name="android:layout">@layout/preference_material</item>
+    </style>
+
+    <style name="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:layout">@layout/preference_material</item>
+    </style>
+
+    <style name="Preference.PreferenceScreen.Material">
+        <item name="android:layout">@layout/preference_material</item>
+    </style>
+
+    <style name="Preference.DialogPreference.Material">
+        <item name="android:layout">@layout/preference_material</item>
+    </style>
+
+    <style name="Preference.DialogPreference.EditTextPreference.Material">
+        <item name="android:layout">@layout/preference_material</item>
+    </style>
+
+    <style name="Preference_TextAppearanceMaterialBody2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Preference_TextAppearanceMaterialSubhead">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="PreferenceFragmentList.Material">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
     </style>
 
 </resources>
