@@ -26,6 +26,7 @@
     "gulp-typogr": "^1.0.0",
     "gulp-uglify": "^1.4.1",
     "gulp-uncss": "^1.0.4",
-    "hyphenation.en-gb": "^0.2.1"
+    "hyphenation.en-gb": "^0.2.1",
+    "imagemin-zopfli": "^4.2.0"
   }
 }

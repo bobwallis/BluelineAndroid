@@ -4,27 +4,29 @@ var m = {
 	localStorage_age: '20151003'
 };
 
-var gulp         = require( 'gulp' );
-var rename       = require( 'gulp-rename' );
-var concat       = require( 'gulp-concat');
-var es           = require( 'event-stream' );
-var less         = require( 'gulp-less' );
-var autoprefixer = require( 'gulp-autoprefixer' );
-var minifyCss    = require( 'gulp-minify-css' );
-var uncss        = require( 'gulp-uncss' );
-var imagemin     = require( 'gulp-imagemin' );
-var svg2png      = require( 'gulp-svg2png' );
-var requirejs    = require( 'gulp-requirejs' );
-var amdclean     = require( 'gulp-amdclean' );
-var uglify       = require( 'gulp-uglify' );
-var mustache     = require( 'gulp-mustache' );
-var typogr       = require( 'gulp-typogr' );
-var hypher       = require( 'gulp-hypher' );
-var h_pattern    = require( 'hyphenation.en-gb' );
-var htmlmin      = require( 'gulp-htmlmin' );
+var gulp            = require( 'gulp' );
+var rename          = require( 'gulp-rename' );
+var concat          = require( 'gulp-concat');
+var es              = require( 'event-stream' );
+var less            = require( 'gulp-less' );
+var autoprefixer    = require( 'gulp-autoprefixer' );
+var minifyCss       = require( 'gulp-minify-css' );
+var uncss           = require( 'gulp-uncss' );
+var imagemin        = require( 'gulp-imagemin' );
+var imagemin_zopfli = require( 'imagemin-zopfli' );
+var svg2png         = require( 'gulp-svg2png' );
+var requirejs       = require( 'gulp-requirejs' );
+var amdclean        = require( 'gulp-amdclean' );
+var uglify          = require( 'gulp-uglify' );
+var mustache        = require( 'gulp-mustache' );
+var typogr          = require( 'gulp-typogr' );
+var hypher          = require( 'gulp-hypher' );
+var h_pattern       = require( 'hyphenation.en-gb' );
+var htmlmin         = require( 'gulp-htmlmin' );
 
 
-gulp.task( 'default', ['html', 'css', 'js', 'js.workers', 'img', 'icon', 'icon-store'] );
+gulp.task( 'default', ['html', 'css', 'js', 'js.workers'] );
+gulp.task( 'images', ['img', 'icon', 'icon-store'] );
 
 
 gulp.task( 'html', function() {
@@ -49,8 +51,11 @@ gulp.task( 'css', function() {
 
 gulp.task( 'img', function() {
 	gulp.src( [SRC+'less/*.svg'] )
-		.pipe( imagemin() )
+		.pipe( imagemin( { use: [imagemin_zopfli()] } ) )
 		.pipe( gulp.dest( DEST ) );
+	gulp.src( ['app/src/main/res/**/*.png'] )
+		.pipe( imagemin( { use: [imagemin_zopfli()] } ) )
+		.pipe( gulp.dest( 'app/src/main/res/' ) );
 } );
 
 
@@ -58,7 +63,7 @@ gulp.task( 'icon', function() {
 	var tasks = [ ['mdpi',48], ['hdpi',72], ['xhdpi',96], ['xxhdpi',144], ['xxxhdpi',192] ].map( function( size ) {
 		return gulp.src( 'res/icon.svg' )
 			.pipe( svg2png( size[1]/192 ) )
-			.pipe( imagemin() )
+			.pipe( imagemin( { use: [imagemin_zopfli()] } ) )
 			.pipe( rename( 'ic_launcher.png' ) )
 			.pipe( gulp.dest( 'app/src/main/res/mipmap-'+size[0]+'/' ) );
 	} );
@@ -67,7 +72,7 @@ gulp.task( 'icon', function() {
 gulp.task( 'icon-store', function() {
 	return gulp.src( 'res/icon.svg' )
 		.pipe( svg2png( 512/192 ) )
-		.pipe( imagemin() )
+		.pipe( imagemin( { use: [imagemin_zopfli()] } ) )
 		.pipe( rename( 'icon.png' ) )
 		.pipe( gulp.dest( 'res/' ) );
 } );
