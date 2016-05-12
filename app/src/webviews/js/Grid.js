@@ -71,7 +71,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 				context.textBaseline = 'middle';
 				y = canvasTopPadding + rowHeight + textMetrics.y;
 				for( i = 0; i < options.sideNotation.text.length; ++i ) {
-					context.fillText( options.sideNotation.text[i], canvasLeftPadding - 4, (i*rowHeight)+y );
+					context.fillText( options.sideNotation.text[i], canvasLeftPadding - parseInt( options.sideNotation.font )/2, (i*rowHeight)+y );
 				}
 			}
 

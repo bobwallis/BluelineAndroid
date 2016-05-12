@@ -89,6 +89,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				size: fontSize*1.083
 			},
 			sideNotation: {
+				font: (fontSize*0.8333)+'px sans-serif',
 				show: true
 			}
 		};
