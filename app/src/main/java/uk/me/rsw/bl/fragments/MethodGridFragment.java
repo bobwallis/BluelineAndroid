@@ -3,6 +3,7 @@ package uk.me.rsw.bl.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -46,6 +47,12 @@ public class MethodGridFragment extends Fragment {
         @JavascriptInterface
         public String queryString() {
             return "size=" + size + "&layout=" + layout + "&type=" + type + "&workingBell="+ workingBell +"&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&calls=" + method.getCalls() + "&callingPositions=" + method.getCallingPositions() + "&ruleOffs=" + method.getRuleOffs();
+        }
+
+        @JavascriptInterface
+        public int maxLayoutHeight() {
+            Configuration configuration = mActivity.getResources().getConfiguration();
+            return (configuration.screenHeightDp-123);
         }
     }
 

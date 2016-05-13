@@ -96,4 +96,5 @@
  - Update database
  - Update support libraries
  - Simplify options and improve defaults
+ - Improve layout when overflowing horizontally
  - Performance improvements and other small fixes

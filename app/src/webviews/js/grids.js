@@ -1,17 +1,18 @@
 require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : Android.queryString(),
-	qs = (function( a ) {
-		if ( a === '' ) return {};
-			var b = {};
-		for ( var i = 0; i < a.length; ++i ) {
-			var p = a[i].split( '=', 2 );
-			if (p.length == 1)
-				b[p[0]] = '';
-			else
-				b[p[0]] = decodeURIComponent( p[1].replace( /\+/g, " " ) );
-		}
-		return b;
-	})( queryString.split('&') );
+		maxLayoutHeight = (typeof Android === 'object')? Android.maxLayoutHeight() - 32 : 300,
+		qs = (function( a ) {
+			if ( a === '' ) return {};
+				var b = {};
+			for ( var i = 0; i < a.length; ++i ) {
+				var p = a[i].split( '=', 2 );
+				if (p.length == 1)
+					b[p[0]] = '';
+				else
+					b[p[0]] = decodeURIComponent( p[1].replace( /\+/g, " " ) );
+			}
+			return b;
+		})( queryString.split('&') );
 	qs.id = 'blueline';
 	qs.type = (typeof qs.type == 'string' && (qs.type == 'lines' || qs.type == 'diagrams' || qs.type == 'grid'))? qs.type : 'numbers';
 	qs.size = (typeof qs.size == 'string' && (qs.size == 'tiny' || qs.size == 'small' || qs.size == 'large' || qs.size == 'xlarge'))? qs.size : 'medium';
@@ -52,10 +53,11 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 		method = new Method( qs );
 
 	// Plain course
-	var plainCourseGrid = new Grid( $.extend( true, method.gridOptions.plainCourse[qs.type](), {
+	var plainCourseGridOptions = method.gridOptions.plainCourse[qs.type]();
+	var plainCourseGrid = new Grid( $.extend( true, plainCourseGridOptions, {
 		title: false,
 		layout: {
-			numberOfColumns: (qs.layout == 'oneRow')? method.numberOfLeads: 1,
+			numberOfColumns: (qs.layout == 'oneRow')? Math.ceil( method.numberOfLeads / Math.floor( maxLayoutHeight / (plainCourseGridOptions.dimensions.row.height * method.notation.exploded.length) ) ) : 1,
 			numberOfLeads: (qs.type == 'grid')? 1 : method.numberOfLeads
 		}
 	} ) ),
