@@ -405,7 +405,6 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				// Set IDs and other options
 				thisgridOptionscallsgrid[callIndex].id += '_grid';
 				thisgridOptionscallsgrid[callIndex].numbers = false;
-				thisgridOptionscallsgrid[callIndex].sideNotation = { show: true };
 				// Set line colors
 				for( i = 0, j = 0; i < that.stage; ++i ) {
 					isHuntBell = that.huntBells.indexOf( i ) !== -1;
