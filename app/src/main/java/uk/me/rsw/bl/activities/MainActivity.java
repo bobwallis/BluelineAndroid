@@ -3,6 +3,7 @@ package uk.me.rsw.bl.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -158,7 +159,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     anim_toolbarBackground.start();
                     anim_searchBox.start();
                     if(stars.getCount() > 0) {
-                        stars.setVisibility(View.VISIBLE);
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                stars.setVisibility(View.VISIBLE);
+                            }
+                        }, 200);
                     }
                 }
             }
