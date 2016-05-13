@@ -31,97 +31,97 @@ import uk.me.rsw.bl.R;
 
 public class SearchBox extends RelativeLayout {
 
-	private MaterialMenuView materialMenu;
-	private TextView logo;
-	private EditText search;
-	private Context context;
-	private boolean searchOpen;
-	private boolean isMic;
-	private ImageView mic;
-	private SearchListener listener;
-	private MenuListener menuListener;
-	private String logoText;
+    private MaterialMenuView materialMenu;
+    private TextView logo;
+    private EditText search;
+    private Context context;
+    private boolean searchOpen;
+    private boolean isMic;
+    private ImageView mic;
+    private SearchListener listener;
+    private MenuListener menuListener;
+    private String logoText;
 
-	public SearchBox(Context context) {
-		this(context, null);
-	}
+    public SearchBox(Context context) {
+        this(context, null);
+    }
 
-	public SearchBox(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
+    public SearchBox(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-	public SearchBox(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		inflate(context, R.layout.widget_searchbox, this);
-		this.searchOpen = false;
-		this.isMic = true;
-		this.materialMenu = (MaterialMenuView) findViewById(R.id.material_menu_button);
-		this.logo = (TextView) findViewById(R.id.logo);
-		this.search = (EditText) findViewById(R.id.search);
-		this.context = context;
-		this.mic = (ImageView) findViewById(R.id.mic);
-		materialMenu.setOnClickListener(new OnClickListener() {
+    public SearchBox(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        inflate(context, R.layout.widget_searchbox, this);
+        this.searchOpen = false;
+        this.isMic = true;
+        this.materialMenu = (MaterialMenuView) findViewById(R.id.material_menu_button);
+        this.logo = (TextView) findViewById(R.id.logo);
+        this.search = (EditText) findViewById(R.id.search);
+        this.context = context;
+        this.mic = (ImageView) findViewById(R.id.mic);
+        materialMenu.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				if (searchOpen) {
+            @Override
+            public void onClick(View v) {
+                if (searchOpen) {
                     setLogoText(logoText);
                     setSearchText("");
-					closeSearch();
-				} else {
-					if (menuListener != null)
-						menuListener.onMenuClick();
-				}
-			}
+                    closeSearch();
+                } else {
+                    if (menuListener != null)
+                        menuListener.onMenuClick();
+                }
+            }
 
-		});
-		logo.setOnClickListener(new OnClickListener() {
+        });
+        logo.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				openSearch();
-			}
+            @Override
+            public void onClick(View v) {
+                openSearch();
+            }
 
-		});
-		search.setOnEditorActionListener(new OnEditorActionListener() {
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					search(getSearchText());
-					return true;
-				}
-				return false;
-			}
-		});
-		search.setOnKeyListener(new OnKeyListener() {
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (keyCode == KeyEvent.KEYCODE_ENTER) {
-					search(getSearchText());
-					return true;
-				}
-				return false;
-			}
-		});
-		logoText = context.getString(R.string.search_hint);
-	}
+        });
+        search.setOnEditorActionListener(new OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId,
+                    KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    search(getSearchText());
+                    return true;
+                }
+                return false;
+            }
+        });
+        search.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    search(getSearchText());
+                    return true;
+                }
+                return false;
+            }
+        });
+        logoText = context.getString(R.string.search_hint);
+    }
 
-	public void setMenuListener(MenuListener menuListener) {
-		this.menuListener = menuListener;
-	}
-	public void setSearchListener(SearchListener listener) {
-		this.listener = listener;
-	}
+    public void setMenuListener(MenuListener menuListener) {
+        this.menuListener = menuListener;
+    }
+    public void setSearchListener(SearchListener listener) {
+        this.listener = listener;
+    }
 
-	public void setLogoText(String text) {
+    public void setLogoText(String text) {
         logo.setText(text);
-	}
+    }
 
-	public String getSearchText() {
-		return search.getText().toString();
-	}
-	public void setSearchText(String text) {
-		search.setText(text);
-	}
+    public String getSearchText() {
+        return search.getText().toString();
+    }
+    public void setSearchText(String text) {
+        search.setText(text);
+    }
 
     public void search(String text) {
         setSearchText(text);
@@ -133,7 +133,7 @@ public class SearchBox extends RelativeLayout {
     }
 
     // Functions to open and close the search interface
-	public void openSearch() {
+    public void openSearch() {
         this.materialMenu.animateState(IconState.ARROW);
         this.logo.setVisibility(View.GONE);
         this.search.setVisibility(View.VISIBLE);
@@ -189,17 +189,17 @@ public class SearchBox extends RelativeLayout {
         searchOpen = true;
     }
 
-	public void closeSearch() {
+    public void closeSearch() {
         setLogoText(TextUtils.isEmpty(getSearchText())? logoText : getSearchText());
-		this.materialMenu.animateState(IconState.BURGER);
-		this.logo.setVisibility(View.VISIBLE);
-		this.search.setVisibility(View.GONE);
+        this.materialMenu.animateState(IconState.BURGER);
+        this.logo.setVisibility(View.VISIBLE);
+        this.search.setVisibility(View.GONE);
 
         isMic = true;
         mic.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_mic));
 
-		if (listener != null)
-			listener.onSearchClosed();
+        if (listener != null)
+            listener.onSearchClosed();
 
         Handler handler = new Handler();
         Runnable runnable = new Runnable() {
@@ -212,7 +212,7 @@ public class SearchBox extends RelativeLayout {
         handler.postDelayed(runnable, 150);
 
         searchOpen = false;
-	}
+    }
 
 
     // Voice input related functions
@@ -255,16 +255,16 @@ public class SearchBox extends RelativeLayout {
 
 
     // Define interfaces
-	public interface SearchListener {
-		public void onSearchOpened();
-		public void onSearchCleared();
-		public void onSearchClosed();
-		public void onSearchTermChanged();
-		public void onSearch(String result);
-	}
+    public interface SearchListener {
+        public void onSearchOpened();
+        public void onSearchCleared();
+        public void onSearchClosed();
+        public void onSearchTermChanged();
+        public void onSearch(String result);
+    }
 
-	public interface MenuListener {
-		public void onMenuClick();
-	}
+    public interface MenuListener {
+        public void onMenuClick();
+    }
 
 }
