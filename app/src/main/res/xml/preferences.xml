@@ -28,20 +28,20 @@
             android:entryValues="@array/pref_option_style_values" />
 
         <ListPreference
-            android:title="@string/pref_title_line_layout"
-            android:summary="@string/pref_summary_line_layout"
-            android:key="line_layout"
-            android:defaultValue="@string/default_line_layout"
-            android:entries="@array/pref_option_layout"
-            android:entryValues="@array/pref_option_layout_values" />
-
-        <ListPreference
             android:title="@string/pref_title_line_size"
             android:summary="@string/pref_summary_line_size"
             android:key="line_size"
             android:defaultValue="@string/default_line_size"
             android:entries="@array/pref_option_size"
             android:entryValues="@array/pref_option_size_values" />
+
+        <ListPreference
+            android:title="@string/pref_title_line_layout"
+            android:summary="@string/pref_summary_line_layout"
+            android:key="line_layout"
+            android:defaultValue="@string/default_line_layout"
+            android:entries="@array/pref_option_layout"
+            android:entryValues="@array/pref_option_layout_values" />
 
     </PreferenceCategory>
 
