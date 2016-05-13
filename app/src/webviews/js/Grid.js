@@ -274,7 +274,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 								x = canvasLeftPadding + (k*rowWidthWithPadding) + ((positionInLeadHead+0.5)*bellWidth);
 								context.fillStyle = options.lines.bells[j].stroke;
 								context.beginPath();
-								context.arc( x, y, 2, 0, Math.PI*2, true);
+								context.arc( x, y, options.lines.bells[j].width, 0, Math.PI*2, true);
 								context.closePath();
 								context.fill();
 							}
