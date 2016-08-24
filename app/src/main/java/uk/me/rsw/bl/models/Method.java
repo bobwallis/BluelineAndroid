@@ -1,6 +1,7 @@
 package uk.me.rsw.bl.models;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import java.io.Serializable;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
 public class Method implements Serializable {
 
     private String title = "";
+    private String abbreviation = "";
     private Boolean provisional = false;
     private String url = "";
 
@@ -22,6 +24,7 @@ public class Method implements Serializable {
 
     private String leadHead = "";
     private String leadHeadCode = "";
+    private String fchGroups = "";
 
     private Boolean doubleSym = false;
     private Boolean palindromic = false;
@@ -29,6 +32,7 @@ public class Method implements Serializable {
 
     private Integer numberOfHunts = -1;
     private Integer lengthOfLead = 0;
+    private Integer lengthOfCourse = 0;
 
     private String callingPositions = "{}";
     private String ruleOffs = "{}";
@@ -42,6 +46,10 @@ public class Method implements Serializable {
     }
     public void setTitle(String set_title) {
         title = set_title;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
     }
 
     public Boolean getProvisional() {
@@ -74,7 +82,6 @@ public class Method implements Serializable {
     public void setStage(Integer set_stage) {
         stage = set_stage;
     }
-
     public String getStageText() {
         switch(stage) {
             case 3:
@@ -143,6 +150,10 @@ public class Method implements Serializable {
         return leadHeadCode;
     }
 
+    public String getFchGroups() {
+        return fchGroups;
+    }
+
     public Boolean getPalindromic() {
         return palindromic;
     }
@@ -170,6 +181,10 @@ public class Method implements Serializable {
 
     public Integer getLengthOfLead() {
         return lengthOfLead;
+    }
+
+    public Integer getLengthOfCourse() {
+        return lengthOfCourse;
     }
 
     public Integer getNumberOfHunts() {
@@ -200,20 +215,22 @@ public class Method implements Serializable {
         stage = c.getInt(c.getColumnIndexOrThrow("stage"));
 
         notation = c.getString(c.getColumnIndexOrThrow("notation"));
-        notationExpanded = c.getString(c.getColumnIndexOrThrow("notationExpanded"));
+        notationExpanded = c.getString(c.getColumnIndexOrThrow("notationexpanded"));
 
-        leadHead = c.getString(c.getColumnIndexOrThrow("leadHead"));
-        leadHeadCode = c.getString(c.getColumnIndexOrThrow("leadHeadCode"));
+        leadHead = c.getString(c.getColumnIndexOrThrow("leadhead"));
+        leadHeadCode = c.getString(c.getColumnIndexOrThrow("leadheadcode"));
+        fchGroups = c.getString(c.getColumnIndexOrThrow("fchgroups"));
 
-        doubleSym = c.getInt(c.getColumnIndexOrThrow("doubleSym")) == 1;
+        doubleSym = c.getInt(c.getColumnIndexOrThrow("doublesym")) == 1;
         palindromic = c.getInt(c.getColumnIndexOrThrow("palindromic")) == 1;
         rotational = c.getInt(c.getColumnIndexOrThrow("rotational")) == 1;
 
-        numberOfHunts = c.getInt(c.getColumnIndexOrThrow("numberOfHunts"));
-        lengthOfLead = c.getInt(c.getColumnIndexOrThrow("lengthOfLead"));
+        numberOfHunts = c.getInt(c.getColumnIndexOrThrow("numberofhunts"));
+        lengthOfLead = c.getInt(c.getColumnIndexOrThrow("lengthoflead"));
+        lengthOfCourse = c.getInt(c.getColumnIndexOrThrow("lengthofcourse"));
 
-        callingPositions = c.getString(c.getColumnIndexOrThrow("callingPositions"));
-        ruleOffs = c.getString(c.getColumnIndexOrThrow("ruleOffs"));
+        callingPositions = c.getString(c.getColumnIndexOrThrow("callingpositions"));
+        ruleOffs = c.getString(c.getColumnIndexOrThrow("ruleoffs"));
         calls = c.getString(c.getColumnIndexOrThrow("calls"));
     }
 }

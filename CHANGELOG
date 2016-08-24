@@ -101,3 +101,5 @@
 
 21:
  - Update support libraries
+ - Update database and add indexes
+ - Fix display of symmetry, display FCH groups, number of rows and number of leads in a plain course on details tab

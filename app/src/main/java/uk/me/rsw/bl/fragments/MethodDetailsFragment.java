@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,16 +103,16 @@ public class MethodDetailsFragment extends Fragment {
             ll.addView(t, lp);
         }
 
-        if (method.getLengthOfLead() != 0) {
+        if( !TextUtils.isEmpty(method.getFchGroups())) {
             t = new TextView(getActivity());
             t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            t.setText("Lead Length");
+            t.setText("FCH Groups");
             t.setPadding(0, 24, 0, 8);
             t.setTypeface(null, Typeface.BOLD);
             ll.addView(t, lp);
             t = new TextView(getActivity());
             t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            t.setText(method.getLengthOfLead().toString());
+            t.setText(method.getFchGroups());
             t.setTextIsSelectable(true);
             ll.addView(t, lp);
         }
@@ -126,6 +127,25 @@ public class MethodDetailsFragment extends Fragment {
             t = new TextView(getActivity());
             t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             t.setText(method.getNumberOfHunts().toString());
+            t.setTextIsSelectable(true);
+            ll.addView(t, lp);
+        }
+
+        if (method.getLengthOfLead() != 0) {
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText("Lengths");
+            t.setPadding(0, 24, 0, 8);
+            t.setTypeface(null, Typeface.BOLD);
+            ll.addView(t, lp);
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText(method.getLengthOfLead().toString() + " rows per lead");
+            t.setTextIsSelectable(true);
+            ll.addView(t, lp);
+            t = new TextView(getActivity());
+            t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            t.setText(method.getLengthOfCourse().toString() + " rows per course ("+(String.valueOf(method.getLengthOfCourse()/method.getLengthOfLead()))+" leads)");
             t.setTextIsSelectable(true);
             ll.addView(t, lp);
         }
