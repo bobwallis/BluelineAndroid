@@ -34,6 +34,7 @@ CREATE TABLE methods($line);
 DELETE FROM methods WHERE stage > 16;
 CREATE INDEX IF NOT EXISTS title_index ON methods (title);
 CREATE INDEX IF NOT EXISTS title_magic ON methods (magic);
+VACUUM;
 IMPORT
 
 gzip -9 "$d/methods.db"
