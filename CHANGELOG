@@ -98,3 +98,6 @@
  - Simplify options and improve defaults
  - Improve layout when overflowing horizontally
  - Performance improvements and other small fixes
+
+21:
+ - Update support libraries
