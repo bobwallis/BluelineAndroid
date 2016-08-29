@@ -32,6 +32,7 @@ CREATE TABLE methods($line);
 .mode csv methods
 .import methods.csv methods
 DELETE FROM methods WHERE stage > 16;
+UPDATE methods SET leadheadcode = 'f' WHERE leadheadcode = '0';
 CREATE INDEX IF NOT EXISTS title_index ON methods (title);
 CREATE INDEX IF NOT EXISTS title_magic ON methods (magic);
 VACUUM;
