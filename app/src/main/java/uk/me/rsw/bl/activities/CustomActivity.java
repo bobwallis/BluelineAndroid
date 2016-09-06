@@ -12,9 +12,6 @@ import uk.me.rsw.bl.fragments.CustomFragment;
 
 public class CustomActivity extends AppCompatActivity {
 
-    public final static String METHOD_STAGE = "uk.me.rsw.bl.METHOD_STAGE";
-    public final static String METHOD_NOTATION = "uk.me.rsw.bl.METHOD_NOTATION";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

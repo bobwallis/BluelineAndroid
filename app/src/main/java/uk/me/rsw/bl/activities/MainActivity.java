@@ -32,6 +32,9 @@ import uk.me.rsw.bl.widgets.StarList;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public final static String METHOD_TITLE = "uk.me.rsw.bl.METHOD_TITLE";
+    public final static String METHOD_STAGE = "uk.me.rsw.bl.METHOD_STAGE";
+    public final static String METHOD_NOTATION = "uk.me.rsw.bl.METHOD_NOTATION";
+    public final static String METHOD_CUSTOM = "uk.me.rsw.bl.METHOD_CUSTOM";
     public final static String IS_SEARCHING = "uk.me.rsw.bl.IS_SEARCHING";
     public final static String SEARCH_QUERY = "uk.me.rsw.bl.SEARCH_QUERY";
 

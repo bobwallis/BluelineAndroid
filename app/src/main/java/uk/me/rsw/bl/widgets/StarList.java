@@ -84,8 +84,9 @@ public class StarList extends FrameLayout implements AdapterView.OnItemClickList
         c.moveToPosition(position);
         Intent intent = new Intent(mContext, MethodActivity.class);
         intent.putExtra(MainActivity.METHOD_TITLE, c.getString(c.getColumnIndexOrThrow("title")));
-        intent.putExtra(CustomActivity.METHOD_STAGE, c.getInt(c.getColumnIndexOrThrow("stage")));
-        intent.putExtra(CustomActivity.METHOD_NOTATION, c.getString(c.getColumnIndexOrThrow("notationExpanded")));
+        intent.putExtra(MainActivity.METHOD_CUSTOM, true);
+        intent.putExtra(MainActivity.METHOD_STAGE, c.getInt(c.getColumnIndexOrThrow("stage")));
+        intent.putExtra(MainActivity.METHOD_NOTATION, c.getString(c.getColumnIndexOrThrow("notationExpanded")));
         mContext.startActivity(intent);
     }
 

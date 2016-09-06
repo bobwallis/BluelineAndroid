@@ -25,11 +25,12 @@ import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.MethodPagerAdapter;
 import uk.me.rsw.bl.data.MethodsDatabase;
 import uk.me.rsw.bl.data.UserDataDatabase;
+import uk.me.rsw.bl.fragments.NameRequestDialogFragment;
 import uk.me.rsw.bl.models.Method;
 import uk.me.rsw.bl.models.Star;
 
 
-public class MethodActivity extends AppCompatActivity {
+public class MethodActivity extends AppCompatActivity implements NameRequestDialogFragment.NoticeDialogListener {
 
     private Toolbar mToolbar;
     private MethodPagerAdapter mSectionsPagerAdapter;
@@ -37,6 +38,7 @@ public class MethodActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
 
     private String title;
+    private Boolean customMethod;
     private Method method;
     private String line_style;
     private String line_layout;
@@ -60,24 +62,28 @@ public class MethodActivity extends AppCompatActivity {
         db = MethodsDatabase.getInstance(this);
         userDataDB = UserDataDatabase.getInstance(this);
 
-        // Get the title from the intent
+        // Get the intent
         Intent intent = getIntent();
+
+        // Check if a custom method is being viewed
+        customMethod = intent.getStringExtra(MainActivity.METHOD_TITLE).equals("Custom Method") || intent.getBooleanExtra(MainActivity.METHOD_CUSTOM, false);
 
         // If we've been given a definite title from another activity
         if( intent.getStringExtra(MainActivity.METHOD_TITLE) != null ) {
             title = intent.getStringExtra(MainActivity.METHOD_TITLE);
-            if (title.equals("Custom Method")) {
+            if (customMethod) {
                 // Check if the notation is for an existing method
-                method = db.getFromNotationExpandedAndStage(intent.getStringExtra(CustomActivity.METHOD_NOTATION), intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
+                method = db.getFromNotationExpandedAndStage(intent.getStringExtra(MainActivity.METHOD_NOTATION), intent.getIntExtra(MainActivity.METHOD_STAGE, 0));
                 if(method == null) {
                     method = new Method();
                     method.setTitle(title);
-                    method.setStage(intent.getIntExtra(CustomActivity.METHOD_STAGE, 0));
-                    method.setNotation(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
-                    method.setNotationExpanded(intent.getStringExtra(CustomActivity.METHOD_NOTATION));
+                    method.setStage(intent.getIntExtra(MainActivity.METHOD_STAGE, 0));
+                    method.setNotation(intent.getStringExtra(MainActivity.METHOD_NOTATION));
+                    method.setNotationExpanded(intent.getStringExtra(MainActivity.METHOD_NOTATION));
                 }
                 else {
                     title = method.getTitle();
+                    customMethod = false;
                     AlertDialog.Builder alertDialogB = new AlertDialog.Builder(this);
                     alertDialogB.setTitle("Method Exists")
                             .setMessage("A method with that place notation is already in the database:\n   " + title + ".\n\nPress OK to view details.")
@@ -118,7 +124,7 @@ public class MethodActivity extends AppCompatActivity {
         star = new Star(method.getTitle(), method.getStage(), method.getNotationExpanded());
 
         // Start app indexing client if needed
-        if( !title.equals("Custom Method")) {
+        if(!customMethod) {
             APP_URI = Uri.parse("android-app://uk.me.rsw.bl/blueline/methods/"+method.getURL());
             WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/"+method.getURL());
             mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -154,7 +160,7 @@ public class MethodActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if( !title.equals("Custom Method")) {
+        if(!customMethod) {
             mClient.connect();
             Action viewAction = Action.newAction(Action.TYPE_VIEW, title, WEB_URL, APP_URI);
             AppIndex.AppIndexApi.start(mClient, viewAction);
@@ -167,9 +173,9 @@ public class MethodActivity extends AppCompatActivity {
 
         // Check for changes to the preferences deciding which tabs to show and restart the activity if needed
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if( prefs.getString("line_style", "numbers") != line_style ||
-            prefs.getString("line_layout", "oneRow") != line_layout ||
-            prefs.getString("line_size", "medium") != line_size ||
+        if( prefs.getString("line_style",  "numbers")  != line_style  ||
+            prefs.getString("line_layout", "oneRow")   != line_layout ||
+            prefs.getString("line_size",   "medium")   != line_size   ||
             prefs.getString("workingBell", "heaviest") != workingBell
         ) {
             Intent intent = getIntent();
@@ -180,7 +186,7 @@ public class MethodActivity extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        if( !title.equals("Custom Method")) {
+        if( !customMethod) {
             Action viewAction = Action.newAction(Action.TYPE_VIEW, title, WEB_URL, APP_URI);
             AppIndex.AppIndexApi.end(mClient, viewAction);
             mClient.disconnect();
@@ -215,30 +221,17 @@ public class MethodActivity extends AppCompatActivity {
 
             case R.id.action_star:
                 if(item.getTitle() == getResources().getString(R.string.action_star)) {
-                    userDataDB.addStar(star);
-                    Snackbar.make(findViewById(R.id.pager), R.string.snackbar_star_text, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.snackbar_star_action, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                userDataDB.removeStar(star);
-                                invalidateOptionsMenu();
-                            }
-                        })
-                        .setActionTextColor(getResources().getColor(R.color.lighterBlue))
-                        .show();
+                    // If viewing a custom method, get a title from the user before saving
+                    if(customMethod) {
+                        NameRequestDialogFragment dialog = new NameRequestDialogFragment();
+                        dialog.show(getSupportFragmentManager(), "NameRequest");
+                    }
+                    else {
+                        addStar();
+                    }
                 }
                 else if(item.getTitle() == getResources().getString(R.string.action_unstar)) {
-                    userDataDB.removeStar(star);
-                    Snackbar.make(findViewById(R.id.pager), R.string.snackbar_unstar_text, Snackbar.LENGTH_LONG)
-                            .setAction(R.string.snackbar_unstar_action, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    userDataDB.addStar(star);
-                                    invalidateOptionsMenu();
-                                }
-                            })
-                            .setActionTextColor(getResources().getColor(R.color.lighterBlue))
-                            .show();
+                    removeStar();
                 }
                 invalidateOptionsMenu();
                 return true;
@@ -256,4 +249,42 @@ public class MethodActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void addStar() {
+        userDataDB.addStar(star);
+        Snackbar.make(findViewById(R.id.pager), R.string.snackbar_star_text, Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_star_action, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        userDataDB.removeStar(star);
+                        invalidateOptionsMenu();
+                    }
+                })
+                .setActionTextColor(getResources().getColor(R.color.lighterBlue))
+                .show();
+    }
+    private void removeStar() {
+        userDataDB.removeStar(star);
+        Snackbar.make(findViewById(R.id.pager), R.string.snackbar_unstar_text, Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_unstar_action, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        userDataDB.addStar(star);
+                        invalidateOptionsMenu();
+                    }
+                })
+                .setActionTextColor(getResources().getColor(R.color.lighterBlue))
+                .show();
+    }
+
+    // Listeners that receive a user-set title for a custom method when a star is requested
+    @Override
+    public void onDialogPositiveClick(String input) {
+        method.setTitle(input);
+        star = new Star(method.getTitle(), method.getStage(), method.getNotationExpanded());
+        addStar();
+        invalidateOptionsMenu();
+    }
+    @Override
+    public void onDialogNegativeClick() {
+    }
 }

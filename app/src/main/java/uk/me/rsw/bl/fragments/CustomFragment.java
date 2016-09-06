@@ -50,8 +50,9 @@ public class CustomFragment extends Fragment {
                 Uri uri= Uri.parse(url);
                 Intent intent = new Intent(getActivity(), MethodActivity.class);
                 intent.putExtra(MainActivity.METHOD_TITLE, "Custom Method");
-                intent.putExtra(CustomActivity.METHOD_STAGE, Integer.parseInt(uri.getQueryParameter("stage")));
-                intent.putExtra(CustomActivity.METHOD_NOTATION, uri.getQueryParameter("notation"));
+                intent.putExtra(MainActivity.METHOD_CUSTOM, true);
+                intent.putExtra(MainActivity.METHOD_STAGE, Integer.parseInt(uri.getQueryParameter("stage")));
+                intent.putExtra(MainActivity.METHOD_NOTATION, uri.getQueryParameter("notation"));
                 getActivity().startActivity(intent);
                 InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(mWebView.getApplicationWindowToken(), 0);
