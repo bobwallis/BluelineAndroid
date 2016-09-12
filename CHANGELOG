@@ -102,4 +102,5 @@
 21:
  - Update support libraries
  - Update database and add indexes
- - Fix display of symmetry, display FCH groups, number of rows and number of leads in a plain course on details tab
+ - Fix display of symmetry, display FCH groups, number of rows, and number of leads in a plain course on the details tab
+ - Allow user to choose a title when starring a custom method

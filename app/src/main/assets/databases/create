@@ -17,13 +17,13 @@ sed -i "s/,t,/,1,/g; s/,f,/,0,/g" "$d/methods.csv"
 line=$(head -1 "$d/methods.csv")
 line=${line//stage/stage INTEGER}
 line=${line//lengthofcourse/lengthofcourse INTEGER}
-line=${line//numberOfHunts/numberOfHunts INTEGER}
+line=${line//numberOfHunts/numberofhunts INTEGER}
 line=${line//little/little INTEGER}
 line=${line//differential/differential INTEGER}
 line=${line//plain/plain INTEGER}
-line=${line//trebleDodging/trebleDodging INTEGER}
+line=${line//trebleDodging/trebledodging INTEGER}
 line=${line//palindromic/palindromic INTEGER}
-line=${line//doubleSym/doubleSym INTEGER}
+line=${line//doubleSym/doublesym INTEGER}
 line=${line//rotational/rotational INTEGER}
 line=${line//magic/magic INTEGER}
 
