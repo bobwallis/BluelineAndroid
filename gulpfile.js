@@ -32,7 +32,7 @@ gulp.task( 'images', ['img', 'icon', 'icon-store'] );
 gulp.task( 'html', function() {
 	gulp.src( SRC+'html/*.html' )
 		.pipe( mustache( m ) )
-		.pipe( typogr( { only: ['amp', 'widont', 'caps', 'smartypants'] } ) )
+		.pipe( typogr( { only: ['amp', 'widont', 'smartypants'] } ) )
 		.pipe( hypher( h_pattern ) )
 		.pipe( htmlmin( { removeComments: true, collapseWhitespace: true } ) )
 		.pipe( gulp.dest( DEST ) );
