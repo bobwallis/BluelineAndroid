@@ -8,10 +8,12 @@ body {
 	box-sizing: border-box;
 	color: black;
 	font: 14px sans-serif;
-	padding: 16px;
 	font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "dlig" 0;
 	&.flush {
 		padding: 0;
+		#container {
+			padding: 0;
+		}
 	}
 }
 
@@ -25,6 +27,7 @@ body {
 
 #container {
 	position: relative;
+	padding: 16px;
 }
 .about, .copyright, .custom, .prove {
 	#container {

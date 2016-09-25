@@ -22,6 +22,9 @@ require(['autosize', 'LocalStorage'], function( autosize, LocalStorage ) {
 	window['onPause'] = function() {
 		clearInterval( interval );
 	};
+	window['onResume'] = function() {
+		interval = setInterval( cacheStatus, 5000 );
+	};
 
 
 	syntax.addEventListener( 'change', cacheStatus );

@@ -8,6 +8,7 @@
     <item name="lightBlue" type="color">#29404C</item>
     <item name="lighterBlue" type="color">#C2D9E5</item>
 
+    <item name="lightGrey" type="color">#EEEEEE</item>
     <item name="borderGrey" type="color">#E0DED9</item>
     <item name="iconGrey" type="color">#757575</item>
     <item name="darkGrey" type="color">#DE000000</item>

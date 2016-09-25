@@ -1,20 +1,18 @@
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scrollbar"
     android:clipToPadding="false"
     android:fadingEdgeLength="0dp"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.MethodActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <uk.me.rsw.bl.widgets.WebView2
-            android:id="@+id/webview2"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:scrollbars="none" />
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
 
 </android.support.v4.widget.NestedScrollView>

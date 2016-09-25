@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -52,7 +51,7 @@ public class MethodGridFragment extends Fragment {
         @JavascriptInterface
         public int maxLayoutHeight() {
             Configuration configuration = mActivity.getResources().getConfiguration();
-            return (configuration.screenHeightDp-123);
+            return (configuration.screenHeightDp-107);
         }
     }
 
@@ -83,7 +82,7 @@ public class MethodGridFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_nonfocusable_webview_in_card_and_nestedscrollview, container, false);
+        View view = inflater.inflate(R.layout.fragment_nonfocusable_webview_in_nestedscrollview, container, false);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
@@ -102,10 +101,6 @@ public class MethodGridFragment extends Fragment {
                 return true;
             }
         });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((ViewGroup) mWebView.getParent()).setTransitionGroup(true);
-        }
 
         return view;
     }

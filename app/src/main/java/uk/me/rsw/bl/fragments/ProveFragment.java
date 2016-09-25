@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import uk.me.rsw.bl.activities.ProveActivity;
 
 public class ProveFragment extends Fragment {
 
-    private ScrollView mNestedScrollView;
+    private NestedScrollView mNestedScrollView;
     private ProveActivity mActivity;
     private WebView mWebView;
 
@@ -49,9 +50,9 @@ public class ProveFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_webview_in_card_and_scrollview, container, false);
+        View view = inflater.inflate(R.layout.fragment_webview_in_nestedscrollview, container, false);
 
-        mNestedScrollView = (ScrollView) view.findViewById(R.id.scrollview);
+        mNestedScrollView = (NestedScrollView) view.findViewById(R.id.scrollview);
 
         mWebView = (WebView) view.findViewById(R.id.webview);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
@@ -70,10 +71,6 @@ public class ProveFragment extends Fragment {
 
         mWebView.loadUrl("file:///android_asset/webviews/prove.html");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((ViewGroup) mWebView.getParent()).setTransitionGroup(true);
-        }
-
         return view;
     }
 
@@ -87,6 +84,12 @@ public class ProveFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mWebView.loadUrl("javascript:onPause()");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWebView.loadUrl("javascript:onResume()");
     }
 
 

@@ -1,6 +1,6 @@
 require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : Android.queryString(),
-		maxLayoutHeight = (typeof Android === 'object')? Android.maxLayoutHeight() - 32 : 300,
+		maxLayoutHeight = (typeof Android === 'object')? Android.maxLayoutHeight() - 16 : 300,
 		qs = (function( a ) {
 			if ( a === '' ) return {};
 				var b = {};

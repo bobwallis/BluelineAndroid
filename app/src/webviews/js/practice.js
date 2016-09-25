@@ -1,5 +1,8 @@
 require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, RingingPractice, PlaceNotation ) {
 
+	// Set body to the right height
+	document.body.style.height = Android.maxLayoutHeight()+'px';
+
 	// Get options
 	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : Android.queryString(),
 	qs = (function( a ) {

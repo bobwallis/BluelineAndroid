@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,12 @@ public class MethodPracticeFragment extends Fragment {
         }
 
         @JavascriptInterface
+        public int maxLayoutHeight() {
+            Configuration configuration = mActivity.getResources().getConfiguration();
+            return (configuration.screenHeightDp-107);
+        }
+
+        @JavascriptInterface
         public void buzz() {
             if( vibrate ) {
                 Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -78,13 +86,8 @@ public class MethodPracticeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_practice, container, false);
+        mWebView = (WebView2) view.findViewById(R.id.webview2);
 
-        mWebView = (WebView2) view.findViewById(R.id.webview);
-        ViewGroup.LayoutParams lp = mWebView.getLayoutParams();
-        Configuration configuration = mActivity.getResources().getConfiguration();
-        final float scale = mActivity.getResources().getDisplayMetrics().density;
-        lp.height = (int) ((configuration.screenHeightDp-123) * scale + 0.5f);
-        mWebView.setLayoutParams(lp);
         mWebView.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -100,10 +103,6 @@ public class MethodPracticeFragment extends Fragment {
                 return true;
             }
         });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((ViewGroup) mWebView.getParent()).setTransitionGroup(true);
-        }
 
         return view;
     }
