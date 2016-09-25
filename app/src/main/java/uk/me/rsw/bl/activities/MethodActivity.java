@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,6 +16,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -155,6 +160,9 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
 
         // Select the relevant tab
         mViewPager.setCurrentItem(Math.min(1, mSectionsPagerAdapter.getCount() - 1));
+
+        // Calculate the space available for content
+        setAvailableSpace();
     }
 
     @Override
@@ -286,5 +294,24 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     }
     @Override
     public void onDialogNegativeClick() {
+    }
+
+    // Calculate the available space for showing grids, etc. Passed into web views
+    int availableSpace;
+    public int getAvailableSpace() {
+        return availableSpace;
+    }
+    public void setAvailableSpace() {
+        // screen height (excluding decorations)
+        Configuration configuration = getResources().getConfiguration();
+        int screenHeight = configuration.screenHeightDp;
+        // action bar height
+        int actionBarHeight = 0;
+        final TypedArray styledAttributes = getTheme().obtainStyledAttributes(
+                new int[] { android.R.attr.actionBarSize }
+        );
+        actionBarHeight = (int) styledAttributes.getDimension(0, 0);
+        styledAttributes.recycle();
+        availableSpace = screenHeight - (int)(actionBarHeight/Resources.getSystem().getDisplayMetrics().density) - 48;
     }
 }

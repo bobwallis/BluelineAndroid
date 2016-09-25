@@ -51,8 +51,7 @@ public class MethodPracticeFragment extends Fragment {
 
         @JavascriptInterface
         public int maxLayoutHeight() {
-            Configuration configuration = mActivity.getResources().getConfiguration();
-            return (configuration.screenHeightDp-107);
+            return mActivity.getAvailableSpace();
         }
 
         @JavascriptInterface
