@@ -1,9 +1,7 @@
 package uk.me.rsw.bl.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -70,7 +68,7 @@ public class MethodGridFragment extends Fragment {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
             method = (Method) getArguments().getSerializable(ARG_METHOD);
             type = getArguments().getString(ARG_TYPE);
-            if (type != "grid") {
+            if (!"grid".equals(type)) {
                 type = prefs.getString("line_style", "numbers");
             }
             layout = prefs.getString("line_layout", "oneRow");
@@ -105,9 +103,9 @@ public class MethodGridFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (MethodActivity) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (MethodActivity) context;
     }
 
 }

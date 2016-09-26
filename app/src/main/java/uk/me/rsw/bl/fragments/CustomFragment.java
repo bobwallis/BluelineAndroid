@@ -1,7 +1,6 @@
 package uk.me.rsw.bl.fragments;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -63,9 +62,9 @@ public class CustomFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (CustomActivity) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (CustomActivity) context;
     }
 
     @Override

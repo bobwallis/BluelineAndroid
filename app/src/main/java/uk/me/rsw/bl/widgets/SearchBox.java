@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -144,10 +145,10 @@ public class SearchBox extends RelativeLayout {
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) {
                     isMic = false;
-                    mic.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_clear));
+                    mic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_clear));
                 } else {
                     isMic = true;
-                    mic.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_mic));
+                    mic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mic));
                 }
 
                 if (listener != null)
@@ -167,7 +168,7 @@ public class SearchBox extends RelativeLayout {
 
         if (getSearchText().length() > 0) {
             isMic = false;
-            mic.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_clear));
+            mic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_clear));
         }
 
         if (listener != null)
@@ -196,7 +197,7 @@ public class SearchBox extends RelativeLayout {
         this.search.setVisibility(View.GONE);
 
         isMic = true;
-        mic.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_mic));
+        mic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mic));
 
         if (listener != null)
             listener.onSearchClosed();
@@ -256,15 +257,15 @@ public class SearchBox extends RelativeLayout {
 
     // Define interfaces
     public interface SearchListener {
-        public void onSearchOpened();
-        public void onSearchCleared();
-        public void onSearchClosed();
-        public void onSearchTermChanged();
-        public void onSearch(String result);
+        void onSearchOpened();
+        void onSearchCleared();
+        void onSearchClosed();
+        void onSearchTermChanged();
+        void onSearch(String result);
     }
 
     public interface MenuListener {
-        public void onMenuClick();
+        void onMenuClick();
     }
 
 }

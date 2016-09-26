@@ -28,7 +28,7 @@ public class UserDataDatabase extends SQLiteAssetHelper {
 
     public void addStar(Star add_star) {
         SQLiteDatabase db = getWritableDatabase();
-        db.insertWithOnConflict("stars", null, add_star.getAsContentValues(), db.CONFLICT_REPLACE);
+        db.insertWithOnConflict("stars", null, add_star.getAsContentValues(), SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
     }
 

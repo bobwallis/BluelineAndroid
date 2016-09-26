@@ -1,7 +1,6 @@
 package uk.me.rsw.bl.fragments;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,7 +15,6 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ScrollView;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.ProveActivity;
@@ -75,9 +73,9 @@ public class ProveFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (ProveActivity) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (ProveActivity) context;
     }
 
     @Override

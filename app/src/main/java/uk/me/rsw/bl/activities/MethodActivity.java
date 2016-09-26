@@ -12,11 +12,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +54,6 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     private Uri WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/");
     private GoogleApiClient mClient;
 
-    private MethodsDatabase db;
     private UserDataDatabase userDataDB;
     private Star star;
 
@@ -64,7 +63,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         setContentView(R.layout.activity_methods);
 
         // Get instances of databases
-        db = MethodsDatabase.getInstance(this);
+        MethodsDatabase db = MethodsDatabase.getInstance(this);
         userDataDB = UserDataDatabase.getInstance(this);
 
         // Get the intent
@@ -122,6 +121,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
             setResult(Activity.RESULT_CANCELED);
             finish();
         }
+        db.close();
 
         setTitle(title);
 
@@ -183,15 +183,15 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
 
         // Check for changes to the preferences deciding which tabs to show and restart the activity if needed
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if( prefs.getString("line_style",  "numbers")  != line_style  ||
-            prefs.getString("line_layout", "oneRow")   != line_layout ||
-            prefs.getString("line_size",   "medium")   != line_size   ||
-            prefs.getString("workingBell", "heaviest") != workingBell
+        if( !prefs.getString("line_style",  "numbers").equals(line_style) ||
+            !prefs.getString("line_layout", "oneRow").equals(line_layout) ||
+            !prefs.getString("line_size",   "medium").equals(line_size)   ||
+            !prefs.getString("workingBell", "heaviest").equals(workingBell)
         ) {
             Intent intent = getIntent();
             finish();
             startActivity(intent);
-        };
+        }
     }
 
     @Override
@@ -202,6 +202,12 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
             mClient.disconnect();
         }
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        userDataDB.close();
     }
 
     @Override
@@ -269,7 +275,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
                         invalidateOptionsMenu();
                     }
                 })
-                .setActionTextColor(getResources().getColor(R.color.lighterBlue))
+                .setActionTextColor(ContextCompat.getColor(this, R.color.lighterBlue))
                 .show();
     }
     private void removeStar() {
@@ -282,7 +288,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
                         invalidateOptionsMenu();
                     }
                 })
-                .setActionTextColor(getResources().getColor(R.color.lighterBlue))
+                .setActionTextColor(ContextCompat.getColor(this, R.color.lighterBlue))
                 .show();
     }
 
@@ -308,11 +314,10 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         Configuration configuration = getResources().getConfiguration();
         int screenHeight = configuration.screenHeightDp;
         // action bar height
-        int actionBarHeight = 0;
         final TypedArray styledAttributes = getTheme().obtainStyledAttributes(
                 new int[] { android.R.attr.actionBarSize }
         );
-        actionBarHeight = (int) styledAttributes.getDimension(0, 0);
+        int actionBarHeight = (int) styledAttributes.getDimension(0, 0);
         styledAttributes.recycle();
         availableSpace = screenHeight - (int)(actionBarHeight/Resources.getSystem().getDisplayMetrics().density) - 48;
     }
