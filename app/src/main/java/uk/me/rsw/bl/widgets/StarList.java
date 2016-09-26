@@ -37,7 +37,7 @@ public class StarList extends FrameLayout implements AdapterView.OnItemClickList
         inflate(context, R.layout.widget_starlist, this);
 
         mContext = context;
-        userDataDB = UserDataDatabase.getInstance(mContext);
+        userDataDB = new UserDataDatabase(mContext);
         stars_list = (ListView) findViewById(R.id.stars_list);
         stars_list.setOnItemLongClickListener(this);
         stars_list.setOnItemClickListener(this);
@@ -87,6 +87,10 @@ public class StarList extends FrameLayout implements AdapterView.OnItemClickList
         intent.putExtra(MainActivity.METHOD_STAGE, c.getInt(c.getColumnIndexOrThrow("stage")));
         intent.putExtra(MainActivity.METHOD_NOTATION, c.getString(c.getColumnIndexOrThrow("notationExpanded")));
         mContext.startActivity(intent);
+    }
+
+    public void destroy() {
+        userDataDB.close();
     }
 
 }

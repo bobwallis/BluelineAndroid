@@ -10,19 +10,10 @@ import uk.me.rsw.bl.models.Star;
 
 public class UserDataDatabase extends SQLiteAssetHelper {
 
-    private static UserDataDatabase sInstance;
-
     private static final String DATABASE_NAME = "user_data.db";
     private static final int DATABASE_VERSION = 2; // Increment this (and create a SQL upgrade file) each time the database is updated
 
-    public static synchronized UserDataDatabase getInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new UserDataDatabase(context.getApplicationContext());
-        }
-        return sInstance;
-    }
-
-    private UserDataDatabase(Context context) {
+    public UserDataDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

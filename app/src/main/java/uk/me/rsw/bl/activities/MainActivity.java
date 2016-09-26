@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Get instance of database
-        db = MethodsDatabase.getInstance(this);
+        db = new MethodsDatabase(this);
 
         // Set up the drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -284,4 +284,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+        stars.destroy();
+    }
 }

@@ -63,8 +63,8 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         setContentView(R.layout.activity_methods);
 
         // Get instances of databases
-        MethodsDatabase db = MethodsDatabase.getInstance(this);
-        userDataDB = UserDataDatabase.getInstance(this);
+        MethodsDatabase db = new MethodsDatabase(this);
+        userDataDB = new UserDataDatabase(this);
 
         // Get the intent
         Intent intent = getIntent();
