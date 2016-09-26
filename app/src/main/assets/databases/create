@@ -46,7 +46,7 @@ rm -f "$d/methods.csv"
 # Create database for user data
 rm "$d/user_data.db.gz"
 sqlite3 "$d/user_data.db" <<IMPORT
-CREATE TABLE stars(title UNIQUE, stage INTEGER, notationExpanded);
+CREATE TABLE stars(title UNIQUE, stage INTEGER, notationExpanded, custom INTEGER);
 IMPORT
 
 gzip -9 "$d/user_data.db"

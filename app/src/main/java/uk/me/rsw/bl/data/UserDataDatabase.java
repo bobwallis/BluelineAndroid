@@ -13,7 +13,7 @@ public class UserDataDatabase extends SQLiteAssetHelper {
     private static UserDataDatabase sInstance;
 
     private static final String DATABASE_NAME = "user_data.db";
-    private static final int DATABASE_VERSION = 1; // Increment this (and create a SQL upgrade file) each time the database is updated
+    private static final int DATABASE_VERSION = 2; // Increment this (and create a SQL upgrade file) each time the database is updated
 
     public static synchronized UserDataDatabase getInstance(Context context) {
         if (sInstance == null) {
@@ -51,8 +51,8 @@ public class UserDataDatabase extends SQLiteAssetHelper {
 
     public Cursor listStars() {
         SQLiteDatabase db = getReadableDatabase();
-        String[] sqlSelect = {"rowid _id", "title", "stage", "notationExpanded"};
-        return db.query("stars", sqlSelect, null, null,  null, null, null);
+        String[] sqlSelect = {"rowid _id", "title", "stage", "notationExpanded", "custom"};
+        return db.query("stars", sqlSelect, null, null, null, null, null);
     }
 
 }

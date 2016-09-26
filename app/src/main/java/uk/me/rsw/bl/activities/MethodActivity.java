@@ -126,7 +126,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         setTitle(title);
 
         // Create a Star object for use later
-        star = new Star(method.getTitle(), method.getStage(), method.getNotationExpanded());
+        star = new Star(method.getTitle(), method.getStage(), method.getNotationExpanded(), customMethod?1:0);
 
         // Start app indexing client if needed
         if(!customMethod) {
@@ -288,7 +288,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     @Override
     public void onDialogPositiveClick(String input) {
         method.setTitle(input);
-        star = new Star(method.getTitle(), method.getStage(), method.getNotationExpanded());
+        star = new Star(method.getTitle(), method.getStage(), method.getNotationExpanded(), customMethod?1:0);
         addStar();
         invalidateOptionsMenu();
     }
