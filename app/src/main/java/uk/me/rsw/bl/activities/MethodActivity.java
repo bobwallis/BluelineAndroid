@@ -151,6 +151,8 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         // Set up the view pager
         mSectionsPagerAdapter = new MethodPagerAdapter(getSupportFragmentManager(), method);
         mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setPageMargin((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, getResources().getDisplayMetrics()));
+        mViewPager.setPageMarginDrawable(R.color.lightGrey);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // Set up tab bar

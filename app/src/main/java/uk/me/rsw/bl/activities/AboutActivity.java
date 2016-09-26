@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.MenuItem;
 
 import uk.me.rsw.bl.R;
@@ -30,6 +31,8 @@ public class AboutActivity extends AppCompatActivity {
         // Set up tabs
         mSectionsPagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setPageMargin((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, getResources().getDisplayMetrics()));
+        mViewPager.setPageMarginDrawable(R.color.lightGrey);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // Set up tab bar
