@@ -52,7 +52,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			fontFace = ((navigator.userAgent.toLowerCase().indexOf('android') > -1)? '' : 'Blueline, "Andale Mono", Consolas, ')+'monospace',
 			font = fontSize+'px '+fontFace,
 			columnPadding = fontSize,
-			rowHeight = Math.floor( fontSize*(fontSize < 15? 1.1 : 1.05) ),
+			rowHeight = Math.floor( fontSize*(fontSize < 15? 1.05 : 1) ),
 			rowWidth = Math.floor( (this.stage < 9? 1.4 : 1.2)*MeasureCanvasText( Array( this.stage + 1 ).join( '0' ), font ) );
 
 		// Default line colors and widths

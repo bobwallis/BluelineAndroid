@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import uk.me.rsw.bl.fragments.MethodDetailsFragment;
 import uk.me.rsw.bl.fragments.MethodGridFragment;
+import uk.me.rsw.bl.fragments.MethodLineFragment;
 import uk.me.rsw.bl.fragments.MethodPracticeFragment;
 import uk.me.rsw.bl.models.Method;
 
@@ -42,10 +43,10 @@ public class MethodPagerAdapter extends FragmentPagerAdapter {
             return MethodDetailsFragment.newInstance(method);
         }
         if (position == TAB_LINE) {
-            return MethodGridFragment.newInstance(method, "readFromPreferences");
+            return MethodLineFragment.newInstance(method);
         }
         if (position == TAB_GRID) {
-            return MethodGridFragment.newInstance(method, "grid");
+            return MethodGridFragment.newInstance(method);
         }
         if (position == TAB_PRACTICE) {
             return MethodPracticeFragment.newInstance(method);
