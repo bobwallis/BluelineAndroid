@@ -104,3 +104,9 @@
  - Update database and add indexes
  - Fix display of symmetry, display FCH groups, number of rows, and number of leads in a plain course on the details tab
  - Allow user to choose a title when starring a custom method
+
+22:
+ - Update support libraries and database
+ - Remove card views throughout the app
+ - Pinch-to-zoom in grid view
+ - Only search for existing methods if it's possible one doesn't exist

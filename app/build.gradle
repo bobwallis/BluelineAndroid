@@ -8,8 +8,8 @@ android {
         applicationId "uk.me.rsw.bl"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 21
-        versionName "6.2.0"
+        versionCode 22
+        versionName "6.3.0"
         resConfigs "en"
     }
     buildTypes {
