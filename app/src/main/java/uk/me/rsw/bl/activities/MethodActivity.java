@@ -100,8 +100,10 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
             } else {
                 method = db.getFromTitle(title);
                 if( method == null ) {
-                    setResult(Activity.RESULT_CANCELED);
+                    intent.putExtra(MainActivity.METHOD_CUSTOM, true);
                     finish();
+                    startActivity(intent);
+                    return;
                 }
             }
         }
@@ -111,6 +113,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
             if( method == null ) {
                 setResult(Activity.RESULT_CANCELED);
                 finish();
+                return;
             }
             else {
                 title = method.getTitle();
@@ -120,13 +123,14 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         else {
             setResult(Activity.RESULT_CANCELED);
             finish();
+            return;
         }
         db.close();
 
         setTitle(title);
 
         // Create a Star object for use later
-        star = new Star(method.getTitle(), method.getStage(), method.getNotationExpanded(), customMethod?1:0);
+        star = new Star(title, method.getStage(), method.getNotationExpanded(), customMethod?1:0);
 
         // Start app indexing client if needed
         if(!customMethod) {

@@ -19,6 +19,7 @@ public class Star implements Serializable {
         this.setTitle(set_title);
         this.setStage(set_stage);
         this.setNotationExpanded(set_notationExpanded);
+        this.setCustom(set_custom);
     }
 
 
