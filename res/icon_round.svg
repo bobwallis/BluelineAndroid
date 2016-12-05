@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 192 192" preserveAspectRatio="xMidYMid">
+	<defs>
+		<linearGradient id="overlay" x1="0%" y1="0%" x2="0%" y2="100%">
+			<stop offset="0" stop-color="#FFF" stop-opacity="0.2"/>
+			<stop offset="1" stop-color="#333" stop-opacity= "0.2"/>
+		</linearGradient>
+		<mask id="mask" width="192" height="192">
+			<circle cx="96" cy="96" r="88" fill="#FFF" />
+		</mask>
+		<filter id="drop-shadow" color-interpolation-filters="sRGB" x="-50%" y="-50%" height="200%" width="200%">
+			<feOffset id="offset" in="SourceAlpha" dx="0" dy="4" result="SA-offset"/>
+			<feGaussianBlur id="blur" in="SA-offset" stdDeviation="4" result="SA-o-blur"/>
+			<feComponentTransfer in="SA-o-blur" result="SA-o-b-contIN">
+				<feFuncA id="contour" type="table" tableValues="0 1"/>
+			</feComponentTransfer>
+			<feComposite operator="in" in="SA-o-blur" in2="SA-o-b-contIN" result="SA-o-b-cont"/>
+			<feComponentTransfer in="SA-o-b-cont" result="SA-o-b-c-sprd">
+				<feFuncA id="spread-ctrl" type="linear" slope="1"/>
+			</feComponentTransfer>
+			<feColorMatrix id="recolor" in="SA-o-b-c-sprd" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .25 0" result="SA-o-b-c-s-recolor"/>
+			<feTurbulence result="fNoise" type="fractalNoise" numOctaves="6" baseFrequency="1.98"/>
+			<feColorMatrix in="fNoise" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 7 -3" result="clipNoise"/>
+			<feComposite id="noisemix" operator="arithmetic" in="SA-o-b-c-s-recolor" in2="clipNoise" k1="0" k2="1" result="SA-o-b-c-s-r-mix"/>
+			<feMerge>
+				<feMergeNode in="SA-o-b-c-s-r-mix"/>
+				<feMergeNode in="SourceGraphic"/>
+			</feMerge>
+		</filter>
+	</defs>
+	<circle cx="96" cy="96" r="87.5" fill="#FFF" filter="url(#drop-shadow)" />
+	<g mask="url(#mask)">
+		<circle cx="96" cy="96" r="88" fill="#EFE5BD" />
+		<path fill="none" stroke="#B40200" stroke-width="8" stroke-linecap="square" stroke-linejoin="round" d="M20,20l8,6 46.666,35 -46.666,35 140,105" />
+		<path fill="none" stroke="#0024FF" stroke-width="12" stroke-linecap="square" stroke-linejoin="round" d="M172,20l-8,6 -93.333,70 46.666,35 -93.333,70" />
+		<circle cx="96" cy="96" r="88" fill="none" stroke="#E5D594" stroke-width="4" />
+		<circle cx="96" cy="96" r="88" fill="url(#overlay)" />
+	</g>
+</svg>

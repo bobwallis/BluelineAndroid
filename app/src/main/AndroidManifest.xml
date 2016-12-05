@@ -12,6 +12,7 @@
         android:name=".Blueline"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launder_round"
         android:label="@string/app_name"
         android:theme="@style/Blueline" >
 

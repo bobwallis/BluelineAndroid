@@ -26,7 +26,7 @@ var htmlmin         = require( 'gulp-htmlmin' );
 
 
 gulp.task( 'default', ['html', 'css', 'js', 'js.workers'] );
-gulp.task( 'images', ['img', 'icon', 'icon-store'] );
+gulp.task( 'images', ['img', 'icon', 'icon-round', 'icon-store'] );
 
 
 gulp.task( 'html', function() {
@@ -65,6 +65,16 @@ gulp.task( 'icon', function() {
 			.pipe( svg2png( size[1]/192 ) )
 			.pipe( imagemin( { use: [imagemin_zopfli()] } ) )
 			.pipe( rename( 'ic_launcher.png' ) )
+			.pipe( gulp.dest( 'app/src/main/res/mipmap-'+size[0]+'/' ) );
+	} );
+	return es.merge.apply( null, tasks );
+} );
+gulp.task( 'icon-round', function() {
+	var tasks = [ ['mdpi',48], ['hdpi',72], ['xhdpi',96], ['xxhdpi',144], ['xxxhdpi',192] ].map( function( size ) {
+		return gulp.src( 'res/icon_round.svg' )
+			.pipe( svg2png( size[1]/192 ) )
+			.pipe( imagemin( { use: [imagemin_zopfli()] } ) )
+			.pipe( rename( 'ic_launcher_round.png' ) )
 			.pipe( gulp.dest( 'app/src/main/res/mipmap-'+size[0]+'/' ) );
 	} );
 	return es.merge.apply( null, tasks );
