@@ -6,27 +6,13 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.webkit.WebView;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.FirebaseApp;
 
 public class Blueline extends Application {
 
-    public static GoogleAnalytics analytics;
-    public static Tracker tracker;
-
     public void onCreate() {
-        // Analytics
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        analytics.enableAutoActivityReports(this);
-        tracker = analytics.newTracker("UA-11877145-9");
-        tracker.enableExceptionReporting(true);
-        tracker.enableAdvertisingIdCollection(true);
-        tracker.setAnonymizeIp(true);
-        tracker.enableAutoActivityTracking(true);
-        if (0 != (getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE)) {
-            analytics.setDryRun(true);
-        }
+        // Firebase
+        FirebaseApp.initializeApp(this);
 
         super.onCreate();
 

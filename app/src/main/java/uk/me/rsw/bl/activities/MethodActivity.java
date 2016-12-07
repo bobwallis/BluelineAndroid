@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
@@ -22,9 +21,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.appindexing.Action;
+import com.google.firebase.appindexing.FirebaseAppIndex;
+import com.google.firebase.appindexing.FirebaseUserActions;
+import com.google.firebase.appindexing.Indexable;
+import com.google.firebase.appindexing.builders.Actions;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.MethodPagerAdapter;
@@ -43,16 +44,13 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     private TabLayout mTabLayout;
 
     private String title;
+    private String url = "https://rsw.me.uk/blueline/methods/view/";
     private Boolean customMethod;
     private Method method;
     private String line_style;
     private String line_layout;
     private String line_size;
     private String workingBell;
-
-    private Uri APP_URI = Uri.parse("android-app://uk.me.rsw.bl/blueline/methods/");
-    private Uri WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/");
-    private GoogleApiClient mClient;
 
     private UserDataDatabase userDataDB;
     private Star star;
@@ -128,16 +126,12 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         db.close();
 
         setTitle(title);
+        if(!customMethod) {
+            url = "https://rsw.me.uk/blueline/methods/view/"+method.getURL();
+        }
 
         // Create a Star object for use later
         star = new Star(title, method.getStage(), method.getNotationExpanded(), customMethod?1:0);
-
-        // Start app indexing client if needed
-        if(!customMethod) {
-            APP_URI = Uri.parse("android-app://uk.me.rsw.bl/blueline/methods/"+method.getURL());
-            WEB_URL = Uri.parse("https://rsw.me.uk/blueline/methods/view/"+method.getURL());
-            mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        }
 
         // Set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -175,9 +169,10 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     public void onStart() {
         super.onStart();
         if(!customMethod) {
-            mClient.connect();
-            Action viewAction = Action.newAction(Action.TYPE_VIEW, title, WEB_URL, APP_URI);
-            AppIndex.AppIndexApi.start(mClient, viewAction);
+            Indexable methodToIndex = new Indexable.Builder().setName(title).setUrl(url).build();
+            FirebaseAppIndex.getInstance().update(methodToIndex);
+            Action viewAction = Actions.newView(title, url);
+            FirebaseUserActions.getInstance().start(viewAction);
         }
     }
 
@@ -201,9 +196,8 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     @Override
     public void onStop() {
         if( !customMethod) {
-            Action viewAction = Action.newAction(Action.TYPE_VIEW, title, WEB_URL, APP_URI);
-            AppIndex.AppIndexApi.end(mClient, viewAction);
-            mClient.disconnect();
+            Action viewAction = Actions.newView(title, url);
+            FirebaseUserActions.getInstance().end(viewAction);
         }
         super.onStop();
     }
