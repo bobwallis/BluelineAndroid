@@ -55,6 +55,7 @@
         android:background="@color/white"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/menu_navigation_drawer"
+        app:itemBackground="?attr/selectableItemBackground"
         app:itemIconTint="@color/iconGrey"
         app:itemTextColor="@color/darkGrey" />
 
