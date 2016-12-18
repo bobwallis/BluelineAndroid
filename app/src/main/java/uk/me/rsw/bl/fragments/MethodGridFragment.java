@@ -11,6 +11,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import uk.me.rsw.bl.R;
+import uk.me.rsw.bl.activities.MethodActivity;
 import uk.me.rsw.bl.models.Method;
 import uk.me.rsw.bl.widgets.NestedScrollView2;
 import uk.me.rsw.bl.widgets.ViewPager2;
@@ -21,6 +22,7 @@ public class MethodGridFragment extends Fragment {
     private static final String ARG_METHOD = "method";
     private Method method;
 
+    private MethodActivity mActivity;
     private NestedScrollView2 mScrollView;
     private WebView mWebView;
 
@@ -34,6 +36,11 @@ public class MethodGridFragment extends Fragment {
         @JavascriptInterface
         public String queryString() {
             return "&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&calls=" + method.getCalls() + "&ruleOffs=" + method.getRuleOffs();
+        }
+
+        @JavascriptInterface
+        public int maxLayoutHeight() {
+            return mActivity.getAvailableSpace();
         }
 
         @JavascriptInterface
@@ -88,6 +95,12 @@ public class MethodGridFragment extends Fragment {
         });
 
         return mScrollView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (MethodActivity) context;
     }
 
 }

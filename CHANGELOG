@@ -110,3 +110,7 @@
  - Remove card views throughout the app
  - Pinch-to-zoom in grid view
  - Only search for existing methods if it's possible one doesn't exist
+
+22:
+ - Update support libraries and database
+ - Other small UI tweaks and small fixes

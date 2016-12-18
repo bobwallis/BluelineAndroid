@@ -47,7 +47,9 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 		qs.fontSize = 15;
 	}
 
+	// Configure page
 	document.body.className = qs.layout+' '+qs.size;
+	document.body.style.minHeight = Android.maxLayoutHeight()+'px';
 
 	var container = document.getElementById( 'container' ),
 		method = new Method( qs );

@@ -22,6 +22,7 @@ require(['jquery', 'pinch', 'Method', 'Grid'], function( $, pinch, Method, Grid 
 
 	// Configure page
 	document.body.className = qs.layout+' '+qs.size;
+	document.body.style.minHeight = Android.maxLayoutHeight()+'px';
 	var scaleX = 1, scaleY = 1;
 
 	// Get container and method details
