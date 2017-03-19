@@ -1,11 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:id="@+id/menu_top">
         <item android:id="@+id/navigation_search"
             android:icon="@drawable/ic_methods"
             android:title="@string/title_activity_main" />
         <item android:id="@+id/navigation_custom"
             android:icon="@drawable/ic_custom"
             android:title="@string/title_activity_custom" />
+    </group>
+    <group android:checkableBehavior="none" android:id="@+id/menu_bottom">
         <item android:id="@+id/navigation_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/title_activity_settings" />
