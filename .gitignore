@@ -2,35 +2,39 @@
 /*/build/
 com_crashlytics_export_strings.xml
 local.properties
+bin/
+gen/
+out/
+proguard/
+captures/
+.externalNativeBuild/
+.idea/
 .signing/
-*.iml
+.navigation/
 *.apk
 *.ap_
 *.dex
 *.class
+*.iml
+*.jks
 *.o
 *.so
-bin/
-gen/
-.idea/
 
-# FireBase
+## FireBase
 app/google-services.json
 
-### Gradle ###
+## VSCode
+.vscode/
+.project
+
+## Gradle
 .gradle
 build/
-# Ignore Gradle GUI config
 gradle-app.setting
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+
+## NPM
+node_modules/
 
 ## Blueline database
 app/src/main/assets/databases/blueline.db.gz
-
-# Grunt / NPM ignores
-node_modules/
-.grunt/
-.tmp/
-.lock-wscript
-app/src/main/js/main.built.js
