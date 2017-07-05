@@ -15,7 +15,7 @@
     <string name="action_star">Star</string>
     <string name="action_unstar">Unstar</string>
     <string name="action_settings">Settings</string>
-    <string name="action_about">About</string>
+    <string name="action_about">About &amp; Help</string>
 
     <string name="snackbar_star_text">Method has been starred.</string>
     <string name="snackbar_star_action">Unstar</string>
@@ -23,7 +23,7 @@
     <string name="snackbar_unstar_action">Restar</string>
 
     <string name="title_activity_main">Search methods</string>
-    <string name="title_activity_about">About</string>
+    <string name="title_activity_about">About &amp; Help</string>
     <string name="title_activity_method">Method</string>
     <string name="title_activity_custom">Custom Method</string>
     <string name="title_activity_prove">Composition Prover</string>

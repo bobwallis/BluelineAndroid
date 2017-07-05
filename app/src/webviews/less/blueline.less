@@ -29,13 +29,85 @@ body {
 	position: relative;
 	padding: 16px;
 }
-.about, .copyright, .custom, .prove {
+.about, .help, .copyright, .custom, .prove {
 	#container {
 		max-width: 500px;
 		margin: 0 auto;
 	}
 }
 
+// Accordian
+.accordian {
+	margin-top: 5px;
+	dt {
+		position: relative;
+		font-size: 13px;
+		font-weight: normal;
+		color: #333;
+		margin: 0;
+		padding: 5px 0 5px 15px;
+		text-transform: uppercase;
+		&:hover {
+			cursor: pointer;
+		}
+		&:before {
+			content: "";
+			position: absolute;
+			width: 5px;
+			height: 26px;
+			top: 0;
+			left: 5px;
+			z-index: -1;
+			background: url(arrow.svg) left center no-repeat;
+			transform: rotate(0deg);
+			transform-origin: 2.5px 50%;
+			transition: transform 0.2s ease-in-out;
+		}
+		&.expanded:before {
+			transform: rotate(90deg);
+		}
+	}
+	dd {
+		padding: 0 0 0 20px;
+		height: auto;
+		overflow: hidden;
+		max-height: 50em;
+		font-size: 13px;
+		transition: max-height 0.3s;
+		&:hover {
+			cursor: pointer;
+		}
+		&.collapsed {
+			max-height: 0;
+			animation: accordionOut 0.3s alternate ease-out both 1;
+		}
+		&.expanded {
+			animation: accordionIn 0.3s normal ease-in both 1;
+		}
+	}
+}
+@keyframes accordionIn {
+	0% {
+		opacity: 0.5;
+		transform: scale(0.98) rotateX(-5deg);
+		transform-origin: 50% 0;
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+@keyframes accordionOut {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0.5;
+		transform: scale(0.99);
+		transform-origin: 50% 0;
+	}
+}
 
 // Links
 a {
@@ -112,6 +184,12 @@ ul {
 	}
 	&:last-child {
 		margin-bottom: -8px;
+	}
+	&.compact li {
+		margin-bottom: 0;
+		&:last-child {
+			margin-bottom: 8px;
+		}
 	}
 }
 blockquote {

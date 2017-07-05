@@ -88,7 +88,7 @@ gulp.task( 'icon-store', function() {
 } );
 
 gulp.task( 'js', function() {
-	var tasks = ['grids', 'lines', 'custom', 'practice', 'prove'].map( function( s ) {
+	var tasks = ['grids', 'help', 'lines', 'custom', 'practice', 'prove'].map( function( s ) {
 		return requirejs( {
 			baseUrl: SRC+'js/',
 			include: [s],
