@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.fragments.CustomFragment;
-import uk.me.rsw.bl.fragments.NameRequestDialogFragment;
 
 public class CustomActivity extends AppCompatActivity {
 
