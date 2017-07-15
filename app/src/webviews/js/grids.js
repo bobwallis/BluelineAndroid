@@ -1,6 +1,6 @@
 require(['jquery', 'pinch', 'Method', 'Grid'], function( $, pinch, Method, Grid ) {
 	// Get options
-	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : Android.queryString(),
+	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : (typeof 'Android' === 'object')? Android.queryString() : '',
 		qs = (function( a ) {
 			if ( a === '' ) return {};
 				var b = {};
@@ -22,7 +22,7 @@ require(['jquery', 'pinch', 'Method', 'Grid'], function( $, pinch, Method, Grid 
 
 	// Configure page
 	document.body.className = qs.layout+' '+qs.size;
-	document.body.style.minHeight = Android.maxLayoutHeight()+'px';
+	document.body.style.minHeight = (typeof Android === 'object')? Android.maxLayoutHeight()+'px' : 0;
 	var scaleX = 1, scaleY = 1;
 
 	// Get container and method details

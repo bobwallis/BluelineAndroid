@@ -35,6 +35,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 				bellHeight = options.dimensions.bell.height,
 				bellWidth = options.dimensions.bell.width,
 
+				textMetrics,
 				canvasTopPadding = options.dimensions.canvas.padding.top,
 				canvasLeftPadding = options.dimensions.canvas.padding.left,
 				columnRightPadding = options.dimensions.column.padding.right,

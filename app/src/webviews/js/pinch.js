@@ -68,7 +68,7 @@ define( function() {
 			}
 		};
 
-		// Liten for touches
+		// Listen for touches
 		target.addEventListener( 'touchstart', touchStartHandler );
 	};
 } );

@@ -64,7 +64,7 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 		}
 	} ) ),
 		plainCourseGridImage = plainCourseGrid.draw();
-	plainCourseContainer = document.createElement( 'div' );
+	var plainCourseContainer = document.createElement( 'div' );
 	plainCourseContainer.appendChild( plainCourseGridImage );
 	container.appendChild( plainCourseContainer );
 
