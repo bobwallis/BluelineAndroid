@@ -50,7 +50,7 @@ gulp.task( 'css', function() {
 
 
 gulp.task( 'img', function() {
-	gulp.src( [SRC+'less/*.svg'] )
+	gulp.src( [SRC+'img/*.svg'] )
 		.pipe( imagemin( { use: [imagemin_zopfli()] } ) )
 		.pipe( gulp.dest( DEST ) );
 	gulp.src( ['app/src/main/res/**/*.png'] )
