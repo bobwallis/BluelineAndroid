@@ -35,7 +35,7 @@ public class MethodGridFragment extends Fragment {
 
         @JavascriptInterface
         public String queryString() {
-            return "&notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&calls=" + method.getCalls() + "&ruleOffs=" + method.getRuleOffs();
+            return "notation=" + method.getNotationExpanded() + "&stage=" + method.getStage() + "&calls=" + method.getCalls() + "&ruleOffs=" + method.getRuleOffs();
         }
 
         @JavascriptInterface
