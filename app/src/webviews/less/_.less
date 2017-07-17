@@ -1,0 +1,45 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: white;
+	box-sizing: border-box;
+	text-size-adjust: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0.05);
+	color: black;
+	font: 14px sans-serif;
+	font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "dlig" 0;
+	&.flush {
+		padding: 0;
+		#container {
+			padding: 0;
+		}
+	}
+}
+
+#container {
+	position: relative;
+	padding: 16px;
+}
+.about, .help, .copyright, .custom, .prove {
+	#container {
+		max-width: 500px;
+		margin: 0 auto;
+	}
+}
+
+hr {
+	clear: both;
+	border: 0;
+	background: 0;
+}
+
+@import "accordion.less";
+@import "forms.less";
+@import "typography.less";
+
+@import "custom.less";
+@import "grids.less";
+@import "practice.less";

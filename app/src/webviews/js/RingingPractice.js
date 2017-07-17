@@ -4,30 +4,30 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 		// Key codes
 		var LEFT = 37, DOWN = 40, RIGHT = 39, SHIFT = 16;
 
-		// Helper functions
-		var arraysEqual = function( a, b ) {
-			if (a === b)                { return true; }
-			if (a === null || b === null) { return false; }
-			if (a.length != b.length)   { return false; }
-			for (var i = 0; i < a.length; ++i) {
-				if (a[i] !== b[i]) { return false; }
-			}
-			return true;
-		};
+		// Settings
+		var changeSpeed = 250;
 
-
-		// Set up method options
+		// Normalise method/interface options
 		var container = (typeof options.container === 'string')? document.getElementById( options.container ) : options.container,
 			stage     = parseInt( options.stage ),
-			notation  = (typeof options.notation === 'string')? PlaceNotation.parse( PlaceNotation.expand( options.notation, stage ), stage ) : options.notation,
-			startRow  = (typeof options.startRow === 'string')? options.startRow.split( '' ).map( PlaceNotation.charToBell ) : ((typeof options.startRow === 'object')? options.startRow.slice(0) : PlaceNotation.rounds( stage )),
-			finishRow = (typeof options.finishRow === 'string')? options.finishRow.split( '' ).map( PlaceNotation.charToBell ) : ((typeof options.finishRow === 'object')? options.finishRow.slice(0) : PlaceNotation.rounds( stage )),
+			notation  = (typeof options.notation  === 'string')? PlaceNotation.parse( PlaceNotation.expand( options.notation, stage ), stage ) : options.notation,
+			startRow  = (typeof options.startRow  === 'string')? options.startRow.split( '' ).map( PlaceNotation.charToBell ) : ((typeof options.startRow === 'object')? options.startRow.slice(0) : PlaceNotation.rounds( stage )),
+			finishRow = ((typeof options.finishRow === 'string')? options.finishRow.split( '' ).map( PlaceNotation.charToBell ) :
+			            ((typeof options.finishRow === 'object')? options.finishRow.slice(0) :
+			            ((typeof options.finishRow === 'number'? Math.floor( options.finishRow ) :
+			            PlaceNotation.rounds( stage ) )))),
 			following = options.following;
 		if( typeof options.score !== 'boolean' ) {
 			options.score = false;
 		}
 		if( typeof options.introduction !== 'boolean' ) {
 			options.introduction = false;
+		}
+		if( typeof options.autostart !== 'boolean' ) {
+			options.autostart = false;
+		}
+		if( Object.prototype.toString.call(options.buttons) !== '[object Array]' ) {
+			options.buttons = [];
 		}
 		if( typeof options.thatsAll !== 'boolean' && typeof options.thatsAll !== 'string' ) {
 			options.thatsAll = false;
@@ -39,7 +39,6 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			options.hbIndicator = 0;
 		}
 
-
 		// Sizing
 		var canvasWidth   = (typeof options.width == 'number')? options.width : container.offsetWidth,
 			canvasHeight  = ((typeof options.height == 'number')? options.height : container.offsetHeight) - 30,
@@ -48,8 +47,8 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			paddingForLeftMostPosition = (canvasWidth - ((stage-1)*bellWidth))/2;
 
 		// Calling clearRect (to clear the canvas after each frame) is surprisingly resource intensive
-		// so we only want to clear the part of the canvas we actually draw on
-		var clearLeft = Math.floor(Math.max(0, paddingForLeftMostPosition - (bellWidth/3))),
+		// so we only want to clear the part of the canvas we actually draw on. Calculate what that will be
+		var clearLeft  = Math.floor(Math.max(0, paddingForLeftMostPosition - (bellWidth/3))),
 			clearWidth = Math.floor(Math.min((stage-1)*bellWidth + (2*bellWidth/3) + 4, canvasWidth - clearLeft));
 
 		// Clear the container
@@ -82,7 +81,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 				},
 				reset: function() {
 					rowCount = errorCount = 0;
-					scoreboard.innerHTML = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
+					scoreboard.innerHTML  = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
 				},
 				score: function() {
 					return Math.max(0, Math.round(100 - ((errorCount*100)/rowCount)))+'%';
@@ -118,17 +117,18 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			var pause = document.createElement( 'div' );
 			pause.className = 'practice_pause';
 			container.appendChild( pause );
-			pauseFunction = function() {
+			var pauseFunction = function() {
 				going = false;
 				canvasPaused = true;
 				buttons.show();
 				pauseButton.hide();
+				scoreboard.hide();
 				controls.deactivate();
 			};
 			pause.addEventListener( 'click', pauseFunction );
 			if( typeof document.hidden === 'boolean' ) {
 				document.addEventListener( 'visibilitychange', function() {
-					if( document.hidden == true && going ) {
+					if( document.hidden === true && going ) {
 						pauseFunction();
 					}
 				}, false );
@@ -145,6 +145,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			var buttonsContainer = document.createElement( 'div' );
 			buttonsContainer.className = 'practice_buttons visible';
 			container.appendChild( buttonsContainer );
+
 			if( typeof options.title === 'string' && options.title !== '' ) {
 				var title = document.createElement( 'h1' );
 				title.appendChild( document.createTextNode( options.title ) );
@@ -155,18 +156,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 				buttonsContainer.style.paddingTop = '12.5px';
 			}
 
-			var button_resume   = document.createElement( 'input' );
-			button_resume.value = 'Resume';
-			button_resume.type  = 'button';
-			button_resume.style.display = 'none';
-			buttonsContainer.appendChild( button_resume );
-
-			var button_restart   = document.createElement( 'input' );
-			button_restart.value = 'Go';
-			button_restart.type  = 'button';
-			buttonsContainer.appendChild( button_restart );
-
-			button_resume.addEventListener( 'click', function() {
+			var resumeCallback = function() {
 				if( !going ) {
 					going = true;
 					canvasPaused = false;
@@ -177,36 +167,43 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 					canvas.element.className = 'visible';
 					draw();
 				}
-			} );
-			button_restart.addEventListener( 'click', function() {
-				if( !going ) {
-					going = true;
-					canvasPaused = false;
+			};
+			options.buttons.unshift( {
+				text: 'Start',
+				callback: function() {
 					setup();
-					buttons.hide();
-					pauseButton.show();
-					controls.activate();
-					if( options.score ) { scoreboard.show(); }
-					canvas.element.className = 'visible';
-					draw();
+					resumeCallback();
 				}
+			} );
+			options.buttons.unshift( {
+				text: 'Resume',
+				callback: resumeCallback
+			} );
+
+			var buttonElements = options.buttons.map( function( e ) {
+				var button   = document.createElement( 'input' );
+				button.value = e.text;
+				button.type  = 'button';
+				buttonsContainer.appendChild( button );
+				button.addEventListener( 'click', e.callback );
+				return button;
 			} );
 
 			return {
 				element: buttonsContainer,
 				show: function() {
+					// Treat the start and resume buttons specially
 					if( currentRow > 0 ) {
-						button_restart.value = 'Restart';
-						button_resume.style.display = 'inline-block';
+						buttonElements[1].value = 'Restart';
+						buttonElements[0].style.display = 'inline-block';
 					}
 					if( currentRow === 0 || finished ) {
-						button_resume.style.display = 'none';
+						buttonElements[0].style.display = 'none';
 					}
 					buttonsContainer.className = 'practice_buttons visible';
 				},
 				hide: function() {
-					button_resume.blur();
-					button_restart.blur();
+					buttonElements.forEach( function( e ) { e.blur(); } );
 					buttonsContainer.className = 'practice_buttons';
 				}
 			};
@@ -240,73 +237,62 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 		})();
 
 
-		// Cache some resuable images to avoid excessive use of slow fillText calls in the drawing function that's meant to run at 60fps
+		// Cache some reusable images to avoid excessive use of slow fillText calls in the drawing function that's meant to run at 60fps
 		if( options.hbIndicator ) {
-			var fillTextCache_hIndicator = ( function() {
+			var fillTextCache_hbIndicator = function( char ) {
 				var cacheCanvas = new Canvas( {
-					id: 'cc1',
+					id: 'cc'+char,
 					width: 16,
 					height: 16
 				} );
 				var context = cacheCanvas.context;
-				var hMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', 'H' );
+				var hMetrics = MeasureCanvasTextOffset( 16, '12px Roboto, sans-serif', char );
 				context.fillStyle = '#999';
 				context.textAlign = 'center';
 				context.textBaseline = 'middle';
-				context.font = '12px sans-serif';
-				context.fillText( 'H', 8 + hMetrics.x, 8 + hMetrics.y );
+				context.font = '12px Roboto, sans-serif';
+				context.fillText( char, 8 + hMetrics.x, 8 + hMetrics.y );
 				// Check if the clearance rectangle needs to be increase
 				if( paddingForLeftMostPosition-bellWidth-8 < clearLeft ) {
 					clearWidth = Math.floor( clearWidth + clearLeft - (paddingForLeftMostPosition-bellWidth-8) );
 					clearLeft = Math.floor( Math.max( 0, paddingForLeftMostPosition-bellWidth-8 ) );
 				}
 				return cacheCanvas;
-			}() );
-			var fillTextCache_bIndicator = ( function() {
+			};
+			var fillTextCache_hIndicator = fillTextCache_hbIndicator( 'H' );
+			var fillTextCache_bIndicator = fillTextCache_hbIndicator( 'B' );
+		}
+		if( typeof options.placeStarts === 'object' ) {
+			var fillTextCache_placeStarts = ( function() {
+				var x, y;
 				var cacheCanvas = new Canvas( {
-					id: 'cc1',
-					width: 16,
-					height: 16
+					id: 'cc0',
+					width: 22*stage,
+					height: 22
 				} );
-				var context  = cacheCanvas.context;
-				var bMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', 'B' );
-				context.fillStyle = '#999';
+				var context = cacheCanvas.context;
+				var placeStartTextMetrics = MeasureCanvasTextOffset( 16, '12px Roboto, sans-serif', '0' );
+				context.strokeStyle = options.lines[following].color;
+				context.fillStyle   = '#333';
+				context.lineWidth   = 1.5;
+				context.setLineDash( [] );
+				context.font = '12px Roboto, sans-serif';
 				context.textAlign = 'center';
 				context.textBaseline = 'middle';
-				context.font = '12px sans-serif';
-				context.fillText( 'B', 8 + bMetrics.x, 8 + bMetrics.y );
+				for( var i = 0; i < stage; ++i ) {
+					x = (i+0.5)*22;
+					y = 11;
+					context.fillText( PlaceNotation.bellToChar( i ), x + placeStartTextMetrics.x, y + placeStartTextMetrics.y );
+					context.beginPath();
+					context.arc( x, y, 8, 0, Math.PI*2, true );
+					context.closePath();
+					context.stroke();
+				}
+				// Check if the clearance rectangle needs to be increase
+				clearWidth = Math.floor( Math.max( clearWidth, paddingForLeftMostPosition + (stage*bellWidth) + 16 - clearLeft ) );
 				return cacheCanvas;
-			}() );
+			})();
 		}
-		var fillTextCache_placeStarts = (typeof options.placeStarts === 'object')? ( function() {
-			var x, y;
-			var cacheCanvas = new Canvas( {
-				id: 'cc0',
-				width: 22*stage,
-				height: 22
-			} );
-			var context = cacheCanvas.context;
-			var placeStartTextMetrics = MeasureCanvasTextOffset( 16, '12px sans-serif', '0' );
-			context.strokeStyle = options.lines[following].color;
-			context.fillStyle   = '#333';
-			context.lineWidth   = 1.5;
-			context.setLineDash( [] );
-			context.font = '12px sans-serif';
-			context.textAlign = 'center';
-			context.textBaseline = 'middle';
-			for( var i = 0; i < stage; ++i ) {
-				x = (i+0.5)*22;
-				y = 11;
-				context.fillText( PlaceNotation.bellToChar( i ), x + placeStartTextMetrics.x, y + placeStartTextMetrics.y );
-				context.beginPath();
-				context.arc( x, y, 8, 0, Math.PI*2, true );
-				context.closePath();
-				context.stroke();
-			}
-			// Check if the clearance rectangle needs to be increase
-			clearWidth = Math.floor( Math.max( clearWidth, paddingForLeftMostPosition + (stage*bellWidth) + 16 - clearLeft ) );
-			return cacheCanvas;
-		})() : null;
 		var fillTextCache_guides = (function() {
 			var cacheCanvas = new Canvas( {
 				id: 'cc1',
@@ -317,56 +303,60 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			context.fillStyle    = '#999';
 			context.textAlign    = 'center';
 			context.textBaseline = 'middle';
-			context.font         = '12px sans-serif';
+			context.font         = '12px Roboto, sans-serif';
 			for( var i = 0; i < stage; ++i ) {
 				context.fillText( PlaceNotation.bellToChar( i ), paddingForLeftMostPosition + (i*bellWidth), 11 );
 			}
 			return cacheCanvas;
 		})();
-		var fillTextCache_introduction = (options.introduction)? (function() {
-			var cacheCanvas = new Canvas( {
-				id: 'cc2',
-				width: canvasWidth,
-				height: 40
-			} );
-			var context = cacheCanvas.context;
-			context.font         = 'bold 12px sans-serif';
-			context.strokeStyle  = 'rgba(255,255,255,0.8)';
-			context.lineWidth    = 4;
-			context.fillStyle    = '#333';
-			context.textAlign    = 'center';
-			context.textBaseline = 'middle';
-			context.strokeText( 'Use the arrow keys, or', canvasWidth/2, 40/3 );
-			context.strokeText( 'tap the screen, to navigate.', canvasWidth/2, 40*2/3 );
-			context.fillText( 'Use the arrow keys, or', canvasWidth/2, 40/3 );
-			context.fillText( 'tap the screen, to navigate.', canvasWidth/2, 40*2/3 );
-			// Check if the clearance rectangle needs to be increase
-			var width = context.measureText('tap the screen, to navigate.').width;
-			if( Math.floor((canvasWidth - width)/2) < clearLeft ) {
-				clearWidth = Math.max( width, clearWidth + clearLeft - Math.floor((canvasWidth - width)/2) );
-				clearLeft = Math.floor( Math.max(0, (canvasWidth - width)/2));
-			}
-			clearWidth = Math.floor(Math.min(Math.max(clearWidth, canvasWidth - clearLeft - (canvasWidth-width)/2), canvasWidth - clearLeft));
-			return cacheCanvas;
-		})() : null;
-		var fillTextCache_thatsAll = (options.thatsAll)? (function() {
-			var cacheCanvas = new Canvas( {
-				id: 'cc3',
-				width: canvasWidth,
-				height: 40
-			} );
-			var context = cacheCanvas.context;
-			context.font         = 'bold 15px sans-serif';
-			context.strokeStyle  = 'rgba(255,255,255,0.8)';
-			context.lineWidth    = 4;
-			context.fillStyle    = '#333';
-			context.textAlign    = 'center';
-			context.textBaseline = 'top';
-			context.strokeText( (typeof options.thatsAll == 'string')? options.thatsAll : "That's all!", canvasWidth/2, 0 );
-			context.fillText( (typeof options.thatsAll == 'string')? options.thatsAll : "That's all!", canvasWidth/2, 0 );
-			return cacheCanvas;
-		})() : null;
-		var fillTextCache_thatsAllFinished = (options.score)? false : true; // We'll need to draw on the final score later
+		if( options.introduction ) {
+			var fillTextCache_introduction = (function() {
+				var cacheCanvas = new Canvas( {
+					id: 'cc2',
+					width: canvasWidth,
+					height: 40
+				} );
+				var context = cacheCanvas.context;
+				context.font         = '13px Roboto, sans-serif';
+				context.strokeStyle  = 'rgba(255,255,255,0.8)';
+				context.lineWidth    = 4;
+				context.fillStyle    = '#333';
+				context.textAlign    = 'center';
+				context.textBaseline = 'middle';
+				context.strokeText( 'Use the arrow keys, or', canvasWidth/2, 40/3 );
+				context.strokeText( 'tap the screen, to navigate.', canvasWidth/2, 40*2/3 );
+				context.fillText( 'Use the arrow keys, or', canvasWidth/2, 40/3 );
+				context.fillText( 'tap the screen, to navigate.', canvasWidth/2, 40*2/3 );
+				// Check if the clearance rectangle needs to be increased
+				var width = context.measureText('tap the screen, to navigate.').width;
+				if( Math.floor((canvasWidth - width)/2) < clearLeft ) {
+					clearWidth = Math.max( width, clearWidth + clearLeft - Math.floor((canvasWidth - width)/2) );
+					clearLeft = Math.floor( Math.max(0, (canvasWidth - width)/2));
+				}
+				clearWidth = Math.floor(Math.min(Math.max(clearWidth, canvasWidth - clearLeft - (canvasWidth-width)/2), canvasWidth - clearLeft));
+				return cacheCanvas;
+			})();
+		}
+		if( options.thatsAll ) {
+			var fillTextCache_thatsAll = (function() {
+				var cacheCanvas = new Canvas( {
+					id: 'cc3',
+					width: canvasWidth,
+					height: 40
+				} );
+				var context = cacheCanvas.context;
+				context.font         = 'bold 15px Roboto, sans-serif';
+				context.strokeStyle  = 'rgba(255,255,255,0.8)';
+				context.lineWidth    = 4;
+				context.fillStyle    = '#333';
+				context.textAlign    = 'center';
+				context.textBaseline = 'top';
+				context.strokeText( (typeof options.thatsAll == 'string')? options.thatsAll : "That's all!", canvasWidth/2, 0 );
+				context.fillText( (typeof options.thatsAll == 'string')? options.thatsAll : "That's all!", canvasWidth/2, 0 );
+				return cacheCanvas;
+			})();
+			var fillTextCache_thatsAllFinished = (options.score)? false : true; // We'll need to draw on the final score later
+		}
 		var fillTextCache_messagesText = (function() {
 			var m = {
 				byRow: [],
@@ -395,7 +385,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 					height: 40
 				} );
 				var context = m.canvases[i].context;
-				context.font         = 'bold 12px sans-serif';
+				context.font         = 'bold 12px Roboto, sans-serif';
 				context.strokeStyle  = 'rgba(255,255,255,0.8)';
 				context.lineWidth    = 4;
 				context.fillStyle    = '#333';
@@ -414,21 +404,59 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			}
 			return m;
 		})();
+		var fillTextCache_overlayMessagesText = (function() {
+			var m = [], width;
+			for( var i in options.overlayMessages) {
+				m[i] = new Canvas( {
+					id: 'ccom'+i,
+					width: canvasWidth,
+					height: rowHeight
+				} );
+				var context = m[i].context;
+				context.font         = 'bold 12px Roboto, sans-serif';
+				context.strokeStyle  = 'rgba(255,255,255,0.8)';
+				context.lineWidth    = 4;
+				context.fillStyle    = '#333';
+				context.textAlign    = 'center';
+				context.textBaseline = 'middle';
+				context.strokeText( options.overlayMessages[i], canvasWidth/2, rowHeight/2 );
+				context.fillText( options.overlayMessages[i], canvasWidth/2, rowHeight/2 );
+				++i;
+				// See if we need to increase the amount of the canvas to clear to make sure the text is covered
+				width = context.measureText( options.overlayMessages[i] ).width;
+				if( Math.floor((canvasWidth - width)/2) < clearLeft ) {
+					clearWidth = Math.max( width, clearWidth + clearLeft - Math.floor((canvasWidth - width)/2) );
+					clearLeft = Math.floor( Math.max(0, (canvasWidth - width)/2));
+				}
+				clearWidth = Math.floor(Math.min(Math.max(clearWidth, canvasWidth - clearLeft - (canvasWidth-width)/2), canvasWidth - clearLeft));
+			}
+			return m;
+		})();
 
+		// Precalculate all rows
+		var rows = [startRow.slice(0)];
+		rows.push( PlaceNotation.apply( notation[0], rows[0] ) );
+		if( typeof finishRow === 'number' ) {
+			while( rows.length <= finishRow ) {
+				rows.push( PlaceNotation.apply( notation[(rows.length-1) % notation.length], rows[rows.length-1] ) );
+			}
+		}
+		else {
+			while( rows.length < 10000 && !PlaceNotation.rowsEqual( finishRow, rows[rows.length-1] ) ) {
+				rows.push( PlaceNotation.apply( notation[(rows.length-1) % notation.length], rows[rows.length-1] ) );
+			}
+		}
 
 		// Variables used during drawing
 		var context      = canvas.context;
-		var rows, nextRow, currentPos, nextPos;
 		var going        = false;
 		var canvasPaused = false;
 		var finished     = false;
-		var currentRow, targetRow, dotY, previousTimestamp, currentRowAtTimeOfLastTargetRowSet;
+		var currentPos, nextPos, currentRow, targetRow, dotY, previousTimestamp, currentRowAtTimeOfLastTargetRowSet;
 
 		var setup = function() {
-			rows       = [startRow.slice(0)];
-			nextRow    = PlaceNotation.apply( notation[0], rows[0] );
 			currentPos = rows[0].indexOf( following );
-			nextPos    = nextRow.indexOf( following );
+			nextPos    = rows[1].indexOf( following );
 			currentRow = 0;
 			targetRow  = 0;
 			dotY       = canvasHeight/2;
@@ -443,24 +471,22 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 		var advance = function( direction ) {
 			if( !going ) { return; }
 			// Advance the various tracking variables
-			rows.push( nextRow.slice(0) );
 			currentPos = nextPos;
-			targetRow  = rows.length - 1;
+			targetRow++;
 			currentRowAtTimeOfLastTargetRowSet = currentRow;
-			scoreboard.correct();
+			if( options.score ) { scoreboard.correct(); }
 			buttonFlash( direction, 'success' );
 			// Stop if we're at the end
-			if( rows.length > 1 && arraysEqual( nextRow, finishRow ) ) {
+			if( targetRow + 2 > rows.length ) {
 				going    = false;
 				finished = true;
 				buttons.show();
 				pauseButton.hide();
+				scoreboard.hide();
 				controls.deactivate();
 			}
-			// Otherwise keep going
 			else {
-				nextRow = PlaceNotation.apply( notation[(rows.length-1) % notation.length], nextRow );
-				nextPos = nextRow.indexOf( following );
+				nextPos = rows[targetRow+1].indexOf( following );
 			}
 		};
 
@@ -468,14 +494,14 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 		var error = function( direction ) {
 			buttonFlash( direction, 'error' );
 			errorFlash( direction );
-			scoreboard.error();
+			if( options.score ) { scoreboard.error(); }
 			if( typeof Android === 'object' ) { // JavascriptInterface added in Blueline Android app
 				Android.buzz();
 			}
 		};
 
-		// Stepper function
-		var rowMoveDuration = 300;
+		// Stepper function for animation
+		var rowMoveDuration = changeSpeed;
 		var step = function( timestamp ) {
 			var redrawNeeded = false;
 			// Do an initial draw if this is the first run
@@ -483,7 +509,6 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 				previousTimestamp = timestamp;
 				redrawNeeded = true;
 			}
-			// Full pause
 			if( !canvasPaused ) {
 				// Animate the user's movement along the line
 				if( currentRow < targetRow ) {
@@ -522,6 +547,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			context.lineCap     = 'butt';
 			context.beginPath();
 			for( i = 0; i < stage; ++i ) {
+				// I checked and it wasn't worth caching these
 				context.moveTo( paddingForLeftMostPosition + (i*bellWidth), (dotY-(currentRow*rowHeight))%7 );
 				context.lineTo( paddingForLeftMostPosition + (i*bellWidth), canvasHeight - 22 );
 			}
@@ -568,11 +594,13 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 
 			// That's all message
 			if( finished && currentRow > 1 && options.thatsAll ) {
+				// If we haven't drawn on the final score yet then do so
 				if( !fillTextCache_thatsAllFinished && options.score ) {
-					fillTextCache_thatsAll.context.font = '13px sans-serif';
-					fillTextCache_thatsAll.context.fillText( 'Final score: '+scoreboard.score(), canvasWidth/2, 20 );
+					fillTextCache_thatsAll.context.font = '13px Roboto, sans-serif';
+					fillTextCache_thatsAll.context.fillText( 'Score: '+scoreboard.score(), canvasWidth/2, ((options.thatsAll === ' ')? 5 : 20) );
 					fillTextCache_thatsAllFinished = true;
 				}
+				// Otherwise just paste in the pre-rendered text
 				y = dotY + (1 - ((currentRow%1 === 0)? 1 : currentRow%1))*rowHeight + 20;
 				context.globalAlpha = (currentRow%1 === 0)? 1 : currentRow%1;
 				context.drawImage( fillTextCache_thatsAll.element, 0, y, canvasWidth, 40 );
@@ -645,9 +673,8 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			context.closePath();
 			context.fill();
 
-			// Draw overlaid messages
+			// Draw messages
 			if( fillTextCache_messagesText.byRow.length > 0 && (typeof fillTextCache_messagesText.byRow[currentRowFloor] !== 'undefined' || typeof fillTextCache_messagesText.byRow[currentRowCeil] !== 'undefined') ) {
-
 				if( fillTextCache_messagesText.byRow[currentRowCeil] === fillTextCache_messagesText.byRow[currentRowFloor] ) {
 					context.drawImage( fillTextCache_messagesText.canvases[fillTextCache_messagesText.byRow[currentRowFloor]].element, 0, dotY + 15, canvasWidth, 40 );
 				}
@@ -661,6 +688,24 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 						context.drawImage( fillTextCache_messagesText.canvases[fillTextCache_messagesText.byRow[currentRowFloor]].element, 0, dotY + 15, canvasWidth, 40 );
 					}
 					context.globalAlpha = 1;
+				}
+			}
+
+			// Draw overlay messages
+			if( fillTextCache_overlayMessagesText.length > 0 ) {
+				var minOverlayMessage = Math.max( 0, Math.floor( ((currentRow*rowHeight) - dotY)/rowHeight ) ),
+					maxOverlayMessage = Math.ceil( Math.min( currentRow + 3,  ( (canvasHeight - dotY) + (currentRow*rowHeight))/rowHeight ) );
+				for( i = minOverlayMessage; i < maxOverlayMessage; ++i ) {
+					if( typeof fillTextCache_overlayMessagesText[i] !== 'undefined' ) {
+						if( i + 1 >= maxOverlayMessage && currentRow%1 > 0  ) {
+							context.globalAlpha = currentRow%1;
+							context.drawImage( fillTextCache_overlayMessagesText[i].element, 0, dotY - (3/2 + currentRow - i)*rowHeight, canvasWidth, rowHeight );
+							context.globalAlpha = 1;
+						}
+						else {
+							context.drawImage( fillTextCache_overlayMessagesText[i].element, 0, dotY - (3/2 + currentRow - i)*rowHeight, canvasWidth, rowHeight );
+						}
+					}
 				}
 			}
 		};
@@ -701,7 +746,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 						right();
 						break;
 					case SHIFT:
-						rowMoveDuration = 3000;
+						rowMoveDuration = changeSpeed*10;
 						break;
 				}
 			}
@@ -710,7 +755,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			if( going ) {
 				switch( e.which ) {
 					case SHIFT:
-						rowMoveDuration = 300;
+						rowMoveDuration = changeSpeed;
 						break;
 				}
 			}
@@ -732,6 +777,19 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			else if( classes.indexOf( 'practice_controls_down' ) !== -1 )  { down(); }
 			else if( classes.indexOf( 'practice_controls_right' ) !== -1 ) { right(); }
 		} );
+
+		// Autostart
+		if( options.autostart && !going ) {
+			going = true;
+			canvasPaused = false;
+			setup();
+			buttons.hide();
+			pauseButton.show();
+			controls.activate();
+			scoreboard.show();
+			canvas.element.className = 'visible';
+			draw();
+		}
 	};
 
 	return RingingPractice;

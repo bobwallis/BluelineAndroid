@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" data-age="{{ localStorage_age }}" class="practice">
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Practice Method</title>
 		<link rel="stylesheet" type="text/css" href="blueline.css">
 	</head>
-	<body class="flush">
+	<body>
 		<div id="container">
-			<div class="practice_container" id="practice"></div>
+			<div id="practice_chooser">
+				<h4>Place Bell</h4>
+				<ul id="practice_chooser_bell_list" class="tab_group notation">
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_1" value="1" /><label for="practice_chooser_bell_1">1</label></li>
+					<li class="active"><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_2" value="2" checked="checked" /><label for="practice_chooser_bell_2">2</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_3" value="3" /><label for="practice_chooser_bell_3">3</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_4" value="4" /><label for="practice_chooser_bell_4">4</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_5" value="5" /><label for="practice_chooser_bell_5">5</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_6" value="6" /><label for="practice_chooser_bell_6">6</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_7" value="7" /><label for="practice_chooser_bell_7">7</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_8" value="8" /><label for="practice_chooser_bell_8">8</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_9" value="9" /><label for="practice_chooser_bell_9">9</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_0" value="10" /><label for="practice_chooser_bell_0">0</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_e" value="11" /><label for="practice_chooser_bell_e">E</label></li>
+					<li><input type="radio" name="practice_chooser_bell" id="practice_chooser_bell_t" value="12" /><label for="practice_chooser_bell_t">T</label></li>
+				</ul>
+				<ul class="tab_group">
+					<li><input type="radio" name="practice_chooser_leadOrCourse" id="practice_chooser_leadOrCourse_lead" value="lead" /><label for="practice_chooser_leadOrCourse_lead">Single Lead</label></li>
+					<li class="active"><input type="radio" name="practice_chooser_leadOrCourse" id="practice_chooser_leadOrCourse_course" value="course" checked="checked" /><label for="practice_chooser_leadOrCourse_course">Plain Course</label></li>
+				</ul>
+			</div>
+			<div id="practice_chooser_go">
+				<button id="practice_chooser_go_button">Go</button>
+			</div>
 		</div>
-		<!-- build:js inline practice.js -->
+		<div id="practice_overflow"><div class="practice_container" id="practice"></div></div>
 		<script src="practice.js"></script>
-		<!-- /build -->
 	</body>
 </html>

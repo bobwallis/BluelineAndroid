@@ -1,0 +1,134 @@
+::placeholder {
+	color: #999;
+}
+.placeholder {
+	color: #999;
+}
+
+// Radio buttons
+.tab_group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    user-select: none;
+    border-radius: 3px;
+    margin: 0 auto 16px;
+    max-width: 300px;
+    padding: 0;
+    height: 32px;
+	box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    li {
+		flex: 1;
+        line-height: 32px;
+        box-sizing: border-box;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        cursor: pointer;
+        border-right: 1px solid #E0DED9;
+        background-color: #F3F3F3;
+        font-size: 11px;
+        transition: background-color .3s cubic-bezier(0.23, 1, 0.32, 1);
+        &:first-child {
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+        &:last-child {
+            border-right: 0;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        &.active, &:hover {
+            background-color: #FFF;
+        }
+        &.active {
+            font-weight: bold;
+        }
+		input {
+			display: none;
+		}
+		label {
+			display: inline-block;
+			width: 100%;
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0 8px;
+			line-height: 32px;
+			cursor: pointer;
+		}
+    }
+}
+
+// Submit/Prove/Clear button
+input[type="submit"], input[type="reset"], input[type="button"], button {
+	display: block;
+	border-radius: 2px;
+	float: right;
+	border: 0;
+	padding: 10px 15px;
+	text-transform: uppercase;
+	text-align: center;
+	transition: background-color 0.5s ease, color 0.5s ease;
+	box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+    cursor: pointer;
+}
+input[type="submit"], input[type="button"], button {
+	background-color: #002856;
+	margin: 20px 10px 0 0;
+	color: white;
+	&:disabled {
+		background-color: #DDD;
+		color: #AAA;
+	}
+}
+input[type="reset"] {
+	background-color: #DDD;
+	margin: 20px 20px 0 0;
+	color: black;
+}
+
+
+// Other inputs
+input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="number"], input[type="range"], input[type="tel"], input[type="week"] {
+	font-feature-settings: "kern" 0, "liga" 1, "calt" 1, "pnum" 1, "tnum" 0, "onum" 0, "lnum" 1, "zero" 0;
+}
+textarea {
+	display: block;
+	font-family: monospace;
+	border-radius: 2px;
+	background-color: #F3F3F3;
+	border: 0;
+	margin: 20px 1.5% 0;
+	padding: 5px;
+	box-sizing: border-box;
+	width: 97%;
+	box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+}
+
+.select-wrapper, .input-wrapper {
+	display: block;
+	position: relative;
+	border-radius: 2px;
+	background-color: #F3F3F3;
+	margin: 0 1.5%;
+	width: 97%;
+	height: 32px;
+	box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+}
+
+input[type="text"], select {
+	display: block;
+	background-color: #F3F3F3;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 0 10px;
+	line-height: 32px;
+	border: 0;
+	border-radius: 2px;
+	&:focus {
+		border: 0;
+		box-shadow: 0 0 2px #002856;
+	}
+}

@@ -1,6 +1,6 @@
 require(['jquery', 'pinch', 'Method', 'Grid'], function( $, pinch, Method, Grid ) {
 	// Get options
-	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : (typeof 'Android' === 'object')? Android.queryString() : '',
+	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : Android.queryString(),
 		qs = (function( a ) {
 			if ( a === '' ) return {};
 				var b = {};

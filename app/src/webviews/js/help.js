@@ -1,4 +1,4 @@
-require(['Accordian'], function( accordian ) {
-	// Initialise any accordians on the pageg
-	accordian();
+require(['Accordion'], function( accordion ) {
+	// Initialise any accordions on the page
+	accordion();
 } );

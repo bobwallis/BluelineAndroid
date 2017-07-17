@@ -40,7 +40,7 @@ gulp.task( 'html', function() {
 
 
 gulp.task( 'css', function() {
-	gulp.src( [SRC+'less/blueline.less', SRC+'less/ringingPractice.less'] )
+	gulp.src( [SRC+'less/_.less'] )
 		.pipe( less() )
 		.pipe( autoprefixer( { browsers: ['Android > 0'] } ) )
 		.pipe( concat( 'blueline.css' ) )

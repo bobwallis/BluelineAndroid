@@ -1,0 +1,96 @@
+// Links
+a {
+	text-decoration: none;
+	text-shadow: .03em 0 #FFF, -.03em 0 #FFF, 0 .03em #FFF, 0 -.03em #FFF, .06em 0 #FFF, -.06em 0 #FFF, .09em 0 #FFF, -.09em 0 #FFF, .12em 0 #FFF, -.12em 0 #FFF, .15em 0 #FFF, -.15em 0 #FFF;
+	background-image: linear-gradient(#FFF, #FFF), linear-gradient(#FFF, #FFF), linear-gradient(#A1C4D0, #A1C4D0);
+	background-size: .05em 1px, .05em 1px, 1px 1px;
+	background-repeat: no-repeat, no-repeat, repeat-x;
+	background-position: 0% 99%, 100% 99%, 0% 99%;
+	transition-property: color;
+	transition-duration: .4s;
+	&:link { color: #29404C; }
+	&:visited { color: #4C2940; }
+	&:active { color: #404C29; }
+	&.external {
+		padding-right: 13px;
+		background-image: url(external.svg), linear-gradient(#FFF, #FFF), linear-gradient(#FFF, #FFF), linear-gradient(#A1C4D0, #A1C4D0);
+		background-size: auto, .05em 1px, .05em 1px, 1px 1px;
+		background-repeat: no-repeat, no-repeat, no-repeat, repeat-x;
+		background-position: center right, 0% 99%, 100% 99%, 0% 99%;
+	}
+	&::selection {
+		text-shadow: none;
+	}
+}
+
+
+// Headers
+h1, h2, h3, h4 {
+	text-rendering: optimizeLegibility;
+	font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "dlig" 1;
+}
+h1 {
+	display: block;
+	margin-bottom: 5px;
+	font-size: 16px;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+h3 {
+	font-size: 16px;
+	font-weight: normal;
+	color: #002856;
+	margin: 20px 0 15px 0;
+	text-transform: uppercase;
+	&:first-child {
+		margin-top: 0;
+	}
+}
+h4 {
+	font-size: 14px;
+	font-weight: normal;
+	color: #002856;
+	margin: 10px 0 5px 15px;
+	text-transform: uppercase;
+}
+
+
+// Other typography
+p, blockquote {
+	text-align: justify;
+	hyphens: auto;
+	margin-bottom: 8px;
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+ul {
+	margin-left: 20px;
+	li {
+		text-align: justify;
+		hyphens: auto;
+		margin-bottom: 8px;
+	}
+	&:last-child {
+		margin-bottom: -8px;
+	}
+	&.compact li {
+		margin-bottom: 0;
+		&:last-child {
+			margin-bottom: 8px;
+		}
+	}
+}
+blockquote {
+	margin-left: 16px;
+}
+.monospace {
+	font-family: monospace;
+	white-space: pre;
+}
+.notation, #notation-input {
+	font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "pnum" 0, "tnum" 1, "onum" 0, "lnum" 1, "zero" 1;
+}
+.caps {
+	font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "pnum" 1, "tnum" 0, "onum" 1, "lnum" 0, "smcp" 1, "c2sc" 1;
+}

@@ -1,0 +1,51 @@
+// Specific code for grids.html
+html.grids, html.lines {
+	body {
+		text-align: center;
+		padding-right: 0;
+	}
+
+	#container {
+		white-space: nowrap;
+		div {
+			margin-bottom: 15px;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+	body.oneColumn {
+		padding-left: 0;
+	}
+	body.oneRow {
+		text-align: left;
+		h1 {
+			margin-bottom: 0;
+		}
+		#container div {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 15px;
+			margin-bottom: 0;
+			&:last-child {
+				margin-right: 16px;
+			}
+		}
+	}
+
+	body.tiny h1 {
+		font-size: 11px;
+	}
+	body.small h1 {
+		font-size: 13px;
+	}
+	body.medium h1 {
+		font-size: 15px;
+	}
+	body.large h1 {
+		font-size: 18px;
+	}
+	body.xlarge h1 {
+		font-size: 25px;
+	}
+}

@@ -24,7 +24,7 @@ define( function() {
 	};
 
 	return function() {
-		var accordionToggles = document.querySelectorAll( '.accordian dt, .accordian dd' );
+		var accordionToggles = document.querySelectorAll( '.accordion dt, .accordion dd' );
 		for( var i = 0; i < accordionToggles.length; i++ ) {
 			accordionToggles[i].addEventListener('click', switchAccordion, false);
 		}
