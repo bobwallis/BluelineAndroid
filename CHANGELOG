@@ -114,3 +114,9 @@
 22:
  - Update support libraries and database
  - Other small UI tweaks and small fixes
+
+23:
+ - Add some basic help pages
+ - Allow the user to choose which bell they ring in the practice interface
+ - Update support libraries and database
+ - Other small UI tweaks and fixes
