@@ -120,3 +120,6 @@
  - Allow the user to choose which bell they ring in the practice interface
  - Update support libraries and database
  - Other small UI tweaks and fixes
+
+24:
+ - Fix issues with system size settings interfering with font sizes

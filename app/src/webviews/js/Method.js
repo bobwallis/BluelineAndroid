@@ -199,6 +199,9 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					bells: rounds.map( function( b ) {
 						return { color: (toFollow.indexOf( b ) !== -1)? 'transparent' : '#000' };
 					} )
+				},
+				ruleOffs: {
+					width: fontSize/20
 				}
 			} );
 			// Set the colors and stroke widths of the lines in the plain course
@@ -225,6 +228,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				var isHuntBell, isWorkingBell, isAffected;
 				// Set IDs and other options
 				thisgridOptionscallsnumbers[callIndex].numbers = { show: true, font: font, bells: rounds.map( function( b ) { return { color: (thisgridOptionscallsnumbers[callIndex].affected.indexOf( b ) !== -1 || this.huntBells.indexOf( b ) !== -1)? 'transparent' : '#000' }; }, that ) };
+				thisgridOptionscallsnumbers[callIndex].ruleOffs.width = fontSize/20;
 				// Set line colors
 				for( i = 0, j = 0; i < that.stage; ++i ) {
 					isHuntBell = that.huntBells.indexOf( i ) !== -1;
@@ -249,7 +253,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				id: sharedPlainCourseGridOptions.id+'_numbers',
 				numbers: {
 					show: true,
-					font: (fontSize*0.8)+'px '+fontFace,
+					font: (fontSize*0.9)+'px '+fontFace,
 					bells: rounds.map( function( b ) { return { color: '#002856' }; } )
 				},
 				sideNotation: false,
@@ -316,6 +320,9 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			thisgridOptionsplainCourselines = $.extend( true, {}, sharedPlainCourseGridOptions, {
 				id: sharedPlainCourseGridOptions.id+'_lines',
 				numbers: false,
+				ruleOffs: {
+					width: fontSize/20
+				},
 				verticalGuides: {
 					shading: {
 						show: true

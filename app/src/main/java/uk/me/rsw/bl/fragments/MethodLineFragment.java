@@ -2,6 +2,7 @@ package uk.me.rsw.bl.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -84,6 +85,9 @@ public class MethodLineFragment extends Fragment {
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setMinimumFontSize(1);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            webSettings.setTextZoom(100);
+        }
 
         mWebView.loadUrl("file:///android_asset/webviews/lines.html");
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {

@@ -24,10 +24,10 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 
 	switch( qs.size ) {
 		case 'tiny':
-			qs.fontSize = 10;
+			qs.fontSize = 9;
 			break;
 		case 'small':
-			qs.fontSize = 12;
+			qs.fontSize = 11;
 			break;
 		case 'medium':
 			qs.fontSize = 14;
@@ -38,13 +38,6 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 		case 'xlarge':
 			qs.fontSize = 24;
 			break;
-	}
-
-	// Overrides for grid type
-	if( qs.type === 'grid' ) {
-		qs.size = 'medium';
-		qs.layout = 'oneColumn';
-		qs.fontSize = 15;
 	}
 
 	// Configure page
