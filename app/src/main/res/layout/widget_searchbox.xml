@@ -20,7 +20,7 @@
             android:layout_marginLeft="8dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            app:mm_color="#757575"
+            app:mm_color="@color/iconGrey"
             app:mm_strokeWidth="2"
             app:mm_transformDuration="200" />
 
@@ -68,7 +68,7 @@
             android:layout_centerVertical="true"
             android:onClick="mic"
             android:layout_marginRight="13dp"
-            android:src="@drawable/ic_mic"
+            app:srcCompat="@drawable/ic_mic"
             android:contentDescription="Voice Search" />
 
     </RelativeLayout>

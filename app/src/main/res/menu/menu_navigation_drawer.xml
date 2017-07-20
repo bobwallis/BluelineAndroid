@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single" android:id="@+id/menu_top">
         <item android:id="@+id/navigation_search"
-            android:icon="@drawable/ic_methods"
+            android:icon="@drawable/ic_search"
             android:title="@string/title_activity_main" />
         <item android:id="@+id/navigation_custom"
             android:icon="@drawable/ic_custom"

@@ -5,7 +5,7 @@
 
     <item android:id="@+id/action_star"
         android:title="@string/action_star"
-        android:icon="@drawable/ic_star_outline_white"
+        android:icon="@drawable/ic_star_outline"
         app:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_settings"

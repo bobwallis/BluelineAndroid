@@ -145,10 +145,10 @@ public class SearchBox extends RelativeLayout {
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) {
                     isMic = false;
-                    mic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_clear));
+                    mic.setImageResource(R.drawable.ic_clear);
                 } else {
                     isMic = true;
-                    mic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mic));
+                    mic.setImageResource(R.drawable.ic_mic);
                 }
 
                 if (listener != null)
@@ -168,7 +168,7 @@ public class SearchBox extends RelativeLayout {
 
         if (getSearchText().length() > 0) {
             isMic = false;
-            mic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_clear));
+            mic.setImageResource(R.drawable.ic_clear);
         }
 
         if (listener != null)
@@ -197,7 +197,7 @@ public class SearchBox extends RelativeLayout {
         this.search.setVisibility(View.GONE);
 
         isMic = true;
-        mic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mic));
+        mic.setImageResource(R.drawable.ic_mic);
 
         if (listener != null)
             listener.onSearchClosed();

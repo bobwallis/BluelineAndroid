@@ -219,7 +219,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         // Swap the "Star" action for an "Unstar" one if the method is starred
         if(userDataDB.isStar(star)) {
             menu.findItem(R.id.action_star).setTitle(R.string.action_unstar);
-            menu.findItem(R.id.action_star).setIcon(R.drawable.ic_star_white);
+            menu.findItem(R.id.action_star).setIcon(R.drawable.ic_star);
         }
         return super.onPrepareOptionsMenu(menu);
     }
