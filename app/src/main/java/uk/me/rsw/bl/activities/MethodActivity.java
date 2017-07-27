@@ -68,10 +68,10 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         Intent intent = getIntent();
 
         // Check if a custom method is being viewed
-        customMethod = intent.getStringExtra(MainActivity.METHOD_TITLE).equals("Custom Method") || intent.getBooleanExtra(MainActivity.METHOD_CUSTOM, false);
+        customMethod = (intent.hasExtra(MainActivity.METHOD_TITLE) && intent.getStringExtra(MainActivity.METHOD_TITLE).equals("Custom Method")) || (intent.hasExtra(MainActivity.METHOD_CUSTOM) && intent.getBooleanExtra(MainActivity.METHOD_CUSTOM, false));
 
         // If we've been given a definite title from another activity
-        if( intent.getStringExtra(MainActivity.METHOD_TITLE) != null ) {
+        if( intent.hasExtra(MainActivity.METHOD_TITLE) ) {
             title = intent.getStringExtra(MainActivity.METHOD_TITLE);
             if (customMethod) {
                 // Check if the notation is for an existing method
