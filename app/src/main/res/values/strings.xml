@@ -23,10 +23,13 @@
     <string name="snackbar_unstar_action">Restar</string>
 
     <string name="title_activity_main">Search methods</string>
+    <string name="title_activity_main_short">Search</string>
     <string name="title_activity_about">About &amp; Help</string>
     <string name="title_activity_method">Method</string>
     <string name="title_activity_custom">Custom Method</string>
+    <string name="title_activity_custom_short">Custom Method</string>
     <string name="title_activity_prove">Composition Prover</string>
+    <string name="title_activity_prove_short">Prover</string>
     <string name="title_starred">Starred Methods</string>
 
     <string name="dialog_confirm_unstar">Unstar method?</string>

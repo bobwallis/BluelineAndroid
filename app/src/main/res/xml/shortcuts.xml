@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="search"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_search"
+        android:shortcutShortLabel="@string/title_activity_main_short"
+        android:shortcutLongLabel="@string/title_activity_main">
+        <intent
+            android:action="android.intent.action.SEARCH"
+            android:targetPackage="uk.me.rsw.bl"
+            android:targetClass="uk.me.rsw.bl.activities.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="custom"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_custom"
+        android:shortcutShortLabel="@string/title_activity_custom_short"
+        android:shortcutLongLabel="@string/title_activity_custom">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="uk.me.rsw.bl"
+            android:targetClass="uk.me.rsw.bl.activities.CustomActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="prove"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_prove"
+        android:shortcutShortLabel="@string/title_activity_prove_short"
+        android:shortcutLongLabel="@string/title_activity_prove">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="uk.me.rsw.bl"
+            android:targetClass="uk.me.rsw.bl.activities.ProveActivity" />
+    </shortcut>
+</shortcuts>

@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             searchQuery = savedInstanceState.getString(SEARCH_QUERY);
         }
 
+        // Check if the intent is to skip straight to searching
+        if (getIntent().getAction().equals("android.intent.action.SEARCH")) {
+            isSearching = true;
+        }
+
         // Get instance of database
         db = new MethodsDatabase(this);
 
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Set up the toolbar background
         toolbarBackground = findViewById(R.id.toolbar_background);
-        if(isSearching) {
+        if (isSearching) {
             ViewGroup.LayoutParams layoutParams = toolbarBackground.getLayoutParams();
             layoutParams.height = 0;
             toolbarBackground.setLayoutParams(layoutParams);
@@ -82,19 +87,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchResults = (RecyclerView) findViewById(R.id.search_results);
         searchResults_layoutManager = new LinearLayoutManager(this);
         searchResults.setLayoutManager(searchResults_layoutManager);
-        searchResults_adapter = new SearchResultsAdapter(this, db.search("zero results query"));
+        searchResults_adapter = new SearchResultsAdapter(this, null);
         searchResults.setAdapter(searchResults_adapter);
-        if(isSearching) {
+        if (isSearching) {
             searchResults.setVisibility(View.VISIBLE);
-            searchResults_adapter.changeCursor(db.search(searchQuery));
+            if (!TextUtils.isEmpty(searchQuery)) {
+                searchResults_adapter.changeCursor(db.search(searchQuery));
+            }
         }
 
         // Setup stars list
         stars = (StarList) findViewById(R.id.stars);
-        if(stars.getCount() == 0 || isSearching) {
+        if (stars.getCount() == 0 || isSearching) {
             stars.setVisibility(View.GONE);
         }
-
         // Set up the search box
         searchBox = (SearchBox) findViewById(R.id.searchbox);
         searchBox.setMenuListener(new SearchBox.MenuListener() {
@@ -198,11 +204,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         });
-        if(isSearching) {
+        if (isSearching) {
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) searchBox.getLayoutParams();
             layoutParams.topMargin = 0;
             searchBox.setLayoutParams(layoutParams);
             searchBox.search(searchQuery);
+            if (getIntent().getAction().equals("android.intent.action.SEARCH")) {
+                searchBox.openSearch();
+            }
         }
     }
 

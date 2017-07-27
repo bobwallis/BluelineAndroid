@@ -123,3 +123,8 @@
 
 24:
  - Fix issues with system size settings interfering with font sizes
+
+25:
+ - Fix app indexing, and launching app from URLs
+ - Add app shortcuts
+
