@@ -8,8 +8,8 @@ android {
         applicationId "uk.me.rsw.bl"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 24
-        versionName "6.4.1"
+        versionCode 25
+        versionName "6.4.2"
         resConfigs "en"
         vectorDrawables.useSupportLibrary = true
     }
