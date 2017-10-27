@@ -2,18 +2,21 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="63"
-    android:viewportHeight="63">
+    android:viewportWidth="108.0"
+    android:viewportHeight="108.0">
+    <clip-path
+        android:name="mask"
+        android:pathData="M0,0H108V108H0z"/>
     <path
         android:strokeWidth="3.5"
         android:strokeColor="#B40200"
-        android:strokeLineCap="square"
+        android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:pathData="M0,0l2.333,2 19.666,14.75 -19.666,14.75 59,44.25" />
+        android:pathData="M-2,2.983L22.5,22.5l2.333,2 19.666,14.75 -19.666,14.75 80,60" />
     <path
         android:strokeWidth="5"
         android:strokeColor="#0024FF"
-        android:strokeLineCap="square"
+        android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:pathData="M63,0l-2.333,2 -39.333,29.5 19.666,14.75 -39.333,29.5" />
+        android:pathData="M110,2.983L85.5,22.5l-2.333,2 -39.333,29.5 19.666,14.75 -60,45" />
 </vector>
