@@ -22,10 +22,11 @@
 			background: url(arrow.svg) left center no-repeat;
 			transform: rotate(0deg);
 			transform-origin: 2.5px 50%;
-			transition: transform 0.2s ease-in-out;
+			transition: transform 0.3s ease-in;
 		}
 		&.expanded:before {
 			transform: rotate(90deg);
+			transition: transform 0.3s ease-out;
 		}
 	}
 	dd {
