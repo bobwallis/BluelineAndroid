@@ -128,3 +128,6 @@
  - Fix app indexing, and launching app from URLs
  - Add app shortcuts
 
+26:
+ - Update support libraries and database
+ - Update adaptive icon so it works properly
