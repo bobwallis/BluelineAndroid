@@ -14,6 +14,7 @@ define( function() {
 	};
 
 	var switchAccordion = function( e ) {
+		if( e.target.tagName === 'A' ) { return; }
 		e.preventDefault();
 		var target = closestElementOfType( e.target, 'dt, dd' ),
 			otherTarget = (target.tagName.toUpperCase() === 'DT')? target.nextElementSibling : target.previousElementSibling;
