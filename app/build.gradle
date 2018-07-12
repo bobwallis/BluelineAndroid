@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
     android {
-        compileSdkVersion 26
-        buildToolsVersion "26.0.3"
+        compileSdkVersion 27
 
         defaultConfig {
             applicationId "uk.me.rsw.bl"
             minSdkVersion 14
-            targetSdkVersion 26
+            targetSdkVersion 27
             versionCode 26
             versionName "6.4.3"
             resConfigs "en"
@@ -32,18 +32,18 @@ apply plugin: 'com.android.application'
     }
 
     dependencies {
-        compile 'com.android.support:design:26.1.0'
-        compile 'com.android.support:support-vector-drawable:26.1.0'
-        compile 'com.android.support:appcompat-v7:26.1.0'
-        compile 'com.android.support:cardview-v7:26.1.0'
-    compile 'com.android.support:preference-v7:26.1.0'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'com.android.support:support-v13:26.1.0'
-    compile 'com.google.firebase:firebase-core:11.8.0'
-    compile 'com.google.firebase:firebase-crash:11.8.0'
-    compile 'com.google.firebase:firebase-appindexing:11.8.0'
-    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
-    compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
+        implementation 'com.android.support:design:27.1.1'
+        implementation 'com.android.support:support-vector-drawable:27.1.1'
+        implementation 'com.android.support:appcompat-v7:27.1.1'
+        implementation 'com.android.support:cardview-v7:27.1.1'
+        implementation 'com.android.support:preference-v7:27.1.1'
+        implementation 'com.android.support:recyclerview-v7:27.1.1'
+        implementation 'com.android.support:support-v13:27.1.1'
+        implementation 'com.google.firebase:firebase-core:16.0.1'
+        implementation 'com.google.firebase:firebase-appindexing:16.0.1'
+        implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
+        implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+        implementation 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
 }
 
 apply plugin: 'com.google.gms.google-services'
