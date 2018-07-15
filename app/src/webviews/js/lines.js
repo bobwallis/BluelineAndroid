@@ -17,10 +17,10 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 	qs.type = (typeof qs.type == 'string' && (qs.type == 'lines' || qs.type == 'diagrams' || qs.type == 'grid'))? qs.type : 'numbers';
 	qs.size = (typeof qs.size == 'string' && (qs.size == 'tiny' || qs.size == 'small' || qs.size == 'large' || qs.size == 'xlarge'))? qs.size : 'medium';
 	qs.layout = (typeof qs.layout == 'string' && qs.layout == 'oneRow')? 'oneRow' : 'oneColumn';
-	qs.calls = (typeof qs.calls == 'string')? JSON.parse( qs.calls ) : {};
-	qs.ruleOffs = (typeof qs.ruleOffs == 'string')? JSON.parse( qs.ruleOffs ) : {};
-	qs.callingPositions = typeof qs.callingPositions == 'string'? JSON.parse( qs.callingPositions ) : {};
-	qs.workingBell = typeof qs.workingBell == 'string' && qs.workingBell == 'lightest'? 'lightest' : 'heaviest';
+	qs.calls = (typeof qs.calls == 'string' && qs.calls !== 'null' && qs.calls !== '')? JSON.parse( qs.calls ) : {};
+	qs.ruleOffs = (typeof qs.ruleOffs == 'string' && qs.ruleOffs !== 'null' && qs.ruleOffs !== '')? JSON.parse( qs.ruleOffs ) : {};
+	qs.callingPositions = (typeof qs.callingPositions == 'string' && qs.callingPositions !== 'null' && qs.callingPositions !== '')? JSON.parse( qs.callingPositions ) : {};
+	qs.workingBell = (typeof qs.workingBell == 'string' && qs.workingBell == 'lightest')? 'lightest' : 'heaviest';
 
 	switch( qs.size ) {
 		case 'tiny':
