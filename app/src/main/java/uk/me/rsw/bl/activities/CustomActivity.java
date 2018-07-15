@@ -41,7 +41,7 @@ public class CustomActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
 
             case R.id.action_about:
