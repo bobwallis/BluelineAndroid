@@ -22,7 +22,7 @@
     <string name="snackbar_unstar_text">Method has been unstarred.</string>
     <string name="snackbar_unstar_action">Restar</string>
 
-    <string name="title_activity_main">Search methods</string>
+    <string name="title_activity_main">Search Methods</string>
     <string name="title_activity_main_short">Search</string>
     <string name="title_activity_about">About &amp; Help</string>
     <string name="title_activity_method">Method</string>
