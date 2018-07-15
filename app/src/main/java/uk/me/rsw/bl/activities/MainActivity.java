@@ -262,6 +262,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 searchBox.openSearch();
                 return true;
+            case R.id.navigation_discover:
+                intent = new Intent(this, DiscoverActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.navigation_custom:
                 intent = new Intent(this, CustomActivity.class);
                 startActivity(intent);

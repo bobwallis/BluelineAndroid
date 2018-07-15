@@ -12,6 +12,17 @@
             android:targetClass="uk.me.rsw.bl.activities.MainActivity" />
     </shortcut>
     <shortcut
+        android:shortcutId="discover"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_discover"
+        android:shortcutShortLabel="@string/title_activity_discover_short"
+        android:shortcutLongLabel="@string/title_activity_discover">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="uk.me.rsw.bl"
+            android:targetClass="uk.me.rsw.bl.activities.DiscoverActivity" />
+    </shortcut>
+    <shortcut
         android:shortcutId="custom"
         android:enabled="true"
         android:icon="@drawable/ic_shortcut_custom"

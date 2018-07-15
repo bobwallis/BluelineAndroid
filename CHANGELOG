@@ -131,3 +131,7 @@
 26:
  - Update support libraries and database
  - Update adaptive icon so it works properly
+
+27:
+ - Add "Discover Methods" section for finding new methods without searching
+ - Update support libraries, Android API verison and method database

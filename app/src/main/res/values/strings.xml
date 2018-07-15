@@ -3,6 +3,7 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -30,6 +31,8 @@
     <string name="title_activity_custom_short">Custom Method</string>
     <string name="title_activity_prove">Composition Prover</string>
     <string name="title_activity_prove_short">Prover</string>
+    <string name="title_activity_discover">Discover Methods</string>
+    <string name="title_activity_discover_short">Discover</string>
     <string name="title_starred">Starred Methods</string>
 
     <string name="dialog_confirm_unstar">Unstar method?</string>
