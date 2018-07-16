@@ -135,3 +135,7 @@
 27:
  - Add "Discover Methods" section for finding new methods without searching
  - Update support libraries, Android API verison and method database
+
+28:
+ - Update method database (add calls back in)
+
