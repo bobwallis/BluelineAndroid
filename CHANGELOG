@@ -139,3 +139,5 @@
 28:
  - Update method database (add calls back in)
 
+29:
+ - Add Crashlytics logging to help identify causes of crashes

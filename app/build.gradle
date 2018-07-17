@@ -8,8 +8,8 @@ apply plugin: 'io.fabric'
             applicationId "uk.me.rsw.bl"
             minSdkVersion 14
             targetSdkVersion 27
-            versionCode 28
-            versionName "6.4.5"
+            versionCode 29
+            versionName "6.4.6"
             resConfigs "en"
             vectorDrawables.useSupportLibrary = true
         }
