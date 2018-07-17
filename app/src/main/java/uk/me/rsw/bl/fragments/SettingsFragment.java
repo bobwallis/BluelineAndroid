@@ -7,6 +7,8 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 
+import com.crashlytics.android.Crashlytics;
+
 import uk.me.rsw.bl.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -34,6 +36,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
+
+            Crashlytics.setString(preference.getKey(), stringValue);
 
             if (preference instanceof ListPreference) {
                 ListPreference listPreference = (ListPreference) preference;

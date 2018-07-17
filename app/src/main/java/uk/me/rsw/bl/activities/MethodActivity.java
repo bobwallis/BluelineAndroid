@@ -16,11 +16,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.appindexing.Action;
 import com.google.firebase.appindexing.FirebaseAppIndex;
 import com.google.firebase.appindexing.FirebaseUserActions;
@@ -60,12 +62,18 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_methods);
 
+        // Get the intent
+        Intent intent = getIntent();
+
+        // Log the intent into Crashlytics
+        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_TITLE: " + (intent.hasExtra(MainActivity.METHOD_TITLE)? intent.getStringExtra(MainActivity.METHOD_TITLE) : "n/a"));
+        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_NOTATION: " + (intent.hasExtra(MainActivity.METHOD_NOTATION)? intent.getStringExtra(MainActivity.METHOD_NOTATION) : "n/a"));
+        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_STAGE: " + (intent.hasExtra(MainActivity.METHOD_STAGE)? intent.getIntExtra(MainActivity.METHOD_STAGE, 0) : 0));
+        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_URI: " + intent.getDataString());
+
         // Get instances of databases
         MethodsDatabase db = new MethodsDatabase(this);
         userDataDB = new UserDataDatabase(this);
-
-        // Get the intent
-        Intent intent = getIntent();
 
         // Check if a custom method is being viewed
         customMethod = (intent.hasExtra(MainActivity.METHOD_TITLE) && intent.getStringExtra(MainActivity.METHOD_TITLE).equals("Custom Method")) || (intent.hasExtra(MainActivity.METHOD_CUSTOM) && intent.getBooleanExtra(MainActivity.METHOD_CUSTOM, false));
@@ -74,6 +82,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         if( intent.hasExtra(MainActivity.METHOD_TITLE) ) {
             title = intent.getStringExtra(MainActivity.METHOD_TITLE);
             if (customMethod) {
+                Crashlytics.log(Log.DEBUG, "MethodActivity","Custom method");
                 // Check if the notation is for an existing method
                 method = db.getFromNotationExpandedAndStage(intent.getStringExtra(MainActivity.METHOD_NOTATION), intent.getIntExtra(MainActivity.METHOD_STAGE, 0));
                 if(method == null) {
@@ -96,6 +105,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
                     alertDialogB.create().show();
                 }
             } else {
+                Crashlytics.log("Method from title");
                 method = db.getFromTitle(title);
                 if( method == null ) {
                     intent.putExtra(MainActivity.METHOD_CUSTOM, true);
@@ -107,6 +117,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         }
         // Otherwise we've been started from the URL intent
         else if( intent.getData() != null ) {
+            Crashlytics.log(Log.DEBUG, "MethodActivity","Method from URI");
             method = db.getFromURL(intent.getData().getLastPathSegment());
             if( method == null ) {
                 setResult(Activity.RESULT_CANCELED);
@@ -119,6 +130,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         }
         // Otherwise fail
         else {
+            Crashlytics.log(Log.DEBUG, "MethodActivity","Failed to open method");
             setResult(Activity.RESULT_CANCELED);
             finish();
             return;
@@ -169,6 +181,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     public void onStart() {
         super.onStart();
         if(!customMethod) {
+            Crashlytics.log(Log.DEBUG, "MethodActivity","Starting method view in app index");
             Indexable methodToIndex = new Indexable.Builder().setName(title).setUrl(url).build();
             FirebaseAppIndex.getInstance().update(methodToIndex);
             Action viewAction = Actions.newView(title, url);
@@ -196,6 +209,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     @Override
     public void onStop() {
         if( !customMethod) {
+            Crashlytics.log(Log.DEBUG, "MethodActivity","Stopping method view in app index");
             Action viewAction = Actions.newView(title, url);
             FirebaseUserActions.getInstance().end(viewAction);
         }
