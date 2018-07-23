@@ -26,7 +26,9 @@ public class AboutActivity extends AppCompatActivity {
         // Set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Set up tabs
         mSectionsPagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());

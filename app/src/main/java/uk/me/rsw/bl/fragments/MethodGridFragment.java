@@ -3,6 +3,7 @@ package uk.me.rsw.bl.fragments;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +75,7 @@ public class MethodGridFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mScrollView = (NestedScrollView2) inflater.inflate(R.layout.fragment_nonfocusable_webview_in_nestedscrollview, container, false);
 
         mWebView = (WebView) mScrollView.findViewById(R.id.webview);

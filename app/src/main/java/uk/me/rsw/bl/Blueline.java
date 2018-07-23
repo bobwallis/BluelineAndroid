@@ -4,14 +4,12 @@ import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.webkit.WebView;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.FirebaseApp;
 
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class Blueline extends Application {
 

@@ -21,7 +21,9 @@ public class CustomActivity extends AppCompatActivity {
         // Set up toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Set up fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

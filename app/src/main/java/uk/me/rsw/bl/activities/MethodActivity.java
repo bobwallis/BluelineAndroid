@@ -66,10 +66,10 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         Intent intent = getIntent();
 
         // Log the intent into Crashlytics
-        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_TITLE: " + (intent.hasExtra(MainActivity.METHOD_TITLE)? intent.getStringExtra(MainActivity.METHOD_TITLE) : "n/a"));
+        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_TITLE: "    + (intent.hasExtra(MainActivity.METHOD_TITLE)? intent.getStringExtra(MainActivity.METHOD_TITLE) : "n/a"));
         Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_NOTATION: " + (intent.hasExtra(MainActivity.METHOD_NOTATION)? intent.getStringExtra(MainActivity.METHOD_NOTATION) : "n/a"));
-        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_STAGE: " + (intent.hasExtra(MainActivity.METHOD_STAGE)? intent.getIntExtra(MainActivity.METHOD_STAGE, 0) : 0));
-        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_URI: " + intent.getDataString());
+        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_STAGE: "    + (intent.hasExtra(MainActivity.METHOD_STAGE)? intent.getIntExtra(MainActivity.METHOD_STAGE, 0) : 0));
+        Crashlytics.log(Log.DEBUG, "MethodActivity","METHOD_URI: "      + intent.getDataString());
 
         // Get instances of databases
         MethodsDatabase db = new MethodsDatabase(this);
@@ -148,8 +148,10 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         // Set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(title);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(title);
+        }
 
         // Cache the current layout options so we can reload the activity should they change
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

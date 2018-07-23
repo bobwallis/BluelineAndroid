@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Check if the intent is to skip straight to searching
-        if (getIntent().getAction().equals("android.intent.action.SEARCH")) {
+        if (getIntent().getAction() != null && getIntent().getAction().equals("android.intent.action.SEARCH")) {
             isSearching = true;
         }
 
@@ -195,7 +196,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onSearch(String searchTerm) {
                 InputMethodManager inputMethodManager = (InputMethodManager) searchBox.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(mDrawerLayout.getApplicationWindowToken(), 0);
+                if (inputMethodManager != null) {
+                    inputMethodManager.hideSoftInputFromWindow(mDrawerLayout.getApplicationWindowToken(), 0);
+                }
             }
 
             @Override
@@ -254,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Intent intent;
 
         switch (menuItem.getItemId()) {

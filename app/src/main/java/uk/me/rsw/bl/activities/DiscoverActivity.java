@@ -3,14 +3,12 @@ package uk.me.rsw.bl.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import uk.me.rsw.bl.R;
-import uk.me.rsw.bl.fragments.CustomFragment;
 import uk.me.rsw.bl.fragments.DiscoverFragment;
 
 public class DiscoverActivity extends AppCompatActivity {
@@ -23,7 +21,9 @@ public class DiscoverActivity extends AppCompatActivity {
         // Set up toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Set up fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

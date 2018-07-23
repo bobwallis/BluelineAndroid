@@ -2,6 +2,7 @@ package uk.me.rsw.bl.fragments;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -30,7 +31,7 @@ public class MethodDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         method = (Method) getArguments().getSerializable(METHOD_DATA);
 
         View view = inflater.inflate(R.layout.fragment_method_details, container, false);

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -180,9 +179,11 @@ public class SearchBox extends RelativeLayout {
             public void run() {
                 InputMethodManager inputMethodManager = (InputMethodManager) context
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.toggleSoftInputFromWindow(
-                        getApplicationWindowToken(),
-                        InputMethodManager.SHOW_FORCED, 0);
+                if (inputMethodManager != null) {
+                    inputMethodManager.toggleSoftInputFromWindow(
+                            getApplicationWindowToken(),
+                            InputMethodManager.SHOW_FORCED, 0);
+                }
             }
         };
         handler.postDelayed(runnable, 150);
@@ -207,7 +208,9 @@ public class SearchBox extends RelativeLayout {
             @Override
             public void run() {
                 InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getApplicationWindowToken(), 0);
+                if (inputMethodManager != null) {
+                    inputMethodManager.hideSoftInputFromWindow(getApplicationWindowToken(), 0);
+                }
             }
         };
         handler.postDelayed(runnable, 150);
