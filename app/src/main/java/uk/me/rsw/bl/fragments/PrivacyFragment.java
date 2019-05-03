@@ -9,14 +9,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import uk.me.rsw.bl.R;
 
-public class CopyrightFragment extends Fragment {
+public class PrivacyFragment extends Fragment {
 
-    public CopyrightFragment() {
+    public PrivacyFragment() {
     }
 
     @Override
@@ -24,8 +25,10 @@ public class CopyrightFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nonfocusable_webview_in_nestedscrollview, container, false);
 
         WebView mWebView = (WebView) view.findViewById(R.id.webview);
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(false);
         mWebView.setWebViewClient(new blWebViewClient());
-        mWebView.loadUrl("file:///android_asset/webviews/copyright.html");
+        mWebView.loadUrl("file:///android_asset/webviews/privacy.html");
 
         return view;
     }
@@ -38,5 +41,4 @@ public class CopyrightFragment extends Fragment {
             return true;
         }
     }
-
 }

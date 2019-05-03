@@ -26,6 +26,7 @@
     <string name="title_activity_main">Search Methods</string>
     <string name="title_activity_main_short">Search</string>
     <string name="title_activity_about">About &amp; Help</string>
+    <string name="title_activity_privacy">Privacy</string>
     <string name="title_activity_method">Method</string>
     <string name="title_activity_custom">Custom Method</string>
     <string name="title_activity_custom_short">Custom Method</string>

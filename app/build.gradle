@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 
     android {
         compileSdkVersion 27
@@ -8,8 +7,8 @@ apply plugin: 'io.fabric'
             applicationId "uk.me.rsw.bl"
             minSdkVersion 14
             targetSdkVersion 27
-            versionCode 29
-            versionName "6.4.6"
+            versionCode 30
+            versionName "6.5.0"
             resConfigs "en"
             vectorDrawables.useSupportLibrary = true
         }
@@ -39,9 +38,8 @@ apply plugin: 'io.fabric'
         implementation 'com.android.support:preference-v7:27.1.1'
         implementation 'com.android.support:recyclerview-v7:27.1.1'
         implementation 'com.android.support:support-v13:27.1.1'
-        implementation 'com.google.firebase:firebase-core:16.0.1'
-        implementation 'com.google.firebase:firebase-appindexing:16.0.1'
-        implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
+        implementation 'com.google.firebase:firebase-core:16.0.8'
+        implementation 'com.google.firebase:firebase-appindexing:17.1.0'
         implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
         implementation 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
 }

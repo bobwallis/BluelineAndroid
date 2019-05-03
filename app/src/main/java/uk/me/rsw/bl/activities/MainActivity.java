@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 searchBox.openSearch();
             }
         }
+
     }
 
     @Override
@@ -279,6 +280,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.navigation_settings:
                 intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.navigation_privacy:
+                intent = new Intent(this, AboutActivity.class);
+                intent.putExtra("defaultTab", 2);
                 startActivity(intent);
                 return true;
             case R.id.navigation_about:

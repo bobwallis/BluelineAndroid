@@ -36,12 +36,12 @@ public class AboutActivity extends AppCompatActivity {
         mViewPager.setPageMargin((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, getResources().getDisplayMetrics()));
         mViewPager.setPageMarginDrawable(R.color.lightGrey);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(getIntent().getIntExtra("defaultTab", 0));
 
         // Set up tab bar
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setupWithViewPager(mViewPager);
-
     }
 
     @Override

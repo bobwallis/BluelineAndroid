@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import uk.me.rsw.bl.fragments.AboutFragment;
 import uk.me.rsw.bl.fragments.CopyrightFragment;
 import uk.me.rsw.bl.fragments.HelpFragment;
+import uk.me.rsw.bl.fragments.PrivacyFragment;
 
 
 public class AboutPagerAdapter extends FragmentPagerAdapter {
@@ -17,7 +18,7 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -28,6 +29,8 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new HelpFragment();
             case 2:
+                return new PrivacyFragment();
+            case 3:
                 return new CopyrightFragment();
         }
         return null;
@@ -41,6 +44,8 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return "Help";
             case 2:
+                return "Privacy";
+            case 3:
                 return "Copyright";
         }
         return null;

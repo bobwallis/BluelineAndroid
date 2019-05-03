@@ -141,3 +141,7 @@
 
 29:
  - Add Crashlytics logging to help identify causes of crashes
+
+30:
+ - Update support libraries and database
+ - Add privacy policy

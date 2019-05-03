@@ -11,7 +11,7 @@ import uk.me.rsw.bl.models.Method;
 public class MethodsDatabase extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "methods.db";
-    private static final int DATABASE_VERSION = 36; // Increment this each time the database is updated
+    private static final int DATABASE_VERSION = 37; // Increment this each time the database is updated
 
     private static final String[] sqlSelect = {"title", "abbreviation", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationexpanded", "leadheadcode", "leadhead", "palindromic", "rotational", "doublesym", "fchgroups", "numberofhunts", "lengthoflead", "lengthofcourse", "callingpositions", "ruleoffs", "calls"};
 

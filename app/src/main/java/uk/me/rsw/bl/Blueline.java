@@ -6,8 +6,8 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.webkit.WebView;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Map;
 
@@ -19,12 +19,12 @@ public class Blueline extends Application {
 
         super.onCreate();
 
-        // Initialise preferences and set initial Crashlytics keys
+        // Initialise preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         Map<String,?> keys = PreferenceManager.getDefaultSharedPreferences(this).getAll();
-        for(Map.Entry<String,?> entry : keys.entrySet()) {
-            Crashlytics.setString(entry.getKey(), entry.getValue().toString());
-        }
+
+        // Disable Firebase analytics data collection
+        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(false);
 
         // Enable WebView debugging if developing
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

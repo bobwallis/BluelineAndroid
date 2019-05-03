@@ -14,6 +14,9 @@
         <item android:id="@+id/navigation_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/title_activity_settings" />
+        <item android:id="@+id/navigation_privacy"
+            android:icon="@drawable/ic_privacy"
+            android:title="@string/title_activity_privacy" />
         <item android:id="@+id/navigation_about"
             android:icon="@drawable/ic_about"
             android:title="@string/title_activity_about" />
