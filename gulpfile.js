@@ -80,10 +80,10 @@ gulp.task( 'icon-round', function() {
 	return es.merge.apply( null, tasks );
 } );
 gulp.task( 'icon-store', function() {
-	return gulp.src( 'res/icon.svg' )
-		.pipe( svg2png( 512/192 ) )
+	return gulp.src( 'res/icon_store.svg' )
+		.pipe( svg2png( 512/63 ) )
 		.pipe( imagemin( { use: [imagemin_zopfli()] } ) )
-		.pipe( rename( 'icon.png' ) )
+		.pipe( rename( 'icon_full.png' ) )
 		.pipe( gulp.dest( 'res/' ) );
 } );
 

@@ -40,3 +40,6 @@ node_modules/
 
 ## Blueline database
 app/src/main/assets/databases/blueline.db.gz
+
+# Generated icons
+res/icon_full.png

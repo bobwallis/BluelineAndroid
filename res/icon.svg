@@ -2,10 +2,6 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 192 192" preserveAspectRatio="xMidYMid">
 	<defs>
-		<linearGradient id="overlay" x1="0%" y1="0%" x2="0%" y2="100%">
-			<stop offset="0" stop-color="#FFF" stop-opacity="0.2"/>
-			<stop offset="1" stop-color="#333" stop-opacity= "0.2"/>
-		</linearGradient>
 		<mask id="mask" width="192" height="192">
 			<rect x="20" y="20" rx="16" ry="16" width="152" height="152" fill="#FFF" />
 		</mask>
@@ -35,6 +31,5 @@
 		<path fill="none" stroke="#B40200" stroke-width="8" stroke-linecap="square" stroke-linejoin="round" d="M20,20l8,6 46.666,35 -46.666,35 140,105" />
 		<path fill="none" stroke="#0024FF" stroke-width="12" stroke-linecap="square" stroke-linejoin="round" d="M172,20l-8,6 -93.333,70 46.666,35 -93.333,70" />
 		<rect width="152" height="152" fill="none" stroke="#E5D594" stroke-width="4" x="20" y="20" rx="16" ry="16" />
-		<rect width="152" height="152" fill="url(#overlay)" x="20" y="20" />
 	</g>
 </svg>
