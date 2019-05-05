@@ -4,12 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.MainActivity;

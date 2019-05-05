@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-public class ViewPager2 extends android.support.v4.view.ViewPager {
+import androidx.viewpager.widget.ViewPager;
+
+public class ViewPager2 extends ViewPager {
 
     public ViewPager2(Context context) {
         super(context);

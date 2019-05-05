@@ -142,6 +142,7 @@
 29:
  - Add Crashlytics logging to help identify causes of crashes
 
-30:
+30/31:
  - Update support libraries and database
+ - Remove Crashlytics, Firebase Analytics, internet permission
  - Add privacy policy

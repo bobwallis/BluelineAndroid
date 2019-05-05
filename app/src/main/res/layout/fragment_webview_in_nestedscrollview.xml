@@ -1,4 +1,4 @@
-<android.support.v4.widget.NestedScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollview"
@@ -15,4 +15,4 @@
         android:layout_height="wrap_content"
         android:scrollbars="none" />
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

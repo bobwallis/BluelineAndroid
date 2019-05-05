@@ -2,8 +2,9 @@ package uk.me.rsw.bl.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
+
+import androidx.cursoradapter.widget.CursorAdapter;
 
 import uk.me.rsw.bl.R;
 

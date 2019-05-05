@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
     android {
-        compileSdkVersion 27
+        compileSdkVersion 28
 
         defaultConfig {
             applicationId "uk.me.rsw.bl"
             minSdkVersion 14
-            targetSdkVersion 27
-            versionCode 30
+            targetSdkVersion 28
+            versionCode 31
             versionName "6.5.0"
             resConfigs "en"
             vectorDrawables.useSupportLibrary = true
@@ -31,13 +31,13 @@ apply plugin: 'com.android.application'
     }
 
     dependencies {
-        implementation 'com.android.support:design:27.1.1'
-        implementation 'com.android.support:support-vector-drawable:27.1.1'
-        implementation 'com.android.support:appcompat-v7:27.1.1'
-        implementation 'com.android.support:cardview-v7:27.1.1'
-        implementation 'com.android.support:preference-v7:27.1.1'
-        implementation 'com.android.support:recyclerview-v7:27.1.1'
-        implementation 'com.android.support:support-v13:27.1.1'
+        implementation 'com.google.android.material:material:1.0.0'
+        implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
+        implementation 'androidx.appcompat:appcompat:1.0.2'
+        implementation 'androidx.cardview:cardview:1.0.0'
+        implementation 'androidx.preference:preference:1.0.0'
+        implementation 'androidx.recyclerview:recyclerview:1.0.0'
+        implementation 'androidx.legacy:legacy-support-v13:1.0.0'
         implementation 'com.google.firebase:firebase-core:16.0.8'
         implementation 'com.google.firebase:firebase-appindexing:17.1.0'
         implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
