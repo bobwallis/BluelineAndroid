@@ -13,16 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
+        <uk.me.rsw.bl.widgets.TextView_h3
             android:text="@string/title_starred"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingTop="12dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textAllCaps="true"
-            android:textColor="@color/darkBlue" />
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
         <ListView
             android:id="@+id/stars_list"
             android:layout_width="match_parent"
