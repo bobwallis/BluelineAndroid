@@ -146,3 +146,7 @@
  - Update support libraries and database
  - Remove Crashlytics, Firebase Analytics, internet permission
  - Add privacy policy
+
+32:
+ - Replace some webviews with native Android layouts
+

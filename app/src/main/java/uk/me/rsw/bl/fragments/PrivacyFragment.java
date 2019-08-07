@@ -1,20 +1,18 @@
 package uk.me.rsw.bl.fragments;
 
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import uk.me.rsw.bl.R;
+import uk.me.rsw.bl.widgets.TextView_h3;
+import uk.me.rsw.bl.widgets.TextView_p;
 
 public class PrivacyFragment extends Fragment {
 
@@ -23,23 +21,17 @@ public class PrivacyFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_nonfocusable_webview_in_nestedscrollview, container, false);
+        View view = inflater.inflate(R.layout.fragment_textcontainer, container, false);
+        ViewGroup ll = (ViewGroup) view.findViewById(R.id.container);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextView t;
 
-        WebView mWebView = (WebView) view.findViewById(R.id.webview);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(false);
-        mWebView.setWebViewClient(new blWebViewClient());
-        mWebView.loadUrl("file:///android_asset/webviews/privacy.html");
+        t = new TextView_h3(getActivity());
+        t.setPadding(0, 0, 0, 8);
+        t.setText("Privacy Policy");
+        ll.addView(t, lp);
+        ll.addView(new TextView_p(getActivity(), "All data used by the app is stored only on your device and isn't transmitted anywhere, to anyone, at any point."), lp);
 
         return view;
-    }
-
-    private class blWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
-            return true;
-        }
     }
 }

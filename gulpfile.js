@@ -1,7 +1,7 @@
 var SRC  = 'app/src/webviews/';
 var DEST = 'app/src/main/assets/webviews/';
 var m = {
-	localStorage_age: '20151003'
+	localStorage_age: '20190807'
 };
 
 var gulp            = require( 'gulp' );
@@ -88,7 +88,7 @@ gulp.task( 'icon-store', function() {
 } );
 
 gulp.task( 'js', function() {
-	var tasks = ['grids', 'help', 'lines', 'custom', 'practice', 'prove', 'discover'].map( function( s ) {
+	var tasks = ['grids', 'lines', 'custom', 'practice', 'prove', 'discover'].map( function( s ) {
 		return requirejs( {
 			baseUrl: SRC+'js/',
 			include: [s],
