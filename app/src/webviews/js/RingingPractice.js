@@ -463,6 +463,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			previousTimestamp = null;
 			currentRowAtTimeOfLastTargetRowSet = 0;
 			scoreboard.reset();
+			fillTextCache_thatsAllFinished = false;
 			finished = false;
 		};
 		setup();
@@ -596,6 +597,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			if( finished && currentRow > 1 && options.thatsAll ) {
 				// If we haven't drawn on the final score yet then do so
 				if( !fillTextCache_thatsAllFinished && options.score ) {
+					fillTextCache_thatsAll.context.clearRect( 0, ((options.thatsAll === ' ')? 5 : 20), canvasWidth, 15 );
 					fillTextCache_thatsAll.context.font = '13px Roboto, sans-serif';
 					fillTextCache_thatsAll.context.fillText( 'Score: '+scoreboard.score(), canvasWidth/2, ((options.thatsAll === ' ')? 5 : 20) );
 					fillTextCache_thatsAllFinished = true;
