@@ -30,11 +30,16 @@
     }
 }
 
-#practice_chooser h4 {
-	display: block;
-	margin: 0 auto 10px auto;
-	max-width: 300px;
-	font-size: 12px;
+#practice_chooser {
+	.tab_group {
+		margin-bottom: 32px;
+	}
+	h4 {
+		display: block;
+		margin: 10px auto;
+		max-width: 420px;
+		font-size: 12px;
+	}
 }
 
 #practice_chooser_go {
@@ -42,6 +47,7 @@
 	text-align: center;
 	button {
 		float: none;
+		margin-top: 0;
 		display: inline-block;
 	}
 }
@@ -184,7 +190,7 @@
     	pointer-events: none;
 		top: 10px;
 		left: 10px;
-		font-size: 10px;
+		font-size: 12px;
 		line-height: 15px;
 		opacity: 0;
 		transition: opacity .4s cubic-bezier(0.23, 1, 0.32, 1);
