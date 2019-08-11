@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="@string/pref_header_general"
-        android:key="pref_general_settings">
+        android:title="@string/pref_header_line"
+        android:key="pref_line_settings">
 
         <ListPreference
             android:title="@string/pref_title_workingBell"
@@ -13,12 +13,6 @@
             android:defaultValue="@string/default_workingBell"
             android:entries="@array/pref_option_workingBell"
             android:entryValues="@array/pref_option_workingBell_values" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/pref_header_line"
-        android:key="pref_line_settings">
 
         <ListPreference
             android:title="@string/pref_title_line_style"

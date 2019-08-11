@@ -1,13 +1,10 @@
 <resources>
     <string name="title_activity_settings">Settings</string>
 
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_workingBell">Default working bell</string>
-    <string name="pref_summary_workingBell">Select the default working bell in a group</string>
-
-
     <string name="pref_header_line">Blue line display</string>
+
+    <string name="pref_title_workingBell">Working bell</string>
+    <string name="pref_summary_workingBell">Select the default working bell in a group</string>
 
     <string name="pref_title_line_style">Line style</string>
     <string name="pref_summary_line_style">Select the style of image to display</string>
