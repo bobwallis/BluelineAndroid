@@ -23,9 +23,8 @@
             android:scrollbars="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_centerHorizontal="true"
-            android:paddingTop="64dp"
+            android:paddingTop="68dp"
             android:paddingBottom="8dp"
             android:clipToPadding="false"
             android:visibility="gone"
@@ -42,7 +41,7 @@
         <uk.me.rsw.bl.widgets.StarList
             android:layout_width="460dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/toolbar_background"
             android:id="@+id/stars" />
