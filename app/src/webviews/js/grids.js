@@ -99,14 +99,14 @@ require(['jquery', 'pinch', 'Method', 'Grid'], function( $, pinch, Method, Grid 
 	pinch( document.body,
 		// While zooming, scale the container using CSS transform
 		function(p1s,p1c,p2s,p2c) {
-			var newScaleX = Math.min( 3, Math.max( 0.333, Math.abs((p1c[0]-p2c[0])/(p1s[0]-p2s[0])) ) ),
-				newScaleY = Math.min( 3, Math.max( 0.333, Math.abs((p1c[1]-p2c[1])/(p1s[1]-p2s[1])) ) );
+			var newScaleX = Math.min( 2, Math.max( 0.5, Math.abs((p1c[0]-p2c[0])/(p1s[0]-p2s[0])) ) ),
+				newScaleY = Math.min( 2, Math.max( 0.5, Math.abs((p1c[1]-p2c[1])/(p1s[1]-p2s[1])) ) );
 			container.style.transform = container.style.webkitTransform = 'scale('+newScaleX+','+newScaleY+')';
 		},
 		// When done zooming redraw all the grids at the new scale
 		function(p1s,p1c,p2s,p2c) {
-			scaleX = scaleX*Math.min( 3, Math.max( 0.333, scaleX*Math.abs((p1c[0]-p2c[0])/(p1s[0]-p2s[0])) ) ),
-			scaleY = scaleY*Math.min( 3, Math.max( 0.333, scaleY*Math.abs((p1c[1]-p2c[1])/(p1s[1]-p2s[1])) ) );
+			scaleX = scaleX*Math.min( 2, Math.max( 0.5, scaleX*Math.abs((p1c[0]-p2c[0])/(p1s[0]-p2s[0])) ) ),
+			scaleY = scaleY*Math.min( 2, Math.max( 0.5, scaleY*Math.abs((p1c[1]-p2c[1])/(p1s[1]-p2s[1])) ) );
 			adjustContainer();
 			redrawPlainCourseGrid();
 			redrawCallGrids();
