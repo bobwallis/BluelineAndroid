@@ -19,7 +19,7 @@ define( function() {
 		this.width = options.width;
 		this.height = options.height;
 		this.element = canvas;
-		this.context = canvas.getContext( '2d' );
+		this.context = (typeof options.alpha !== 'undefined' && options.alpha === false)? canvas.getContext( '2d', { alpha: false } ) : canvas.getContext( '2d' );
 		this.scale = pixelRatio;
 
 		// Scale for high pixel ratios

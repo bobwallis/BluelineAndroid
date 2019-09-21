@@ -53,7 +53,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			font = fontSize+'px '+fontFace,
 			columnPadding = fontSize,
 			rowHeight = Math.floor( fontSize*(fontSize < 15? 1.05 : 1) ),
-			rowWidth = Math.floor( (this.stage < 9? 1.4 : 1.2)*MeasureCanvasText( Array( this.stage + 1 ).join( '0' ), font ) );
+			rowWidth = Math.round( (this.stage < 9? 1.4 : 1.2)*MeasureCanvasText( '0', font ) ) * this.stage;
 
 		// Default line colors and widths
 		var workingBellColor = ['#11D','#1D1','#D1D', '#DD1', '#1DD', '#306754', '#AF7817', '#F75D59', '#736AFF'],

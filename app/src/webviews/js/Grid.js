@@ -17,7 +17,8 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 			var canvas =  new Canvas( $.extend( ((typeof options.scale === 'number')? { scale: options.scale } : {}), {
 				id: options.id,
 				width: options.dimensions.canvas.width,
-				height: options.dimensions.canvas.height
+				height: options.dimensions.canvas.height,
+				alpha: false
 			} ) );
 
 			// Create some shortcut variables for later use
@@ -130,32 +131,38 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 			// Draw numbers
 			if( options.numbers.show ) {
 				// Cache pre-rendered numbers
-				var fillTextCache_numbers = (function() {
-					var textMetrics = MeasureCanvasTextOffset( Math.max(bellWidth, rowHeight ), options.numbers.font, '0' );
+				var fillTextCache_numbers_size = Math.round(Math.max(bellWidth, rowHeight)),
+				fillTextCache_numbers = (function() {
+					var textMetrics = MeasureCanvasTextOffset( Math.max(bellWidth, rowHeight ), options.numbers.font, '0' ),
+						alpha = !options.verticalGuides.shading.show && !options.verticalGuides.lines.show;
 					return options.numbers.bells.map( function( bellOptions, bell ) {
 						if( bellOptions.color === 'transparent' ) {
 							return null;
 						}
-						var size = Math.max(bellWidth, rowHeight ),
-						cacheCanvas = new Canvas( {
+						var cacheCanvas = new Canvas( {
 							id: 'ccn'+bell,
-							width: size,
-							height: size
+							width: fillTextCache_numbers_size,
+							height: fillTextCache_numbers_size,
+							alpha: alpha
 						} );
 						var context = cacheCanvas.context;
+						if( alpha === false ) {
+							context.fillStyle = options.background.color;
+							context.fillRect(0, 0, fillTextCache_numbers_size, fillTextCache_numbers_size);
+						}
 						context.font = options.numbers.font;
 						context.textAlign = 'center';
 						context.textBaseline = 'middle';
 						context.fillStyle = bellOptions.color;
-						context.fillText( PlaceNotation.bellToChar( bell ), size/2 + textMetrics.x, size/2 + textMetrics.y );
+						context.fillText( PlaceNotation.bellToChar( bell ), fillTextCache_numbers_size/2 + textMetrics.x, fillTextCache_numbers_size/2 + textMetrics.y );
 						return cacheCanvas;
 					} );
 				})();
 
 				// Calculate reused offsets
 				var columnSidePadding = interColumnPadding + columnRightPadding,
-					sidePadding = canvasLeftPadding + (bellWidth/2) - (Math.max(bellWidth, rowHeight )/2),
-					topPadding = canvasTopPadding + (rowHeight/2) - (Math.max(bellWidth, rowHeight )/2);
+					sidePadding = Math.round( canvasLeftPadding + (bellWidth/2) - (fillTextCache_numbers_size/2) ),
+					topPadding = Math.round( canvasTopPadding + (rowHeight/2) - (fillTextCache_numbers_size/2) );
 
 				// Draw each bell separately
 				options.numbers.bells.forEach( function( bellOptions, bell ) { // For each number
@@ -164,7 +171,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 					}
 					var row = options.startRow,
 						fillTextCacheScale = fillTextCache_numbers[bell].scale,
-						fillTextCacheSize  = Math.max(bellWidth, rowHeight ),
+						fillTextCacheSize  = fillTextCache_numbers[bell].width,
 						fillTextSourceSize = Math.floor(fillTextCacheSize*fillTextCacheScale);
 					for( i = 0; i < numberOfColumns; ++i ) {
 						for( j = 0; j < leadsPerColumn && (i*leadsPerColumn)+j < numberOfLeads; ++j ) {
