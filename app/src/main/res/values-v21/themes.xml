@@ -10,7 +10,7 @@
         <item name="android:windowExitTransition">@android:transition/slide_bottom</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-        <item name="android:statusBarColor">@color/darkerBlue</item>
+        <item name="android:statusBarColor">@color/darkBlue</item>
         <item name="android:navigationBarColor">@color/black</item>
     </style>
 
