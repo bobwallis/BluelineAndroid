@@ -30,6 +30,5 @@
     "gulp-uncss": "^1.0.5",
     "hyphenation.en-gb": "^0.2.1",
     "merge-stream": "^2.0.0"
-  },
-  "dependencies": {}
+  }
 }
