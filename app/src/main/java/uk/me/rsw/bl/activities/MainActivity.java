@@ -275,10 +275,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this, CustomActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.navigation_prove:
-                intent = new Intent(this, ProveActivity.class);
-                startActivity(intent);
-                return true;
             case R.id.navigation_settings:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);

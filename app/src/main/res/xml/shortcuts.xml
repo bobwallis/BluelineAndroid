@@ -33,15 +33,4 @@
             android:targetPackage="uk.me.rsw.bl"
             android:targetClass="uk.me.rsw.bl.activities.CustomActivity" />
     </shortcut>
-    <shortcut
-        android:shortcutId="prove"
-        android:enabled="true"
-        android:icon="@drawable/ic_shortcut_prove"
-        android:shortcutShortLabel="@string/title_activity_prove_short"
-        android:shortcutLongLabel="@string/title_activity_prove">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="uk.me.rsw.bl"
-            android:targetClass="uk.me.rsw.bl.activities.ProveActivity" />
-    </shortcut>
 </shortcuts>

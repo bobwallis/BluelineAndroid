@@ -1,7 +1,7 @@
 var SRC  = 'app/src/webviews/';
 var DEST = 'app/src/main/assets/webviews/';
 var m = {
-	localStorage_age: '20190807'
+	localStorage_age: '20210320'
 };
 
 var gulp         = require( 'gulp' );
@@ -85,7 +85,7 @@ function iconStore() {
 };
 
 function js() {
-	var tasks = ['grids', 'lines', 'custom', 'practice', 'prove', 'discover'].map( function( s ) {
+	var tasks = ['grids', 'lines', 'custom', 'practice', 'discover'].map( function( s ) {
 		return requirejs( {
 			baseUrl: SRC+'js/',
 			include: [s],
@@ -100,11 +100,6 @@ function js() {
 	return mergeStream.apply( null, tasks );
 };
 
-function jsWorkers() {
-	return gulp.src( [SRC+'js/gsiril.worker.js'] )
-		.pipe( gulp.dest( DEST ) );
-};
 
-
-exports.default = gulp.parallel( html, css, js, jsWorkers );
+exports.default = gulp.parallel( html, css, js );
 exports.images  = gulp.parallel( img, icon, iconRound, iconStore );
