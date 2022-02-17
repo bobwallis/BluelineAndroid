@@ -173,9 +173,9 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         super.onStart();
         if(!customMethod) {
             Indexable methodToIndex = new Indexable.Builder().setName(title).setUrl(url).build();
-            FirebaseAppIndex.getInstance().update(methodToIndex);
+            FirebaseAppIndex.getInstance(getApplicationContext()).update(methodToIndex);
             Action viewAction = Actions.newView(title, url);
-            FirebaseUserActions.getInstance().start(viewAction);
+            FirebaseUserActions.getInstance(getApplicationContext()).start(viewAction);
         }
     }
 
@@ -200,7 +200,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     public void onStop() {
         if( !customMethod) {
             Action viewAction = Actions.newView(title, url);
-            FirebaseUserActions.getInstance().end(viewAction);
+            FirebaseUserActions.getInstance(getApplicationContext()).end(viewAction);
         }
         super.onStop();
     }
