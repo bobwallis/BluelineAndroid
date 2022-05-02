@@ -11,7 +11,7 @@ import uk.me.rsw.bl.models.Method;
 public class MethodsDatabase extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "methods.db";
-    private static final int DATABASE_VERSION = 39; // Increment this each time the database is updated
+    private static final int DATABASE_VERSION = 40; // Change this to a bigger number each time the database is updated
 
     private static final String[] sqlSelect = {"title", "abbreviation", "provisional", "url", "little", "differential", "classification", "stage", "notation", "notationexpanded", "leadheadcode", "leadhead", "palindromic", "rotational", "doublesym", "fchgroups", "numberofhunts", "lengthoflead", "lengthofcourse", "callingpositions", "ruleoffs", "calls"};
 
@@ -24,6 +24,7 @@ public class MethodsDatabase extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         String actualQuery = "%" + (query+"%")
+                .replaceAll(" 3%$", " Singles")
                 .replaceAll(" 4%$", " Minimus")
                 .replaceAll(" 5%$", " Doubles")
                 .replaceAll(" 6%$", " Minor")
@@ -33,6 +34,10 @@ public class MethodsDatabase extends SQLiteAssetHelper {
                 .replaceAll(" 10%$", " Royal")
                 .replaceAll(" 11%$", " Cinques")
                 .replaceAll(" 12%$", " Maximus")
+                .replaceAll(" 13%$", " Sextuples")
+                .replaceAll(" 14%$", " Fourteen")
+                .replaceAll(" 15%$", " Septuples")
+                .replaceAll(" 16%$", " Sixteen")
                 .replace('*', '%')
                 .replace('?','_')
                 .replace('.',' ')
