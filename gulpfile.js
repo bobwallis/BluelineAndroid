@@ -1,30 +1,28 @@
+import gulp         from 'gulp';
+import rename       from 'gulp-rename';
+import concat       from 'gulp-concat';
+import mergeStream  from 'merge-stream';
+import less         from 'gulp-less';
+import autoprefixer from 'gulp-autoprefixer';
+import minifyCss    from 'gulp-minify-css';
+import imagemin     from 'gulp-imagemin';
+import svg2png      from 'gulp-svg2png';
+import requirejs    from 'gulp-requirejs';
+import amdclean     from 'gulp-amdclean';
+import uglify       from 'gulp-uglify';
+import mustache     from 'gulp-mustache';
+import typogr       from 'gulp-typogr';
+import hypher       from 'gulp-hypher';
+import h_pattern    from 'hyphenation.en-gb';
+import htmlmin      from 'gulp-htmlmin';
+
 var SRC  = 'app/src/webviews/';
 var DEST = 'app/src/main/assets/webviews/';
 var m = {
-	localStorage_age: '20210320'
+	localStorage_age: '20220507'
 };
 
-var gulp         = require( 'gulp' );
-var rename       = require( 'gulp-rename' );
-var concat       = require( 'gulp-concat');
-var mergeStream  = require( 'merge-stream' );
-var less         = require( 'gulp-less' );
-var autoprefixer = require( 'gulp-autoprefixer' );
-var minifyCss    = require( 'gulp-minify-css' );
-var uncss        = require( 'gulp-uncss' );
-var imagemin     = require( 'gulp-imagemin' );
-var svg2png      = require( 'gulp-svg2png' );
-var requirejs    = require( 'gulp-requirejs' );
-var amdclean     = require( 'gulp-amdclean' );
-var uglify       = require( 'gulp-uglify' );
-var mustache     = require( 'gulp-mustache' );
-var typogr       = require( 'gulp-typogr' );
-var hypher       = require( 'gulp-hypher' );
-var h_pattern    = require( 'hyphenation.en-gb' );
-var htmlmin      = require( 'gulp-htmlmin' );
-
-
-function html() {
+function gulp_html() {
 	return gulp.src( SRC+'html/*.html' )
 		.pipe( mustache( m ) )
 		.pipe( typogr( { only: ['amp', 'widont', 'smartypants'] } ) )
@@ -34,7 +32,7 @@ function html() {
 };
 
 
-function css() {
+function gulp_css() {
 	return gulp.src( [SRC+'less/_.less'] )
 		.pipe( less() )
 		.pipe( autoprefixer() )
@@ -44,7 +42,7 @@ function css() {
 };
 
 
-function img() {
+function gulp_img() {
 	return mergeStream(
 		gulp.src( [SRC+'img/*.svg'] )
 			.pipe( imagemin() )
@@ -56,7 +54,7 @@ function img() {
 };
 
 
-function icon() {
+function gulp_icon() {
 	var tasks = [ ['mdpi',48], ['hdpi',72], ['xhdpi',96], ['xxhdpi',144], ['xxxhdpi',192] ].map( function( size ) {
 		return gulp.src( 'res/icon.svg' )
 			.pipe( svg2png( size[1]/192 ) )
@@ -66,7 +64,7 @@ function icon() {
 	} );
 	return mergeStream.apply( null, tasks );
 };
-function iconRound() {
+function gulp_iconRound() {
 	var tasks = [ ['mdpi',48], ['hdpi',72], ['xhdpi',96], ['xxhdpi',144], ['xxxhdpi',192] ].map( function( size ) {
 		return gulp.src( 'res/icon_round.svg' )
 			.pipe( svg2png( size[1]/192 ) )
@@ -76,7 +74,7 @@ function iconRound() {
 	} );
 	return mergeStream.apply( null, tasks );
 };
-function iconStore() {
+function gulp_iconStore() {
 	return gulp.src( 'res/icon_store.svg' )
 		.pipe( svg2png( 512/63 ) )
 		.pipe( imagemin() )
@@ -84,7 +82,7 @@ function iconStore() {
 		.pipe( gulp.dest( 'res/' ) );
 };
 
-function js() {
+function gulp_js() {
 	var tasks = ['grids', 'lines', 'custom', 'practice', 'discover'].map( function( s ) {
 		return requirejs( {
 			baseUrl: SRC+'js/',
@@ -92,7 +90,7 @@ function js() {
 			mainConfigFile: SRC+'js/'+s+'.js',
 			optimize: 'none',
 			out: s+'.js'
-		} )
+		} ).on('error', function( error ) { console.log( error ); } )
 			.pipe( amdclean.gulp() )
 			.pipe( uglify() )
 			.pipe( gulp.dest( DEST ) );
@@ -101,5 +99,5 @@ function js() {
 };
 
 
-exports.default = gulp.parallel( html, css, js );
-exports.images  = gulp.parallel( img, icon, iconRound, iconStore );
+export default gulp.parallel( gulp_html, gulp_css, gulp_js );
+export const images = gulp.parallel( gulp_img, gulp_icon, gulp_iconRound, gulp_iconStore );
