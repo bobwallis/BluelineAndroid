@@ -151,3 +151,8 @@
  - Update support libraries and database
  - Replace some webviews with native Android layouts
  - Bug fixes relating to slow line drawing
+
+33:
+ - Update support libraries and database
+ - Support jump notation
+ - Remove prover (seems mostly pointless on a mobile)
