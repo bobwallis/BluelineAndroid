@@ -1,4 +1,4 @@
-require(['jquery', 'pinch', 'Method', 'Grid'], function( $, pinch, Method, Grid ) {
+require(['deepmerge', 'pinch', 'GridOptionsBuilder', 'Grid'], function( deepmerge, pinch, GridOptionsBuilder, Grid ) {
 	// Get options
 	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : Android.queryString(),
 		qs = (function( a ) {
@@ -27,7 +27,7 @@ require(['jquery', 'pinch', 'Method', 'Grid'], function( $, pinch, Method, Grid 
 
 	// Get container and method details
 	var container = document.getElementById( 'container' ),
-		method = new Method( qs );
+		method = new GridOptionsBuilder( qs );
 
 	// Function to tweak the container padding when pinch-to-zooming
 	container.style.padding = '16px';
@@ -38,7 +38,7 @@ require(['jquery', 'pinch', 'Method', 'Grid'], function( $, pinch, Method, Grid 
 	// Drawing the plain course
 	var plainCourseContainer = document.createElement( 'div' );
 	container.appendChild( plainCourseContainer );
-	var plainCourseGridOptions = $.extend( true, method.gridOptions.plainCourse['grid'](), {
+	var plainCourseGridOptions = deepmerge( method.gridOptions.plainCourse['grid'](), {
 		title: false,
 		layout: {
 			numberOfColumns: 1,

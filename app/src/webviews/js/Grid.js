@@ -1,25 +1,28 @@
-define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'MeasureCanvasTextOffset'], function( require, $, GridOptions, PlaceNotation, Canvas, MeasureCanvasTextOffset ) {
+define( ['deepmerge', 'GridOptions', 'PlaceNotation', 'Canvas', 'MeasureCanvasTextOffset'], function( deepmerge, GridOptions, PlaceNotation, Canvas, MeasureCanvasTextOffset ) {
 
 	var MethodGrid = function( passedOptions ) {
 		var options = {};
 
 		this.setOptions = function( passedOptions ) {
-			options = GridOptions( $.extend( true, options, passedOptions ) );
+			options = GridOptions( deepmerge( options, passedOptions ) );
+		};
+
+		this.getOptions = function() {
+			return options;
 		};
 
 		this.measure = function() {
 			return options.dimensions;
 		};
 
-		this.draw = function(returnImage) {
+		this.draw = function( returnImage ) {
 			returnImage = (typeof returnImage !== 'boolean')? false : returnImage;
 			// Set up canvas
-			var canvas =  new Canvas( $.extend( ((typeof options.scale === 'number')? { scale: options.scale } : {}), {
+			var canvas =  new Canvas( deepmerge.all( [((typeof options.scale === 'number')? { scale: options.scale } : {}), {
 				id: options.id,
 				width: options.dimensions.canvas.width,
-				height: options.dimensions.canvas.height,
-				alpha: false
-			} ) );
+				height: options.dimensions.canvas.height
+			}] ) );
 
 			// Create some shortcut variables for later use
 			var i, j, k, l, m, h, w, x, y,
@@ -30,6 +33,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 				leadsPerColumn = options.layout.leadsPerColumn,
 				changesPerColumn = options.layout.changesPerColumn,
 				leadLength = options.layout.leadLength,
+				stage = options.stage,
 
 				rowHeight = options.dimensions.row.height,
 				rowWidth = options.dimensions.row.width,
@@ -93,10 +97,29 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 						}
 						y = canvasTopPadding + (bellHeight/2);
 					}
-					for( k = 1; k < options.stage; k+=2 ) {
+					for( k = 1; k < stage; k+=2 ) {
 						context.fillRect( canvasLeftPadding + (i*rowWidthWithPadding) + ((k-0.5)*bellWidth), y, bellWidth, h );
 					}
 				}
+			}
+
+			// Draw highlighting
+			if( options.highlighting.show ) {
+					for( i = 0; i < numberOfColumns; ++i ) {
+						for( j = 0; j < leadsPerColumn && (i*leadsPerColumn)+j < numberOfLeads; ++j ) {
+							for( k = 0; k < leadLength; ++k ) {
+								for( l = 0; l < stage; ++l ) {
+									context.fillStyle = options.highlighting.colors[(i*leadsPerColumn*leadLength) + (j*leadLength) + k][l];
+									context.fillRect( canvasLeftPadding + (i*rowWidthWithPadding) + (l*bellWidth), canvasTopPadding + ((j*leadLength) + k)*rowHeight, bellWidth, rowHeight );
+								}
+							}
+						}
+						// Draw the last row in each column
+						for( l = 0; l < stage; ++l ) {
+							context.fillStyle = options.highlighting.colors[(i*leadsPerColumn*leadLength) + (j*leadLength)][l];
+							context.fillRect( canvasLeftPadding + (i*rowWidthWithPadding) + (l*bellWidth), canvasTopPadding + ((j*leadLength))*rowHeight, bellWidth, rowHeight );
+						}
+					}
 			}
 
 			// Draw vertical guides - lines
@@ -104,7 +127,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 				context.lineWidth = options.verticalGuides.lines.width;
 				context.lineCap = options.verticalGuides.lines.cap;
 				context.strokeStyle = options.verticalGuides.lines.stroke;
-				context.setLineDash( options.verticalGuides.lines.dash );
+				context.setLineDash( (options.verticalGuides.lines.dash === null)? [] : options.verticalGuides.lines.dash );
 				context.beginPath();
 				for( i = 0; i < numberOfColumns; ++i ) {
 					if( options.verticalGuides.shading.fullHeight ) {
@@ -119,7 +142,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 						}
 						y = canvasTopPadding + (bellHeight/2);
 					}
-					for( k = 0; k < options.stage; ++k ) {
+					for( k = 0; k < stage; ++k ) {
 						x = canvasLeftPadding + (i*rowWidthWithPadding) + ((0.5+k)*bellWidth);
 						context.moveTo( x, y );
 						context.lineTo( x, y + h );
@@ -131,38 +154,32 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 			// Draw numbers
 			if( options.numbers.show ) {
 				// Cache pre-rendered numbers
-				var fillTextCache_numbers_size = Math.round(Math.max(bellWidth, rowHeight)),
-				fillTextCache_numbers = (function() {
-					var textMetrics = MeasureCanvasTextOffset( Math.max(bellWidth, rowHeight ), options.numbers.font, '0' ),
-						alpha = !options.verticalGuides.shading.show && !options.verticalGuides.lines.show;
+				var fillTextCache_numbers = (function() {
+					var textMetrics = MeasureCanvasTextOffset( Math.max(bellWidth, rowHeight ), options.numbers.font, '0' );
 					return options.numbers.bells.map( function( bellOptions, bell ) {
 						if( bellOptions.color === 'transparent' ) {
 							return null;
 						}
-						var cacheCanvas = new Canvas( {
+						var size = Math.max(bellWidth, rowHeight ),
+						cacheCanvas = new Canvas( {
 							id: 'ccn'+bell,
-							width: fillTextCache_numbers_size,
-							height: fillTextCache_numbers_size,
-							alpha: alpha
+							width: size,
+							height: size
 						} );
 						var context = cacheCanvas.context;
-						if( alpha === false ) {
-							context.fillStyle = options.background.color;
-							context.fillRect(0, 0, fillTextCache_numbers_size, fillTextCache_numbers_size);
-						}
 						context.font = options.numbers.font;
 						context.textAlign = 'center';
 						context.textBaseline = 'middle';
 						context.fillStyle = bellOptions.color;
-						context.fillText( PlaceNotation.bellToChar( bell ), fillTextCache_numbers_size/2 + textMetrics.x, fillTextCache_numbers_size/2 + textMetrics.y );
+						context.fillText( PlaceNotation.bellToChar( bell ), size/2 + textMetrics.x, size/2 + textMetrics.y );
 						return cacheCanvas;
 					} );
 				})();
 
 				// Calculate reused offsets
 				var columnSidePadding = interColumnPadding + columnRightPadding,
-					sidePadding = Math.round( canvasLeftPadding + (bellWidth/2) - (fillTextCache_numbers_size/2) ),
-					topPadding = Math.round( canvasTopPadding + (rowHeight/2) - (fillTextCache_numbers_size/2) );
+					sidePadding = canvasLeftPadding + (bellWidth/2) - (Math.max(bellWidth, rowHeight )/2),
+					topPadding = canvasTopPadding + (rowHeight/2) - (Math.max(bellWidth, rowHeight )/2);
 
 				// Draw each bell separately
 				options.numbers.bells.forEach( function( bellOptions, bell ) { // For each number
@@ -171,7 +188,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 					}
 					var row = options.startRow,
 						fillTextCacheScale = fillTextCache_numbers[bell].scale,
-						fillTextCacheSize  = fillTextCache_numbers[bell].width,
+						fillTextCacheSize  = Math.max(bellWidth, rowHeight ),
 						fillTextSourceSize = Math.floor(fillTextCacheSize*fillTextCacheScale);
 					for( i = 0; i < numberOfColumns; ++i ) {
 						for( j = 0; j < leadsPerColumn && (i*leadsPerColumn)+j < numberOfLeads; ++j ) {
@@ -199,7 +216,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 
 			// Draw lines
 			if( options.lines.show ) {
-				i = options.stage;
+				i = stage;
 				while( i-- ) {
 					j = options.startRow[i];
 					if( typeof options.lines.bells[j] === 'object' && options.lines.bells[j].stroke !== 'transparent' ) {
@@ -234,7 +251,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 						context.lineWidth = options.lines.bells[j].width;
 						context.lineCap = options.lines.bells[j].cap;
 						context.lineJoin = options.lines.bells[j].join;
-						context.setLineDash( options.lines.bells[j].dash );
+						context.setLineDash( (options.lines.bells[j].dash === null)? [] : options.lines.bells[j].dash );
 						context.stroke();
 					}
 				}
@@ -245,7 +262,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 				context.lineWidth = options.ruleOffs.width;
 				context.lineCap = options.ruleOffs.cap;
 				context.strokeStyle = options.ruleOffs.stroke;
-				context.setLineDash( options.ruleOffs.dash );
+				context.setLineDash( (options.ruleOffs.dash === null)? [] : options.ruleOffs.dash );
 				context.beginPath();
 				for( i = 0; i < numberOfColumns; ++i ) {
 					for( j = 0; j < leadsPerColumn && (i*leadsPerColumn)+j < numberOfLeads; ++j ) {
@@ -265,7 +282,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 			// Draw place starts
 			if( options.placeStarts.show ) {
 				options.placeStarts.bells.sort( function(a,b) { return a - b; } );
-				context.lineWidth = options.placeStarts.size*0.1;
+				context.lineWidth = options.placeStarts.width;
 				context.setLineDash( [] );
 				options.placeStarts.bells.forEach( function( i, pos ) {
 					var j = (typeof options.startRow === 'object')? options.startRow[i] : i,
@@ -275,7 +292,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 							var positionInLeadHead = leadHeads[(k*leadsPerColumn)+l].indexOf( j ),
 							x, y;
 
-							y = canvasTopPadding + (l*rowHeight*leadLength) + Math.max(options.placeStarts.size/2, rowHeight/2);
+							y = canvasTopPadding + (l*rowHeight*leadLength) + Math.max(options.placeStarts.diameter/2, rowHeight/2);
 
 							// The little circle
 							if( options.placeStarts.showSmallCircle ) {
@@ -288,16 +305,16 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 							}
 
 							// The big circle
-							x = canvasLeftPadding + (k*rowWidthWithPadding) + rowWidth + options.placeStarts.size*(pos+0.75);
+							x = canvasLeftPadding + (k*rowWidthWithPadding) + rowWidth + options.placeStarts.diameter*(pos+0.75);
 							context.strokeStyle = options.lines.bells[j].stroke;
 							context.beginPath();
-							context.arc( x, y, options.placeStarts.size/2, 0, Math.PI*2, true );
+							context.arc( x, y, options.placeStarts.diameter/2, 0, Math.PI*2, true );
 							context.closePath();
 							context.stroke();
 
 							// The text inside the big circle
-							var placeStartFontSize = Math.round( 10*Math.min( options.placeStarts.size-((positionInLeadHead<9)?2:4), (((positionInLeadHead<9)?0.75:0.6)*options.placeStarts.size) )/10 ),
-								textMetrics = MeasureCanvasTextOffset( Math.ceil(options.placeStarts.size), placeStartFontSize+'px '+options.placeStarts.font, (positionInLeadHead+1).toString() );
+							var placeStartFontSize = Math.round( 10*Math.min( options.placeStarts.diameter-((positionInLeadHead<9)?2:4), (((positionInLeadHead<9)?0.75:0.6)*options.placeStarts.diameter) )/10 ),
+								textMetrics = MeasureCanvasTextOffset( Math.ceil(options.placeStarts.diameter), placeStartFontSize+'px '+options.placeStarts.font, (positionInLeadHead+1).toString() );
 							context.fillStyle = options.placeStarts.color;
 							context.font = placeStartFontSize+'px '+options.placeStarts.font;
 							context.textAlign = 'center';
@@ -342,7 +359,7 @@ define( ['require', 'jquery', 'GridOptions', 'PlaceNotation', 'Canvas', 'Measure
 		if( passedOptions ) {
 			this.setOptions( passedOptions );
 		}
-		
+
 		return this;
 	};
 

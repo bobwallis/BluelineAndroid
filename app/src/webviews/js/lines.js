@@ -1,4 +1,4 @@
-require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
+require(['deepmerge', 'GridOptionsBuilder', 'Grid', 'InteractiveGridOverlay', 'Text', 'Music'], function( deepmerge, GridOptionsBuilder, Grid, InteractiveGridOverlay, Text, Music ) {
 	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : Android.queryString(),
 		maxLayoutHeight = (typeof Android === 'object')? Android.maxLayoutHeight() - 16 : 300,
 		qs = (function( a ) {
@@ -45,11 +45,11 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 	document.body.style.minHeight = Android.maxLayoutHeight()+'px';
 
 	var container = document.getElementById( 'container' ),
-		method = new Method( qs );
+		method = new GridOptionsBuilder( qs );
 
 	// Plain course
 	var plainCourseGridOptions = method.gridOptions.plainCourse[qs.type]();
-	var plainCourseGrid = new Grid( $.extend( true, plainCourseGridOptions, {
+	var plainCourseGrid = new Grid( deepmerge( plainCourseGridOptions, {
 		title: false,
 		layout: {
 			numberOfColumns: (qs.layout == 'oneRow')? Math.ceil( method.numberOfLeads / Math.floor( maxLayoutHeight / (plainCourseGridOptions.dimensions.row.height * method.notation.exploded.length) ) ) : 1,
@@ -72,7 +72,7 @@ require(['jquery', 'Method', 'Grid'], function( $, Method, Grid ) {
 		var callContainer = document.createElement( 'div' ),
 			title = document.createElement( 'h1' ),
 			titleText = document.createTextNode( e.title.text.replace(':', '') ),
-			callGrid = new Grid( $.extend( e, {
+			callGrid = new Grid( deepmerge( e, {
 				title: false
 			} ) ),
 			callGridImage = callGrid.draw();

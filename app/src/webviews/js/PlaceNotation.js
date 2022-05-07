@@ -20,7 +20,7 @@ define( function() {
 		expand: function( notation, stage ) {
 			// Tries to normalise place notation given in abbreviated form into full notation
 			var fullNotation, matches, stageText;
-			
+
 			fullNotation = notation
 				.toUpperCase().replace( /X/g, 'x' ) // Tidy up cases
 				.replace( /[\[{<].*[\]}>]/, '' ).replace( / FCH.*$/, '' ) // Remove anything inside (non normal) brackets, or appended fch details
@@ -161,6 +161,10 @@ define( function() {
 				if( piece === 'x' ) {
 					return (stage % 2 === 0)? 'x' : stageText;
 				}
+				// Check for empty
+				if( piece.match( /[A-Z\d]+/g ) === null ) {
+					return '';
+				}
 				// Work out which places are affected
 				var affected = piece.match( /[A-Z\d]+/g ).join( '' ).split( '' ).map( PlaceNotation.charToBell ).sort( function( a, b ) { return a - b;} );
 				// Then add missing external places
@@ -269,6 +273,39 @@ define( function() {
 		},
 		rounds: function( stage ) {
 			var row = new Array( stage ), i = stage;
+			while( i-- ) { row[i] = i; }
+			return row;
+		},
+		backRounds: function( stage ) {
+			return PlaceNotation.rounds( stage ).reverse();
+		},
+		queens: function( stage ) {
+			if( stage < 4 )  { throw null; }
+			if( stage % 2 === 1 ) { return PlaceNotation.queens( stage + 1 ).slice( 1 ).map( function( e ) { return --e; } ); }
+			var row = new Array( stage ), i = stage, mid = Math.ceil( stage / 2 );
+			while( i-- > mid ) { row[i] = 1 + (i-mid)*2; }
+			do { row[i] = i*2; } while( i-- );
+			return row;
+		},
+		kings: function( stage ) {
+			var mid = Math.floor( stage / 2 ),
+				queens = PlaceNotation.queens( stage );
+			return queens.slice( 0, mid ).reverse().concat( queens.slice( mid ) );
+		},
+		tittums: function( stage ) {
+			if( stage % 2 === 1 ) { return PlaceNotation.tittums( stage + 1 ).slice( 1 ).map( function( e ) { return --e; } ); }
+			var row = new Array( stage ), i = stage, mid = Math.floor( stage / 2 );
+			while( i-- ) { row[i] = Math.ceil( i / 2) + ((i%2 === 0)? 0 : mid); }
+			return row;
+		},
+		whittingtons: function( stage ) {
+			if( stage < 6 )  { throw null; }
+			if( stage % 2 === 1 ) { return PlaceNotation.whittingtons( stage + 1 ).slice( 1 ).map( function( e ) { return --e; } ); }
+			var row = new Array( stage ), i = stage, mid = Math.floor( stage / 2 );
+			while( i-- > stage - 3 ) { row[i] = 1 + (i-mid)*2; }
+			row[i] = row[i+1]-1;
+			row[--i] = row[i+1]+2;
+			if( i ) { row[--i] = row[i+1]+2 };
 			while( i-- ) { row[i] = i; }
 			return row;
 		},

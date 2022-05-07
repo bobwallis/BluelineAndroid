@@ -1,4 +1,4 @@
-define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNotation, MeasureCanvasText ) {
+define( ['deepmerge', 'PlaceNotation', 'MeasureCanvasText'], function( deepmerge, PlaceNotation, MeasureCanvasText ) {
 
 	// Default options (note runtime defaults are set later)
 	var defaultOptions = {
@@ -49,7 +49,8 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			showSmallCircle: true,
 			font: '"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif',
 			color: '#000',
-			size: 13,
+			diameter: 13,
+			width: 1.25,
 			from: 0
 		},
 		callingPositions: {
@@ -71,13 +72,32 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		},
 		lines: {
 			show: true
+		},
+		highlighting: {
+			show: false,
+			colors: []
 		}
 	};
-	
+
 	var counter = 1;
 
 	return function( passedOptions ) {
 		var options = {};
+		passedOptions = passedOptions || {};
+
+		// Parse notation passed as a string
+		if( typeof passedOptions.notation === 'string' ) {
+			passedOptions.notation = {
+				text: PlaceNotation.expand( passedOptions.notation, ((typeof passedOptions.stage !== 'undefined')? passedOptions.stage : undefined) ),
+			};
+			passedOptions.notation.exploded = PlaceNotation.explode( passedOptions.notation.text );
+			passedOptions.notation.parsed = PlaceNotation.parse( passedOptions.notation.text, ((typeof passedOptions.stage !== 'undefined')? passedOptions.stage : undefined) );
+		}
+
+		// Parse startRow passed as a string
+		if( typeof passedOptions.startRow === 'string' ) {
+			passedOptions.startRow = passedOptions.startRow.split( '' ).map( PlaceNotation.charToBell );
+		}
 
 		// Make runtime adjustments to the default options object
 		var defaultRuntimeOptions = {
@@ -131,7 +151,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		} );
 
 		// Merge options object with the defaults
-		options = $.extend( true, {}, defaultOptions, defaultRuntimeOptions, passedOptions );
+		options = deepmerge.all( [{}, defaultOptions, defaultRuntimeOptions, passedOptions] );
 
 		// Allow title to be shown by just setting title.text
 		if( options.title.text !== null ) { options.title.show = true; }
@@ -180,8 +200,8 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		})()) : 0;
 
 		if( options.placeStarts.show ) {
-			options.dimensions.column.padding.right = Math.ceil( Math.max( options.dimensions.column.padding.right, 10 + ( options.placeStarts.bells.length * options.placeStarts.size ) ) );
-			options.dimensions.canvas.padding.top = Math.ceil( Math.max( options.dimensions.canvas.padding.top, 1 + options.placeStarts.size - options.dimensions.row.height) );
+			options.dimensions.column.padding.right = Math.ceil( Math.max( options.dimensions.column.padding.right, 10 + ( options.placeStarts.bells.length * options.placeStarts.diameter ) ) );
+			options.dimensions.canvas.padding.top = Math.ceil( Math.max( options.dimensions.canvas.padding.top, 1 + options.placeStarts.diameter - options.dimensions.row.height) );
 		}
 		if( options.callingPositions.show ) {
 			options.dimensions.column.padding.right = Math.ceil( Math.max( options.dimensions.column.padding.right, 15 ) );

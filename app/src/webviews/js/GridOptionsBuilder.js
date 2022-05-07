@@ -1,8 +1,8 @@
-define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNotation, MeasureCanvasText ) {
+define( ['deepmerge', 'PlaceNotation', 'MeasureCanvasText'], function( deepmerge, PlaceNotation, MeasureCanvasText ) {
 
 	// Helps generate options for Grid.js to display full plain courses and calls for a particular method
 
-	var Method = function( options ) {
+	var GridOptionsBuilder = function( options ) {
 		var i, j, k, l;
 
 		// Calculate various attributes of the method
@@ -20,6 +20,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			this.callingPositions = options.callingPositions;
 			if( typeof this.callingPositions.show == 'undefined' ) { this.callingPositions.show = true; }
 			if( typeof this.callingPositions.font == 'undefined' ) { this.callingPositions.font = (fontSize*0.8)+'"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif'; }
+			if( typeof options.workingBell == 'string' && options.workingBell == 'lightest' ) { this.callingPositions.show = false; }
 		}
 		else {
 			this.callingPositions = false;
@@ -32,7 +33,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			this.leadHeads.push( PlaceNotation.apply( this.leadHead, this.leadHeads[i] ) );
 		}
 		this.leadHeads.pop();
-		
+
 		this.numberOfLeads = this.leadHeads.length;
 		this.workGroups = PlaceNotation.cycles( this.leadHead );
 
@@ -48,12 +49,12 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 		var placeStarts = toFollow.filter( function( b ) { return this.huntBells.indexOf( b ) === -1; }, this );
 
 		// Calculate some sizing to help with creating default grid options objects
-		var fontSize = (typeof options.fontSize == 'number')? options.fontSize : 14,
+		var fontSize = (typeof options.fontSize == 'number')? options.fontSize : 12,
 			fontFace = ((navigator.userAgent.toLowerCase().indexOf('android') > -1)? '' : 'Blueline, "Andale Mono", Consolas, ')+'monospace',
 			font = fontSize+'px '+fontFace,
 			columnPadding = fontSize,
-			rowHeight = Math.floor( fontSize*(fontSize < 15? 1.05 : 1) ),
-			rowWidth = Math.round( (this.stage < 9? 1.4 : 1.2)*MeasureCanvasText( '0', font ) ) * this.stage;
+			rowHeight = Math.floor( fontSize*(fontSize < 15? 1.1 : 1.05) ),
+			rowWidth = Math.floor( (this.stage < 9? 1.4 : 1.2)*MeasureCanvasText( Array( this.stage + 1 ).join( '0' ), font ) );
 
 		// Default line colors and widths
 		var workingBellColor = ['#11D','#1D1','#D1D', '#DD1', '#1DD', '#306754', '#AF7817', '#F75D59', '#736AFF'],
@@ -86,10 +87,11 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 			placeStarts: {
 				show: true,
 				bells: placeStarts,
-				size: fontSize*1.083
+				diameter: fontSize*1.083,
+				width: fontSize/10
 			},
 			sideNotation: {
-				font: (fontSize*0.8333)+'px sans-serif',
+				font: (fontSize*0.8333)+'px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif',
 				show: true
 			}
 		};
@@ -107,15 +109,13 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					// Create a block of notation big enough to play with
 					var notationExploded = PlaceNotation.explode( options.notation ),
 						callNotationExploded = PlaceNotation.explode( call.notation );
-					while( notationExploded.length < (2*call.every)+call.from ) { notationExploded = notationExploded.concat( notationExploded ); }
+					while( notationExploded.length < (2*call.every)+call.from+call.cover ) { notationExploded = notationExploded.concat( notationExploded ); }
 
 					// Insert the call's notation
-					for( i = 0; i < callNotationExploded.length; ++i ) {
-						notationExploded[(i + call.from + call.every) - 1] = callNotationExploded[i];
-					}
+					Array.prototype.splice.apply( notationExploded, [call.from+call.every-1, call.cover].concat( callNotationExploded ) );
 
 					// Calculate a good amount of padding to display on either side of the call's notation
-					var padding = Math.max( 3, Math.floor((this.notation.exploded.length-7)/4) ),
+					var padding = Math.max( 2, Math.floor((this.notation.exploded.length-7)/4) ),
 						start = Math.max( 0, (call.from+call.every-1)-padding ),
 						end = Math.min( notationExploded.length, (call.from+call.every+callNotationExploded.length-1)+padding );
 
@@ -133,7 +133,8 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					call.startRow = (start === 0)? PlaceNotation.rounds( this.stage ) : PlaceNotation.apply( notationParsed.slice( 0, start ), PlaceNotation.rounds( this.stage ) );
 
 					// Adjust rule offs to compensate for the fact we just sliced off some of the start of the method
-					call.ruleOffs = $.extend( {}, this.ruleOffs );
+					// TODO: adjust rule-offs when the call adjusts the lead length
+					call.ruleOffs = deepmerge( {}, this.ruleOffs );
 					call.ruleOffs.from -= start;
 
 					// Calculate which bells are affected by the call
@@ -191,7 +192,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				return thisgridOptionsplainCoursenumbers;
 			}
 			// Create initial object
-			thisgridOptionsplainCoursenumbers = $.extend( true, {}, sharedPlainCourseGridOptions, {
+			thisgridOptionsplainCoursenumbers = deepmerge.all( [{}, sharedPlainCourseGridOptions, {
 				id: sharedPlainCourseGridOptions.id+'_numbers',
 				numbers: {
 					show: true,
@@ -199,11 +200,8 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					bells: rounds.map( function( b ) {
 						return { color: (toFollow.indexOf( b ) !== -1)? 'transparent' : '#000' };
 					} )
-				},
-				ruleOffs: {
-					width: fontSize/20
 				}
-			} );
+			}] );
 			// Set the colors and stroke widths of the lines in the plain course
 			var isHuntBell, isWorkingBell, isAffected;
 			for( var i = 0, j = 0; i < that.stage; ++i ) {
@@ -222,13 +220,13 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				return thisgridOptionscallsnumbers;
 			}
 			// Create initial object
-			thisgridOptionscallsnumbers = $.extend( true, [], sharedCallsGridOptions );
+			thisgridOptionscallsnumbers = deepmerge( [], sharedCallsGridOptions );
 			// Set the colors and stroke widths of the lines in the calls
 			sharedCallsGridOptions.forEach( function( call, callIndex ) {
 				var isHuntBell, isWorkingBell, isAffected;
 				// Set IDs and other options
+				thisgridOptionscallsnumbers[callIndex].id += '_numbers';
 				thisgridOptionscallsnumbers[callIndex].numbers = { show: true, font: font, bells: rounds.map( function( b ) { return { color: (thisgridOptionscallsnumbers[callIndex].affected.indexOf( b ) !== -1 || this.huntBells.indexOf( b ) !== -1)? 'transparent' : '#000' }; }, that ) };
-				thisgridOptionscallsnumbers[callIndex].ruleOffs.width = fontSize/20;
 				// Set line colors
 				for( i = 0, j = 0; i < that.stage; ++i ) {
 					isHuntBell = that.huntBells.indexOf( i ) !== -1;
@@ -249,25 +247,27 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				return thisgridOptionsplainCoursediagrams;
 			}
 			// Create initial object
-			thisgridOptionsplainCoursediagrams = $.extend( true, {}, sharedPlainCourseGridOptions, {
+			thisgridOptionsplainCoursediagrams = deepmerge.all( [{}, sharedPlainCourseGridOptions, {
 				id: sharedPlainCourseGridOptions.id+'_numbers',
 				numbers: {
 					show: true,
-					font: (fontSize*0.9)+'px '+fontFace,
+					font: (fontSize*0.8)+'px '+fontFace,
 					bells: rounds.map( function( b ) { return { color: '#002856' }; } )
 				},
 				sideNotation: false,
 				callingPositions: false,
 				placeStarts: {
 					showSmallCircle: false,
-					color: '#002856'
+					color: '#002856',
+					width: fontSize/15
 				},
 				ruleOffs: {
 					stroke: '#002856',
-					width: fontSize/20,
-					dash: [0,0]
+					width: fontSize/15,
+					cap: 'round',
+					dash: null
 				}
-			} );
+			}] );
 			// Set the colors and stroke widths of the lines in the plain course
 			var isHuntBell, isWorkingBell, isAffected;
 			for( var i = 0, j = 0; i < that.stage; ++i ) {
@@ -286,7 +286,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				return thisgridOptionscallsdiagrams;
 			}
 			// Create initial object
-			thisgridOptionscallsdiagrams = $.extend( true, [], sharedCallsGridOptions );
+			thisgridOptionscallsdiagrams = deepmerge( [], sharedCallsGridOptions );
 			// Set the colors and stroke widths of the lines in the calls
 			sharedCallsGridOptions.forEach( function( call, callIndex ) {
 				var isHuntBell, isWorkingBell, isAffected;
@@ -317,18 +317,15 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				return thisgridOptionsplainCourselines;
 			}
 			// Create initial object
-			thisgridOptionsplainCourselines = $.extend( true, {}, sharedPlainCourseGridOptions, {
+			thisgridOptionsplainCourselines = deepmerge.all( [{}, sharedPlainCourseGridOptions, {
 				id: sharedPlainCourseGridOptions.id+'_lines',
 				numbers: false,
-				ruleOffs: {
-					width: fontSize/20
-				},
 				verticalGuides: {
 					shading: {
 						show: true
 					}
 				}
-			} );
+			}] );
 			// Set the colors and stroke widths of the lines in the plain course
 			var isHuntBell, isWorkingBell, isAffected;
 			for( i = 0, j = 0; i < that.stage; ++i ) {
@@ -347,7 +344,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				return thisgridOptionscallslines;
 			}
 			// Create initial object
-			thisgridOptionscallslines = $.extend( true, [], sharedCallsGridOptions );
+			thisgridOptionscallslines = deepmerge( [], sharedCallsGridOptions );
 			// Set the colors and stroke widths of the lines in the calls
 			sharedCallsGridOptions.forEach( function( call, callIndex ) {
 				var isHuntBell, isWorkingBell, isAffected;
@@ -375,7 +372,7 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				return thisgridOptionsplainCoursegrid;
 			}
 			// Create initial object
-			thisgridOptionsplainCoursegrid = $.extend( true, {}, sharedPlainCourseGridOptions, {
+			thisgridOptionsplainCoursegrid = deepmerge.all( [{}, sharedPlainCourseGridOptions, {
 				id: sharedPlainCourseGridOptions.id+'_grid',
 				title: false,
 				numberOfLeads: false,
@@ -386,9 +383,9 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 					numberOfLeads: 1,
 					numberOfColumns: 1
 				}
-			} );
+			}] );
 			// Set the colors and stroke widths of the lines in the plain course
-			var isHuntBell, isWorkingBell, isAffected;
+			var isHuntBell, isWorkingBell, i, j;
 			for( i = 0, j = 0; i < that.stage; ++i ) {
 				isHuntBell = that.huntBells.indexOf( i ) !== -1;
 				isWorkingBell = toFollow.indexOf( i ) !== -1;
@@ -405,10 +402,10 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 				return thisgridOptionscallsgrid;
 			}
 			// Create initial object
-			thisgridOptionscallsgrid = $.extend( true, [], sharedCallsGridOptions );
+			thisgridOptionscallsgrid = deepmerge( [], sharedCallsGridOptions );
 			// Set the colors and stroke widths of the lines in the calls
 			sharedCallsGridOptions.forEach( function( call, callIndex ) {
-				var isHuntBell, isWorkingBell, isAffected;
+				var isHuntBell, isAffected, i, j;
 				// Set IDs and other options
 				thisgridOptionscallsgrid[callIndex].id += '_grid';
 				thisgridOptionscallsgrid[callIndex].numbers = false;
@@ -427,5 +424,5 @@ define( ['jquery', 'PlaceNotation', 'MeasureCanvasText'], function( $, PlaceNota
 
 		return this;
 	};
-	return Method;
+	return GridOptionsBuilder;
 } );
