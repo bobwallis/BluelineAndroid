@@ -7,7 +7,7 @@ apply plugin: 'com.android.application'
             applicationId "uk.me.rsw.bl"
             minSdkVersion 19
             targetSdkVersion 31
-            versionCode 33
+            versionCode 35
             versionName "6.5.4"
             resConfigs 'en'
             vectorDrawables.useSupportLibrary = true
