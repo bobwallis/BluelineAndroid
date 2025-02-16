@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Objects;
+
 import uk.me.rsw.bl.R;
 
 public class NameRequestDialogFragment extends DialogFragment {
@@ -22,7 +24,7 @@ public class NameRequestDialogFragment extends DialogFragment {
     NoticeDialogListener listener;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             listener = (NoticeDialogListener) context;
@@ -34,7 +36,7 @@ public class NameRequestDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         final EditText edittext = new EditText(getActivity());
         builder.setMessage(R.string.enter_custom_title)
                 .setView(edittext)

@@ -87,9 +87,7 @@ public class MethodLineFragment extends Fragment {
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setMinimumFontSize(1);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            webSettings.setTextZoom(100);
-        }
+        webSettings.setTextZoom(100);
 
         mWebView.loadUrl("file:///android_asset/webviews/lines.html");
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -102,7 +100,7 @@ public class MethodLineFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (MethodActivity) context;
     }

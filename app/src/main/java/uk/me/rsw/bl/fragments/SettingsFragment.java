@@ -3,6 +3,7 @@ package uk.me.rsw.bl.fragments;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -33,7 +34,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
+        public boolean onPreferenceChange(@NonNull Preference preference, Object value) {
             String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {

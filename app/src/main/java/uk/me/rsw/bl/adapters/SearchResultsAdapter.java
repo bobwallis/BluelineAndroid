@@ -55,12 +55,10 @@ public class SearchResultsAdapter extends CursorRecyclerAdapter<SearchResultsAda
     @NonNull
     @Override
     public SearchResultsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch(viewType) {
-            case LAST:
-                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_search_result_last, parent, false));
-            default:
-                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_search_result, parent, false));
+        if (viewType == LAST) {
+            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_search_result_last, parent, false));
         }
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_search_result, parent, false));
     }
 
     @Override

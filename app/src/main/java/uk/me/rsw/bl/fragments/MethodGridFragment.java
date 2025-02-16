@@ -1,7 +1,6 @@
 package uk.me.rsw.bl.fragments;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,13 +47,13 @@ public class MethodGridFragment extends Fragment {
 
         @JavascriptInterface
         public void disableNonWebViewTouchEvents() {
-            ((ViewPager2) getActivity().findViewById(R.id.pager)).setPagingEnabled(false);
+            ((ViewPager2) requireActivity().findViewById(R.id.pager)).setPagingEnabled(false);
             mScrollView.setScrollingEnabled(false);
         }
 
         @JavascriptInterface
         public void enableNonWebViewTouchEvents() {
-            ((ViewPager2) getActivity().findViewById(R.id.pager)).setPagingEnabled(true);
+            ((ViewPager2) requireActivity().findViewById(R.id.pager)).setPagingEnabled(true);
             mScrollView.setScrollingEnabled(true);
         }
     }
@@ -84,14 +83,12 @@ public class MethodGridFragment extends Fragment {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDatabaseEnabled(true);
-        String databasePath = getActivity().getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        String databasePath = requireActivity().getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
         webSettings.setDatabasePath(databasePath);
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setMinimumFontSize(1);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            webSettings.setTextZoom(100);
-        }
+        webSettings.setTextZoom(100);
 
         mWebView.loadUrl("file:///android_asset/webviews/grids.html");
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -104,7 +101,7 @@ public class MethodGridFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (MethodActivity) context;
     }

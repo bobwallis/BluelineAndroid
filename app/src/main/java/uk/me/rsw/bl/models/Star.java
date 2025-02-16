@@ -1,7 +1,6 @@
 package uk.me.rsw.bl.models;
 
 import android.content.ContentValues;
-
 import java.io.Serializable;
 
 

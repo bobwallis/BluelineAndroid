@@ -16,6 +16,8 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.CustomActivity;
 import uk.me.rsw.bl.activities.MainActivity;
@@ -51,10 +53,10 @@ public class CustomFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MethodActivity.class);
                 intent.putExtra(MainActivity.METHOD_TITLE, "Custom Method");
                 intent.putExtra(MainActivity.METHOD_CUSTOM, true);
-                intent.putExtra(MainActivity.METHOD_STAGE, Integer.parseInt(uri.getQueryParameter("stage")));
+                intent.putExtra(MainActivity.METHOD_STAGE, Integer.parseInt(Objects.requireNonNull(uri.getQueryParameter("stage"))));
                 intent.putExtra(MainActivity.METHOD_NOTATION, uri.getQueryParameter("notation"));
-                getActivity().startActivity(intent);
-                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                requireActivity().startActivity(intent);
+                InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(mWebView.getApplicationWindowToken(), 0);
                 return true;
             }
@@ -64,7 +66,7 @@ public class CustomFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (CustomActivity) context;
     }

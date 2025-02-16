@@ -1,7 +1,6 @@
 package uk.me.rsw.bl.models;
 
 import android.database.Cursor;
-
 import java.io.Serializable;
 
 

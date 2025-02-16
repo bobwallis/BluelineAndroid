@@ -1,7 +1,6 @@
 package uk.me.rsw.bl.widgets;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.AttributeSet;
@@ -11,14 +10,10 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.MainActivity;
 import uk.me.rsw.bl.activities.MethodActivity;
 import uk.me.rsw.bl.adapters.StarsAdapter;
-import uk.me.rsw.bl.data.UserDataDatabase;
-import uk.me.rsw.bl.models.Star;
 
 public class HeadedMethodList extends FrameLayout implements AdapterView.OnItemClickListener {
 

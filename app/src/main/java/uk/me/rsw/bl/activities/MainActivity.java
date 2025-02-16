@@ -262,35 +262,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Intent intent;
 
-        switch (menuItem.getItemId()) {
-            case R.id.navigation_search:
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-                searchBox.openSearch();
-                return true;
-            case R.id.navigation_discover:
-                intent = new Intent(this, DiscoverActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.navigation_custom:
-                intent = new Intent(this, CustomActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.navigation_settings:
-                intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.navigation_privacy:
-                intent = new Intent(this, AboutActivity.class);
-                intent.putExtra("defaultTab", 2);
-                startActivity(intent);
-                return true;
-            case R.id.navigation_about:
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return true;
+        int itemId = menuItem.getItemId();
+        if (itemId == R.id.navigation_search) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            searchBox.openSearch();
+            return true;
+        } else if (itemId == R.id.navigation_discover) {
+            intent = new Intent(this, DiscoverActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (itemId == R.id.navigation_custom) {
+            intent = new Intent(this, CustomActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (itemId == R.id.navigation_settings) {
+            intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (itemId == R.id.navigation_privacy) {
+            intent = new Intent(this, AboutActivity.class);
+            intent.putExtra("defaultTab", 2);
+            startActivity(intent);
+            return true;
+        } else if (itemId == R.id.navigation_about) {
+            intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+            return true;
         }
+        return true;
     }
 
     @Override

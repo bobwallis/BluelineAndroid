@@ -1,6 +1,7 @@
 package uk.me.rsw.bl.widgets;
 
 import android.content.Context;
+import android.graphics.text.LineBreaker;
 import android.os.Build;
 import android.text.Layout;
 import android.text.Spanned;
@@ -41,15 +42,19 @@ public class TextView_p extends AppCompatTextView {
         this.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         this.setPadding(0, 18, 0, 18);
         this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        if(Build.VERSION.SDK_INT >= 17) {
-            this.setTextLocale(Locale.UK);
-        }
-        if(Build.VERSION.SDK_INT >= 23) {
-            this.setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_FULL);
-            this.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
-        }
+        this.setTextLocale(Locale.UK);
         if(Build.VERSION.SDK_INT >= 26) {
             this.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+        }
+        if(Build.VERSION.SDK_INT < 29) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                this.setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_FULL);
+                this.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
+            }
+        }
+        else {
+            this.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
+            this.setBreakStrategy(LineBreaker.BREAK_STRATEGY_HIGH_QUALITY);
         }
         this.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
     }

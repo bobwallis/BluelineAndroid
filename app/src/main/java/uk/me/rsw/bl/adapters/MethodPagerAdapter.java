@@ -2,6 +2,7 @@ package uk.me.rsw.bl.adapters;
 
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -17,9 +18,9 @@ public class MethodPagerAdapter extends FragmentPagerAdapter {
 
     private Method method;
 
-    private Integer TAB_DETAILS = 0;
-    private Integer TAB_LINE = 1;
-    private Integer TAB_GRID = 2;
+    private final Integer TAB_DETAILS = 0;
+    private final Integer TAB_LINE = 1;
+    private final Integer TAB_GRID = 2;
     private Integer TAB_PRACTICE = 3;
     private Integer count = 4;
 

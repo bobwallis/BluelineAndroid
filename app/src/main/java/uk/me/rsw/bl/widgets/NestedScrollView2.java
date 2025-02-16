@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 
+import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 
 public class NestedScrollView2 extends NestedScrollView {
@@ -31,12 +32,12 @@ public class NestedScrollView2 extends NestedScrollView {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
         return (this.isScrollingEnabled || event.getAction() != MotionEvent.ACTION_DOWN) && super.onTouchEvent(event);
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
+    public boolean onInterceptTouchEvent(@NonNull MotionEvent event) {
         // Bit of a bodge... but sometimes we hit a race condition when touch events happen
         // while we're in the middle of swapping between consuming touches in the WebView and in
         // the ViewPager/NestedScrollView. This ends up with Android firing a touch event for a

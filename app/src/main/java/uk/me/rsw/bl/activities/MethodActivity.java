@@ -231,37 +231,32 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            case R.id.action_star:
-                if(item.getTitle() == getResources().getString(R.string.action_star)) {
-                    // If viewing a custom method, get a title from the user before saving
-                    if(customMethod) {
-                        NameRequestDialogFragment dialog = new NameRequestDialogFragment();
-                        dialog.show(getSupportFragmentManager(), "NameRequest");
-                    }
-                    else {
-                        addStar();
-                    }
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (itemId == R.id.action_star) {
+            if (item.getTitle() == getResources().getString(R.string.action_star)) {
+                // If viewing a custom method, get a title from the user before saving
+                if (customMethod) {
+                    NameRequestDialogFragment dialog = new NameRequestDialogFragment();
+                    dialog.show(getSupportFragmentManager(), "NameRequest");
+                } else {
+                    addStar();
                 }
-                else if(item.getTitle() == getResources().getString(R.string.action_unstar)) {
-                    removeStar();
-                }
-                invalidateOptionsMenu();
-                return true;
-
-            case R.id.action_settings:
-                intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_about:
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
+            } else if (item.getTitle() == getResources().getString(R.string.action_unstar)) {
+                removeStar();
+            }
+            invalidateOptionsMenu();
+            return true;
+        } else if (itemId == R.id.action_settings) {
+            intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (itemId == R.id.action_about) {
+            intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

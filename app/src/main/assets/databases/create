@@ -4,7 +4,7 @@
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
 d="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-cd "$d"
+cd "$d" || exit
 
 
 # Create methods database

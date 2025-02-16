@@ -32,6 +32,7 @@ public class MethodDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        assert getArguments() != null;
         Method method = (Method) getArguments().getSerializable(METHOD_DATA);
 
         View view = inflater.inflate(R.layout.fragment_textcontainer, container, false);

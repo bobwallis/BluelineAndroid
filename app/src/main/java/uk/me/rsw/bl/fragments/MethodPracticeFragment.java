@@ -106,7 +106,7 @@ public class MethodPracticeFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = (MethodActivity) context;
     }

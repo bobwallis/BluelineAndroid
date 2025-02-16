@@ -35,7 +35,7 @@ public class UserDataDatabase extends SQLiteAssetHelper {
         String[] sqlSelect = {"title"};
         String[] sqlArgs = { is_star.getTitle(), Integer.toString(is_star.getStage()), is_star.getNotationExpanded() };
         Cursor c = db.query("stars", sqlSelect, "title = ? AND stage = ? AND notationExpanded = ?", sqlArgs,  null, null, null);
-        Boolean iS = c.getCount() == 1;
+        boolean iS = c.getCount() == 1;
         c.close();
         return iS;
     }

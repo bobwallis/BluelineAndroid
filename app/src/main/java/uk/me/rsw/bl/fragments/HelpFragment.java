@@ -64,7 +64,7 @@ public class HelpFragment extends Fragment {
         ll.addView(new TextView_h3(getActivity(), "Viewing Method Details"), lp);
         ll.addView(new TextView_p(getActivity(), "Select a method by searching in the app or on Google. This opens a screen with several tabs to show the method in different ways:"), lp);
         ll.addView(new TextView_dt(getActivity(), "Details"), lp);
-        ll.addView(new TextView_dd(getActivity(), "This tab displays all the classification details about the method stored in the Central Council database, and some basic information about the number of changes and  hunt bells the method has."), lp);
+        ll.addView(new TextView_dd(getActivity(), "This tab displays all the classification details about the method stored in the Central Council database, and some basic information about the number of changes and hunt bells the method has."), lp);
         ll.addView(new TextView_dt(getActivity(), "Line"), lp);
         ll.addView(new TextView_dd(getActivity(), "This tab shows a view of the method with a red line through hunt bells, and a blue line through one of the working bells. For Differential methods a different coloured line is drawn through one example of each type of working bell."), lp);
         ll.addView(new TextView_dd(getActivity(), "3 different styles of line are available, and you can select whether to draw through the heaviest or lightest working bell in each group. Access Settings through the overflow menu in the toolbar."), lp);
@@ -75,8 +75,6 @@ public class HelpFragment extends Fragment {
         ll.addView(new TextView_dd(getActivity(), "You can disable the vibration that happens when you make a mistake in the settings."), lp);
         ll.addView(new TextView_h3(getActivity(), "Starred Methods"), lp);
         ll.addView(new TextView_p(getActivity(), "When viewing method details a star button appears in the right of the toolbar. Tap this to add the method to the list of 'starred methods'. This will make the method appear in a list on the app's start screen for quick access."), lp);
-        ll.addView(new TextView_h3(getActivity(), "Composition Prover"), lp);
-        ll.addView(new TextView_p(getActivity(), HtmlCompat.fromHtml("Access the composition prover from the navigation menu on the main page. The section contains a simple interface to the <a href=\"http://www.ex-parrot.com/~richard/gsiril/\" class=\"external\">GSiril</a> program for proving touches. Use the drop-down to select between the microSIRIL compatibility mode and the normal GSiril mode. Enter the proving code into the textarea and click \"Prove\" to run GSiril with the code as the input file.", HtmlCompat.FROM_HTML_MODE_LEGACY)), lp);
 
         return view;
     }

@@ -166,7 +166,7 @@ public class SearchBox extends RelativeLayout {
 
         });
 
-        if (getSearchText().length() > 0) {
+        if (!getSearchText().isEmpty()) {
             isMic = false;
             mic.setImageResource(R.drawable.ic_clear);
         }
