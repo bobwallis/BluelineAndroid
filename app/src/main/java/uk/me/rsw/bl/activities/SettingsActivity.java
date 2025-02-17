@@ -17,7 +17,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_prove_settings);
+        setContentView(R.layout.activity_discover_settings);
 
         // Set up toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);

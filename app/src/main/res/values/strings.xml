@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Blueline</string>
 
+    <string name="asset_statements" translatable="false">
+    [{
+      \"include\": \"https://rsw.me.uk[:]/.well-known/assetlinks.json\"
+    }]
+    </string>
+
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ok">OK</string>

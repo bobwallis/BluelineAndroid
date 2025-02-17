@@ -1,9 +1,9 @@
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/lightGrey">
 
     <RelativeLayout
@@ -20,30 +20,30 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_results"
-            android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:clipToPadding="false"
             android:paddingTop="64dp"
             android:paddingBottom="8dp"
-            android:clipToPadding="false"
-            android:visibility="gone"
-            android:scrollbarThumbVertical="@drawable/scrollbar" />
+            android:scrollbarThumbVertical="@drawable/scrollbar"
+            android:scrollbars="vertical"
+            android:visibility="gone" />
 
         <uk.me.rsw.bl.widgets.SearchBox
+            android:id="@+id/searchbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/searchbox_top_margin"
-            android:id="@+id/searchbox" />
+            android:layout_marginTop="@dimen/searchbox_top_margin" />
 
         <uk.me.rsw.bl.widgets.StarList
+            android:id="@+id/stars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/toolbar_background"
-            android:id="@+id/stars" />
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 
@@ -51,12 +51,13 @@
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
         android:layout_gravity="start"
         android:background="@color/white"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/menu_navigation_drawer"
         app:itemBackground="?attr/selectableItemBackground"
         app:itemIconTint="@color/iconGrey"
-        app:itemTextColor="@color/darkGrey" />
+        app:itemTextColor="@color/darkGrey"
+        app:menu="@menu/menu_navigation_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

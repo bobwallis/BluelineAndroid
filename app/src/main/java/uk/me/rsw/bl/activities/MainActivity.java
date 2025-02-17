@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.adapters.SearchResultsAdapter;
@@ -213,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             layoutParams.topMargin = 0;
             searchBox.setLayoutParams(layoutParams);
             searchBox.search(searchQuery);
-            if (getIntent().getAction().equals("android.intent.action.SEARCH")) {
+            if (Objects.equals(getIntent().getAction(), "android.intent.action.SEARCH")) {
                 searchBox.openSearch();
             }
         }
