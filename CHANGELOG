@@ -156,3 +156,9 @@
  - Update support libraries and database
  - Support jump notation
  - Remove prover (seems mostly pointless on a mobile)
+
+36:
+ - Rebuild against Android API 15
+
+37:
+ - Tweak practice interface

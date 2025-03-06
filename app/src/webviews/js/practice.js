@@ -9,7 +9,7 @@ require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, Ringi
 
 	// Set body to the right height
 	document.body.style.minHeight = (typeof Android === 'object')? Android.maxLayoutHeight()+'px' : 0;
-	
+
 	// Get options set in the query string
 	var queryString = window.location.search.substring(1).length > 0? window.location.search.substring(1) : (typeof Android === 'object')? Android.queryString() : '',
 	qs = (function( a ) {
@@ -60,7 +60,7 @@ require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, Ringi
 		} )[0],
 		huntBells = PlaceNotation.huntBells( qs.notation, qs.stage ),
 		option_lines = new Array( qs.stage );
-	
+
 	// Highlight the right stage selector to start with
 		var option_placeStart_radios = document.getElementsByName( 'practice_chooser_bell' );
 		for( i = 0; i < option_placeStart_radios.length; i++ ) {
@@ -103,10 +103,9 @@ require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, Ringi
     		}
 		}
 		var option_title = (option_leadOrCourse === 'course')? qs.title : addOrdinalIndicator(option_placeStart)+'s place '+qs.title,
-        	option_overlayMessages = { 0: option_title },
         	option_thatsAll = (option_leadOrCourse === 'course')? "That's all" : ' ',
 			option_rows = (option_leadOrCourse === 'course')? false : qs.notation.length;
-		
+
 		for( i = 0; i < qs.stage; ++i ) {
 			if( huntBells.indexOf( i ) !== -1 ) {
 				option_lines[i] = { color: '#D11', width: 2 };
@@ -124,7 +123,6 @@ require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, Ringi
             stage: qs.stage,
             autostart: true,
             buttons: [{ text: 'Close', callback: closePractice }],
-            overlayMessages: option_overlayMessages,
             following: option_placeStart-1,
             lines: option_lines,
             ruleOffs: qs.ruleOffs,
@@ -137,7 +135,7 @@ require( ['Canvas', 'RingingPractice', 'PlaceNotation'], function( Canvas, Ringi
             height: document.documentElement.clientHeight,
             width: document.documentElement.clientWidth
 		} );
-		
+
         // Show the practice interface
         practice_element.className = 'practice_container';
 		practiceOverflow_element.className = 'open';

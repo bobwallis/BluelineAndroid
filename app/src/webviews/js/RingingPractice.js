@@ -1,9 +1,6 @@
 define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( PlaceNotation, Canvas, MeasureCanvasTextOffset ) {
 	var RingingPractice = function( options ) {
 
-		// Key codes
-		var LEFT = 37, DOWN = 40, RIGHT = 39, SHIFT = 16;
-
 		// Settings
 		var changeSpeed = 250;
 
@@ -84,7 +81,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 					scoreboard.innerHTML  = 'Changes: '+rowCount+'<br/>Errors: '+errorCount;
 				},
 				score: function() {
-					return Math.max(0, Math.round(100 - ((errorCount*100)/rowCount)))+'%';
+					return Math.max(0,rowCount-errorCount)+'/'+rowCount+' ('+Math.max(0, Math.round(10*(100 - ((errorCount*100)/rowCount)))/10)+'%)';
 				},
 				correct: function() {
 					rowCount++;
@@ -152,8 +149,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 				buttonsContainer.appendChild( title );
 			}
 			else {
-				buttonsContainer.style.height     = '60px';
-				buttonsContainer.style.paddingTop = '12.5px';
+				buttonsContainer.style.height = '50px';
 			}
 
 			var resumeCallback = function() {
@@ -184,6 +180,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 				var button   = document.createElement( 'input' );
 				button.value = e.text;
 				button.type  = 'button';
+				button.className = (typeof e.className === 'string')? e.className : '';
 				buttonsContainer.appendChild( button );
 				button.addEventListener( 'click', e.callback );
 				return button;
@@ -217,7 +214,7 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 			return {
 				element: controlsContainer,
 				deactivate: function() { controlsContainer.className = 'practice_controls'; },
-				activate: function() { controlsContainer.className = 'practice_controls active'; }
+				activate: function()   { controlsContainer.className = 'practice_controls active'; }
 			};
 		})();
 
@@ -311,24 +308,37 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 		})();
 		if( options.introduction ) {
 			var fillTextCache_introduction = (function() {
+				// Create the canvas and set global options
 				var cacheCanvas = new Canvas( {
 					id: 'cc2',
 					width: canvasWidth,
-					height: 40
+					height: 90
 				} );
 				var context = cacheCanvas.context;
-				context.font         = '13px Roboto, sans-serif';
 				context.strokeStyle  = 'rgba(255,255,255,0.8)';
-				context.lineWidth    = 4;
-				context.fillStyle    = '#333';
+				context.lineWidth    = 6;
 				context.textAlign    = 'center';
 				context.textBaseline = 'middle';
-				context.strokeText( 'Use the arrow keys, or', canvasWidth/2, 40/3 );
-				context.strokeText( 'tap the screen, to navigate.', canvasWidth/2, 40*2/3 );
-				context.fillText( 'Use the arrow keys, or', canvasWidth/2, 40/3 );
-				context.fillText( 'tap the screen, to navigate.', canvasWidth/2, 40*2/3 );
+				// Draw the tutor title
+				if( typeof options.title === 'string' ) {
+					context.font      = '14px Roboto, sans-serif';
+					context.fillStyle = '#002856';
+					context.strokeText( options.title.toUpperCase(), canvasWidth/2, -10+60/3 );
+					context.fillText( options.title.toUpperCase(), canvasWidth/2, -10+60/3 );
+				}
+				// Then draw the instruction text
+				context.font      = '13px Roboto, sans-serif';
+				context.fillStyle = '#333';
+				context.strokeText( 'Use the arrow keys or tap', canvasWidth/2, 10+60*2/4 );
+				context.strokeText( 'the screen to navigate.', canvasWidth/2, 10+60*3/4 );
+				context.fillText( 'Use the arrow keys or tap', canvasWidth/2, 10+60*2/4 );
+				context.fillText( 'the screen to navigate.', canvasWidth/2, 10+60*3/4 );
 				// Check if the clearance rectangle needs to be increased
-				var width = context.measureText('tap the screen, to navigate.').width;
+				// Calculate the width of what we just drew
+				var width = context.measureText( 'Use the arrow keys or tap' ).width;
+				context.font = '14px Roboto, sans-serif';
+				width = Math.max( width, context.measureText( options.title.toUpperCase() ).width );
+				// Then increase the global clearance rectangle if needed
 				if( Math.floor((canvasWidth - width)/2) < clearLeft ) {
 					clearWidth = Math.max( width, clearWidth + clearLeft - Math.floor((canvasWidth - width)/2) );
 					clearLeft = Math.floor( Math.max(0, (canvasWidth - width)/2));
@@ -351,8 +361,9 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 				context.fillStyle    = '#333';
 				context.textAlign    = 'center';
 				context.textBaseline = 'top';
-				context.strokeText( (typeof options.thatsAll == 'string')? options.thatsAll : "That's all!", canvasWidth/2, 0 );
-				context.fillText( (typeof options.thatsAll == 'string')? options.thatsAll : "That's all!", canvasWidth/2, 0 );
+				var thatsAllString = (typeof options.thatsAll == 'string')? options.thatsAll : "That's all!";
+				context.strokeText( thatsAllString, canvasWidth/2, 0 );
+				context.fillText( thatsAllString, canvasWidth/2, 0 );
 				return cacheCanvas;
 			})();
 			var fillTextCache_thatsAllFinished = (options.score)? false : true; // We'll need to draw on the final score later
@@ -590,14 +601,14 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 
 			// Introduction message
 			if( dotY - (currentRow*rowHeight) > 0 && options.introduction ) {
-				context.drawImage( fillTextCache_introduction.element, 0, dotY - (currentRow*rowHeight) - 100, canvasWidth, 40 );
+				context.drawImage( fillTextCache_introduction.element, 0, dotY - (currentRow*rowHeight) - 120, canvasWidth, 90 );
 			}
 
 			// That's all message
 			if( finished && currentRow > 1 && options.thatsAll ) {
 				// If we haven't drawn on the final score yet then do so
 				if( !fillTextCache_thatsAllFinished && options.score ) {
-					fillTextCache_thatsAll.context.clearRect( 0, ((options.thatsAll === ' ')? 5 : 20), canvasWidth, 15 );
+					fillTextCache_thatsAll.context.clearRect( 0, ((options.thatsAll === ' ')? 0 : 15), canvasWidth, 15 );
 					fillTextCache_thatsAll.context.font = '13px Roboto, sans-serif';
 					fillTextCache_thatsAll.context.fillText( 'Score: '+scoreboard.score(), canvasWidth/2, ((options.thatsAll === ' ')? 5 : 20) );
 					fillTextCache_thatsAllFinished = true;
@@ -716,8 +727,8 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 		// Functions which try to go left/down/right
 		var left = function() {
 			if( going ) {
-				if( nextPos - currentPos === -1 ) { advance( 'left' ); }
-				else                              { error( 'left' ); }
+				if( nextPos - currentPos <= -1 ) { advance( 'left' ); }
+				else                             { error( 'left' ); }
 			}
 		};
 		var down = function() {
@@ -728,42 +739,47 @@ define( ['./PlaceNotation', './Canvas', './MeasureCanvasTextOffset'], function( 
 		};
 		var right = function() {
 			if( going ) {
-				if( nextPos - currentPos === 1 ) { advance( 'right' ); }
-				else                             { error( 'right' ); }
+				if( nextPos - currentPos >= 1 ) { advance( 'right' ); }
+				else                            { error( 'right' ); }
 			}
 		};
 		document.body.addEventListener( 'keydown', function( e ) {
 			if( going ) {
-				switch( e.which ) {
-					case LEFT:
+				switch( e.key ) {
+					case 'ArrowLeft':
 						e.preventDefault();
 						left();
 						break;
-					case DOWN:
+					case 'ArrowDown':
 						e.preventDefault();
 						down();
 						break;
-					case RIGHT:
+					case 'ArrowRight':
 						e.preventDefault();
 						right();
 						break;
-					case SHIFT:
+					case 'Shift':
 						rowMoveDuration = changeSpeed*10;
+						break;
+					case 'Escape':
+					case ' ':
+						e.preventDefault();
+						pauseButton.element.dispatchEvent( new Event( 'click' ) );
 						break;
 				}
 			}
 		} );
 		document.body.addEventListener( 'keyup', function( e ) {
 			if( going ) {
-				switch( e.which ) {
-					case SHIFT:
+				switch( e.key ) {
+					case 'Shift':
 						rowMoveDuration = changeSpeed;
 						break;
 				}
 			}
 		} );
 		container.addEventListener( 'touchstart', function( e ) {
-			var touch = event.touches[0],
+			var touch = e.touches[0],
 				containerRect = container.getBoundingClientRect(),
 				posX = (touch.clientX - containerRect.left) / containerRect.width;
 			if( going && touch.pageY - containerRect.top > 30 ) {

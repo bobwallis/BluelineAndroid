@@ -2,6 +2,7 @@
 .gradle/
 build/
 /*/build/
+/*/release/
 gradle-app.setting
 !gradle-wrapper.jar
 
