@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
     android {
-        compileSdkVersion 35
+        compileSdkVersion 36
         defaultConfig {
             applicationId "uk.me.rsw.bl"
             minSdkVersion 21
@@ -29,9 +29,9 @@ apply plugin: 'com.android.application'
     }
 
     dependencies {
-        implementation 'com.google.android.material:material:1.12.0'
+        implementation 'com.google.android.material:material:1.13.0'
         implementation 'androidx.vectordrawable:vectordrawable:1.2.0'
-        implementation 'androidx.appcompat:appcompat:1.7.0'
+        implementation 'androidx.appcompat:appcompat:1.7.1'
         implementation 'androidx.cardview:cardview:1.0.0'
         implementation 'androidx.preference:preference:1.2.1'
         implementation 'androidx.recyclerview:recyclerview:1.4.0'
@@ -39,7 +39,7 @@ apply plugin: 'com.android.application'
         implementation 'com.google.firebase:firebase-core:21.1.1'
         implementation 'com.google.firebase:firebase-appindexing:20.0.0'
         implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
-        implementation 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
+        implementation 'com.balysv.materialmenu:material-menu-toolbar:1.5.5'
 }
 
 java {
