@@ -162,3 +162,7 @@
 
 37:
  - Tweak practice interface
+
+38:
+ - Update support libraries and database
+ - Improve how/when the header/tabs scroll out of view while viewing a method
