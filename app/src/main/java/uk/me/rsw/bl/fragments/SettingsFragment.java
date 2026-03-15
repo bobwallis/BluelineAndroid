@@ -22,9 +22,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         bindPreferenceSummaryToValue(findPreference("line_layout"));
         bindPreferenceSummaryToValue(findPreference("line_size"));
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            findPreference("practice_vibrate").setEnabled(false);
-        }
     }
 
     @Override

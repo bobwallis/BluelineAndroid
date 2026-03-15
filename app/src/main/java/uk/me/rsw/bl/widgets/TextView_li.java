@@ -59,9 +59,7 @@ public class TextView_li extends AppCompatTextView {
         this.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         this.setPadding(8, 4, 0, 4);
         this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        if(Build.VERSION.SDK_INT >= 17) {
-            this.setTextLocale(Locale.UK);
-        }
+        this.setTextLocale(Locale.UK);
         if(Build.VERSION.SDK_INT >= 23) {
             this.setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_FULL);
             this.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);

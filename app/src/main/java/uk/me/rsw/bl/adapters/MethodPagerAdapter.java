@@ -28,10 +28,6 @@ public class MethodPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         method = arg1;
         // Hide the practice interface if the Android version is too low
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            TAB_PRACTICE = 999;
-            count--;
-        }
     }
 
     @Override
