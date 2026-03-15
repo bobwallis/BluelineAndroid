@@ -20,6 +20,7 @@
             android:layout_marginLeft="8dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:scaleX="-1"
             app:mm_color="@color/iconGrey"
             app:mm_strokeWidth="2"
             app:mm_transformDuration="200" />
