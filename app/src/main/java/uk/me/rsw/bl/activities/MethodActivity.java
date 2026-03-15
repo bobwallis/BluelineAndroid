@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.appindexing.Action;
@@ -160,6 +161,39 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        final AppBarLayout appBarLayout = findViewById(R.id.appbar);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                // Determine if the header should scroll based on the selected tab
+                // TAB_DETAILS = 0, TAB_LINE = 1, TAB_GRID = 2, TAB_PRACTICE = 3
+                boolean shouldScroll = (position == 1 || position == 2);
+
+                AppBarLayout.LayoutParams toolbarParams = (AppBarLayout.LayoutParams) mToolbar.getLayoutParams();
+                AppBarLayout.LayoutParams tabParams = (AppBarLayout.LayoutParams) mTabLayout.getLayoutParams();
+
+                if (shouldScroll) {
+                    toolbarParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                    tabParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                } else {
+                    toolbarParams.setScrollFlags(0);
+                    tabParams.setScrollFlags(0);
+                    appBarLayout.setExpanded(true, true);
+                }
+
+                mToolbar.setLayoutParams(toolbarParams);
+                mTabLayout.setLayoutParams(tabParams);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
         // Select the relevant tab
         mViewPager.setCurrentItem(Math.min(1, mSectionsPagerAdapter.getCount() - 1));
