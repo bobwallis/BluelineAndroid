@@ -1,7 +1,6 @@
 package uk.me.rsw.bl.widgets;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.util.AttributeSet;
 import android.view.View;
@@ -60,15 +59,11 @@ public class StarList extends HeadedMethodList implements AdapterView.OnItemLong
         final Star star = new Star(c.getString(c.getColumnIndexOrThrow("title")), c.getInt(c.getColumnIndexOrThrow("stage")), c.getString(c.getColumnIndexOrThrow("notationExpanded")), c.getInt(c.getColumnIndexOrThrow("custom")));
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
         builder.setMessage(R.string.dialog_confirm_unstar)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        userDataDB.removeStar(star);
-                        reloadList();
-                    }
+                .setPositiveButton(R.string.yes, (dialog, id1) -> {
+                    userDataDB.removeStar(star);
+                    reloadList();
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
+                .setNegativeButton(R.string.no, (dialog, id2) -> {
                 });
         builder.create().show();
         return true;

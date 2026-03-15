@@ -106,34 +106,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         // Set up the search box
         searchBox = (SearchBox) findViewById(R.id.searchbox);
-        searchBox.setMenuListener(new SearchBox.MenuListener() {
-            @Override
-            public void onMenuClick() {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        searchBox.setMenuListener(() -> mDrawerLayout.openDrawer(GravityCompat.START));
         searchBox.setSearchListener(new SearchBox.SearchListener() {
             @Override
             public void onSearchOpened() {
                 ValueAnimator anim_toolbarBackground = ValueAnimator.ofInt(toolbarBackground.getMeasuredHeight(), 0);
-                anim_toolbarBackground.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        int val = (Integer) valueAnimator.getAnimatedValue();
-                        ViewGroup.LayoutParams layoutParams = toolbarBackground.getLayoutParams();
-                        layoutParams.height = val;
-                        toolbarBackground.setLayoutParams(layoutParams);
-                    }
+                anim_toolbarBackground.addUpdateListener(valueAnimator -> {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = toolbarBackground.getLayoutParams();
+                    layoutParams.height = val;
+                    toolbarBackground.setLayoutParams(layoutParams);
                 });
                 ValueAnimator anim_searchBox = ValueAnimator.ofInt(((ViewGroup.MarginLayoutParams) searchBox.getLayoutParams()).topMargin, 0);
-                anim_searchBox.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        int val = (Integer) valueAnimator.getAnimatedValue();
-                        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) searchBox.getLayoutParams();
-                        layoutParams.topMargin = val;
-                        searchBox.setLayoutParams(layoutParams);
-                    }
+                anim_searchBox.addUpdateListener(valueAnimator -> {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) searchBox.getLayoutParams();
+                    layoutParams.topMargin = val;
+                    searchBox.setLayoutParams(layoutParams);
                 });
                 anim_toolbarBackground.setDuration(180);
                 anim_searchBox.setDuration(180);
@@ -146,24 +135,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onSearchClosed() {
                 if(!isSearching) {
                     ValueAnimator anim_toolbarBackground = ValueAnimator.ofInt(0, getResources().getDimensionPixelSize(R.dimen.toolbar_height_tall));
-                    anim_toolbarBackground.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            int val = (Integer) valueAnimator.getAnimatedValue();
-                            ViewGroup.LayoutParams layoutParams = toolbarBackground.getLayoutParams();
-                            layoutParams.height = val;
-                            toolbarBackground.setLayoutParams(layoutParams);
-                        }
+                    anim_toolbarBackground.addUpdateListener(valueAnimator -> {
+                        int val = (Integer) valueAnimator.getAnimatedValue();
+                        ViewGroup.LayoutParams layoutParams = toolbarBackground.getLayoutParams();
+                        layoutParams.height = val;
+                        toolbarBackground.setLayoutParams(layoutParams);
                     });
                     ValueAnimator anim_searchBox = ValueAnimator.ofInt(0, getResources().getDimensionPixelSize(R.dimen.searchbox_top_margin));
-                    anim_searchBox.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            int val = (Integer) valueAnimator.getAnimatedValue();
-                            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) searchBox.getLayoutParams();
-                            layoutParams.topMargin = val;
-                            searchBox.setLayoutParams(layoutParams);
-                        }
+                    anim_searchBox.addUpdateListener(valueAnimator -> {
+                        int val = (Integer) valueAnimator.getAnimatedValue();
+                        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) searchBox.getLayoutParams();
+                        layoutParams.topMargin = val;
+                        searchBox.setLayoutParams(layoutParams);
                     });
                     anim_toolbarBackground.setDuration(180);
                     anim_searchBox.setDuration(180);
@@ -171,12 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     anim_searchBox.start();
                     if(stars.getCount() > 0) {
                         final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                stars.setVisibility(View.VISIBLE);
-                            }
-                        }, 200);
+                        handler.postDelayed(() -> stars.setVisibility(View.VISIBLE), 200);
                     }
                 }
             }

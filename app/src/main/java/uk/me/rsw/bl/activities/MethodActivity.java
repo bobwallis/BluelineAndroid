@@ -91,9 +91,7 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
                     AlertDialog.Builder alertDialogB = new AlertDialog.Builder(this);
                     alertDialogB.setTitle("Method Exists")
                             .setMessage("A method with that place notation is already in the database:\n   " + title + ".\n\nPress OK to view details.")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
+                            .setPositiveButton("OK", (dialog, id) -> {
                             });
                     alertDialogB.create().show();
                 }
@@ -298,12 +296,9 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     private void addStar() {
         userDataDB.addStar(star);
         Snackbar.make(findViewById(R.id.pager), R.string.snackbar_star_text, Snackbar.LENGTH_LONG)
-                .setAction(R.string.snackbar_star_action, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        userDataDB.removeStar(star);
-                        invalidateOptionsMenu();
-                    }
+                .setAction(R.string.snackbar_star_action, v -> {
+                    userDataDB.removeStar(star);
+                    invalidateOptionsMenu();
                 })
                 .setActionTextColor(ContextCompat.getColor(this, R.color.lighterBlue))
                 .show();
@@ -311,12 +306,9 @@ public class MethodActivity extends AppCompatActivity implements NameRequestDial
     private void removeStar() {
         userDataDB.removeStar(star);
         Snackbar.make(findViewById(R.id.pager), R.string.snackbar_unstar_text, Snackbar.LENGTH_LONG)
-                .setAction(R.string.snackbar_unstar_action, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        userDataDB.addStar(star);
-                        invalidateOptionsMenu();
-                    }
+                .setAction(R.string.snackbar_unstar_action, v -> {
+                    userDataDB.addStar(star);
+                    invalidateOptionsMenu();
                 })
                 .setActionTextColor(ContextCompat.getColor(this, R.color.lighterBlue))
                 .show();

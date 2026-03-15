@@ -96,11 +96,7 @@ public class MethodPracticeFragment extends Fragment {
         webSettings.setBuiltInZoomControls(false);
 
         mWebView.loadUrl("file:///android_asset/webviews/practice.html");
-        mWebView.setOnLongClickListener(new View.OnLongClickListener() {
-            public boolean onLongClick(View v) {
-                return true;
-            }
-        });
+        mWebView.setOnLongClickListener(v -> true);
 
         return view;
     }

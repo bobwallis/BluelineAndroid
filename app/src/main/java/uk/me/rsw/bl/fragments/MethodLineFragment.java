@@ -90,11 +90,7 @@ public class MethodLineFragment extends Fragment {
         webSettings.setTextZoom(100);
 
         mWebView.loadUrl("file:///android_asset/webviews/lines.html");
-        mWebView.setOnLongClickListener(new View.OnLongClickListener() {
-            public boolean onLongClick(View v) {
-                return true;
-            }
-        });
+        mWebView.setOnLongClickListener(v -> true);
 
         return view;
     }

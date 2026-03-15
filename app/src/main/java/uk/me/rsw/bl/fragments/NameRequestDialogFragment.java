@@ -40,16 +40,8 @@ public class NameRequestDialogFragment extends DialogFragment {
         final EditText edittext = new EditText(getActivity());
         builder.setMessage(R.string.enter_custom_title)
                 .setView(edittext)
-                .setPositiveButton(R.string.action_star, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        listener.onDialogPositiveClick(edittext.getText().toString());
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        listener.onDialogNegativeClick();
-                    }
-                });
+                .setPositiveButton(R.string.action_star, (dialog, id) -> listener.onDialogPositiveClick(edittext.getText().toString()))
+                .setNegativeButton(R.string.cancel, (dialog, id) -> listener.onDialogNegativeClick());
         return builder.create();
     }
 }

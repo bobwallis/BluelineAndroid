@@ -23,31 +23,23 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return new AboutFragment();
-            case 1:
-                return new HelpFragment();
-            case 2:
-                return new PrivacyFragment();
-            case 3:
-                return new CopyrightFragment();
-        }
-        return null;
+        return switch (position) {
+            case 0 -> new AboutFragment();
+            case 1 -> new HelpFragment();
+            case 2 -> new PrivacyFragment();
+            case 3 -> new CopyrightFragment();
+            default -> null;
+        };
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "About";
-            case 1:
-                return "Help";
-            case 2:
-                return "Privacy";
-            case 3:
-                return "Copyright";
-        }
-        return null;
+        return switch (position) {
+            case 0 -> "About";
+            case 1 -> "Help";
+            case 2 -> "Privacy";
+            case 3 -> "Copyright";
+            default -> null;
+        };
     }
 }

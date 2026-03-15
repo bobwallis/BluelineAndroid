@@ -274,7 +274,7 @@ public abstract class CursorRecyclerAdapter<VH
 
     /**
      * Called when the {@link ContentObserver} on the cursor receives a change notification.
-     * Can be implemented by sub-class.
+     * Can be implemented by subclass.
      *
      * @see ContentObserver#onChange(boolean)
      */
@@ -312,13 +312,6 @@ public abstract class CursorRecyclerAdapter<VH
             notifyItemRangeRemoved(0, getItemCount());
         }
     }
-
-    /**
-     * <p>The CursorFilter delegates most of the work to the CursorAdapter.
-     * Subclasses should override these delegate methods to run the queries
-     * and convert the results into String that can be used by auto-completion
-     * widgets.</p>
-     */
 
 }
 

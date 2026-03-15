@@ -61,47 +61,30 @@ public class SearchBox extends RelativeLayout {
         this.search = (EditText) findViewById(R.id.search);
         this.context = context;
         this.mic = (ImageView) findViewById(R.id.mic);
-        materialMenu.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (searchOpen) {
-                    setLogoText(logoText);
-                    setSearchText("");
-                    closeSearch();
-                } else {
-                    if (menuListener != null)
-                        menuListener.onMenuClick();
-                }
-            }
-
-        });
-        logo.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                openSearch();
-            }
-
-        });
-        search.setOnEditorActionListener(new OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId,
-                    KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    search(getSearchText());
-                    return true;
-                }
-                return false;
+        materialMenu.setOnClickListener(v -> {
+            if (searchOpen) {
+                setLogoText(logoText);
+                setSearchText("");
+                closeSearch();
+            } else {
+                if (menuListener != null)
+                    menuListener.onMenuClick();
             }
         });
-        search.setOnKeyListener(new OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    search(getSearchText());
-                    return true;
-                }
-                return false;
+        logo.setOnClickListener(v -> openSearch());
+        search.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                search(getSearchText());
+                return true;
             }
+            return false;
+        });
+        search.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                search(getSearchText());
+                return true;
+            }
+            return false;
         });
         logoText = context.getString(R.string.search_hint);
     }
@@ -175,16 +158,13 @@ public class SearchBox extends RelativeLayout {
             listener.onSearchOpened();
 
         Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                InputMethodManager inputMethodManager = (InputMethodManager) context
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (inputMethodManager != null) {
-                    inputMethodManager.toggleSoftInputFromWindow(
-                            getApplicationWindowToken(),
-                            InputMethodManager.SHOW_FORCED, 0);
-                }
+        Runnable runnable = () -> {
+            InputMethodManager inputMethodManager = (InputMethodManager) context
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.toggleSoftInputFromWindow(
+                        getApplicationWindowToken(),
+                        InputMethodManager.SHOW_FORCED, 0);
             }
         };
         handler.postDelayed(runnable, 150);
@@ -205,13 +185,10 @@ public class SearchBox extends RelativeLayout {
             listener.onSearchClosed();
 
         Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (inputMethodManager != null) {
-                    inputMethodManager.hideSoftInputFromWindow(getApplicationWindowToken(), 0);
-                }
+        Runnable runnable = () -> {
+            InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.hideSoftInputFromWindow(getApplicationWindowToken(), 0);
             }
         };
         handler.postDelayed(runnable, 150);
@@ -233,9 +210,7 @@ public class SearchBox extends RelativeLayout {
                 AlertDialog.Builder alertDialogB = new AlertDialog.Builder(activity);
                 alertDialogB.setTitle("Voice search unavailable")
                         .setMessage("No app capable of recognising speech is installed on this device.")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
+                        .setPositiveButton("OK", (dialog, id) -> {
                         });
                 alertDialogB.create().show();
             }
