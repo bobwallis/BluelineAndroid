@@ -2,8 +2,9 @@ package uk.me.rsw.bl;
 
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
-import android.preference.PreferenceManager;
 import android.webkit.WebView;
+
+import androidx.preference.PreferenceManager;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;

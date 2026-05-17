@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -50,6 +52,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView.LayoutManager searchResults_layoutManager;
     private StarList stars;
     private MethodsDatabase db;
+    private final ActivityResultLauncher<Intent> voiceSearchLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    ArrayList<String> matches = result.getData().getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    if (matches != null && !matches.isEmpty()) {
+                        searchBox.populateEditText(matches);
+                    }
+                }
+            });
 
     private Boolean isSearching = false;
     private String searchQuery = "";
@@ -107,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set up the search box
         searchBox = (SearchBox) findViewById(R.id.searchbox);
         searchBox.setMenuListener(() -> mDrawerLayout.openDrawer(GravityCompat.START));
+        searchBox.setVoiceInputLauncher(intent -> voiceSearchLauncher.launch(intent));
         searchBox.setSearchListener(new SearchBox.SearchListener() {
             @Override
             public void onSearchOpened() {
@@ -222,15 +234,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1234 && resultCode == RESULT_OK) {
-            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            searchBox.populateEditText(matches);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void mic(View v) {

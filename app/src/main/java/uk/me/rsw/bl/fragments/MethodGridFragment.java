@@ -83,8 +83,6 @@ public class MethodGridFragment extends Fragment {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDatabaseEnabled(true);
-        String databasePath = requireActivity().getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
-        webSettings.setDatabasePath(databasePath);
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setMinimumFontSize(1);

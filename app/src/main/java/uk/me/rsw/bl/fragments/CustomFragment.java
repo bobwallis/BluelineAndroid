@@ -39,8 +39,6 @@ public class CustomFragment extends Fragment {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDatabaseEnabled(true);
-        String databasePath = mActivity.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
-        webSettings.setDatabasePath(databasePath);
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
 

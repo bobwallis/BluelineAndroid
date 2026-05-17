@@ -2,9 +2,7 @@ package uk.me.rsw.bl.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,7 @@ import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import uk.me.rsw.bl.R;
 import uk.me.rsw.bl.activities.MethodActivity;
@@ -82,8 +81,6 @@ public class MethodLineFragment extends Fragment {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDatabaseEnabled(true);
-        String databasePath = mActivity.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
-        webSettings.setDatabasePath(databasePath);
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setMinimumFontSize(1);

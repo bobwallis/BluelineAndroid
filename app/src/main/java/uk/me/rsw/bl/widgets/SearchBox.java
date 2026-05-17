@@ -37,6 +37,7 @@ public class SearchBox extends RelativeLayout {
     private ImageView mic;
     private SearchListener listener;
     private MenuListener menuListener;
+    private VoiceInputLauncher voiceInputLauncher;
     private String logoText;
 
     public SearchBox(Context context) {
@@ -90,6 +91,9 @@ public class SearchBox extends RelativeLayout {
     }
     public void setSearchListener(SearchListener listener) {
         this.listener = listener;
+    }
+    public void setVoiceInputLauncher(VoiceInputLauncher voiceInputLauncher) {
+        this.voiceInputLauncher = voiceInputLauncher;
     }
 
     public void setLogoText(String text) {
@@ -195,21 +199,28 @@ public class SearchBox extends RelativeLayout {
 
     // Voice input related functions
     public void startVoiceRecognitionActivity(Activity activity) {
-        if (activity != null) {
+        if (voiceInputLauncher != null) {
             try {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.speak_now));
-                activity.startActivityForResult(intent, 1234);
+                voiceInputLauncher.launchVoiceRecognitionIntent(intent);
             }
             catch(ActivityNotFoundException e) {
-                AlertDialog.Builder alertDialogB = new AlertDialog.Builder(activity);
+                AlertDialog.Builder alertDialogB = new AlertDialog.Builder(activity != null ? activity : getContext());
                 alertDialogB.setTitle("Voice search unavailable")
                         .setMessage("No app capable of recognising speech is installed on this device.")
                         .setPositiveButton("OK", (dialog, id) -> {
                         });
                 alertDialogB.create().show();
             }
+        } else if (activity != null) {
+            AlertDialog.Builder alertDialogB = new AlertDialog.Builder(activity);
+            alertDialogB.setTitle("Voice search unavailable")
+                    .setMessage("Voice search is not configured for this screen.")
+                    .setPositiveButton("OK", (dialog, id) -> {
+                    });
+            alertDialogB.create().show();
         }
     }
 
@@ -241,6 +252,10 @@ public class SearchBox extends RelativeLayout {
 
     public interface MenuListener {
         void onMenuClick();
+    }
+
+    public interface VoiceInputLauncher {
+        void launchVoiceRecognitionIntent(Intent intent);
     }
 
 }
