@@ -21,9 +21,9 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/search_hint"
+            android:contentDescription="@string/search_menu_open"
             android:tint="@color/iconGrey"
-            app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+            app:srcCompat="@drawable/ic_menu" />
 
         <TextView
             android:id="@+id/logo"

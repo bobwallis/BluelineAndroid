@@ -118,7 +118,8 @@ public class SearchBox extends RelativeLayout {
 
     // Functions to open and close the search interface
     public void openSearch() {
-        this.materialMenu.setImageResource(androidx.appcompat.R.drawable.abc_ic_ab_back_material);
+        this.materialMenu.setImageResource(R.drawable.ic_arrow_back);
+        this.materialMenu.setContentDescription(context.getString(R.string.search_menu_close_search));
         this.logo.setVisibility(View.GONE);
         this.search.setVisibility(View.VISIBLE);
         search.requestFocus();
@@ -174,7 +175,8 @@ public class SearchBox extends RelativeLayout {
 
     public void closeSearch() {
         setLogoText(TextUtils.isEmpty(getSearchText())? logoText : getSearchText());
-        this.materialMenu.setImageResource(android.R.drawable.ic_menu_sort_by_size);
+        this.materialMenu.setImageResource(R.drawable.ic_menu);
+        this.materialMenu.setContentDescription(context.getString(R.string.search_menu_open));
         this.logo.setVisibility(View.VISIBLE);
         this.search.setVisibility(View.GONE);
 
@@ -207,12 +209,15 @@ public class SearchBox extends RelativeLayout {
                 voiceInputLauncher.launchVoiceRecognitionIntent(intent);
             }
             catch(ActivityNotFoundException e) {
-                AlertDialog.Builder alertDialogB = new AlertDialog.Builder(activity != null ? activity : getContext());
-                alertDialogB.setTitle("Voice search unavailable")
-                        .setMessage("No app capable of recognising speech is installed on this device.")
-                        .setPositiveButton("OK", (dialog, id) -> {
-                        });
-                alertDialogB.create().show();
+                Context dialogContext = activity != null ? activity : getContext();
+                if (dialogContext != null) {
+                    AlertDialog.Builder alertDialogB = new AlertDialog.Builder(dialogContext);
+                    alertDialogB.setTitle("Voice search unavailable")
+                            .setMessage("No app capable of recognising speech is installed on this device.")
+                            .setPositiveButton("OK", (dialog, id) -> {
+                            });
+                    alertDialogB.create().show();
+                }
             }
         } else if (activity != null) {
             AlertDialog.Builder alertDialogB = new AlertDialog.Builder(activity);
