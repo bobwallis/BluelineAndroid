@@ -5,7 +5,7 @@
 Run these from the repository root:
 
 ```bash
-gradle --no-daemon lintDebug testDebugUnitTest assembleDebug
+./gradlew --no-daemon lintDebug testDebugUnitTest assembleDebug
 ```
 
 ## Current CI/environment notes
