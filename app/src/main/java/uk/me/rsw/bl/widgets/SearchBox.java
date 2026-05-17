@@ -3,7 +3,6 @@ package uk.me.rsw.bl.widgets;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
@@ -19,12 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import androidx.appcompat.app.AlertDialog;
-
-import com.balysv.materialmenu.MaterialMenuDrawable.IconState;
-import com.balysv.materialmenu.MaterialMenuView;
 
 import java.util.ArrayList;
 
@@ -32,7 +28,7 @@ import uk.me.rsw.bl.R;
 
 public class SearchBox extends RelativeLayout {
 
-    private MaterialMenuView materialMenu;
+    private AppCompatImageButton materialMenu;
     private TextView logo;
     private EditText search;
     private Context context;
@@ -56,7 +52,7 @@ public class SearchBox extends RelativeLayout {
         inflate(context, R.layout.widget_searchbox, this);
         this.searchOpen = false;
         this.isMic = true;
-        this.materialMenu = (MaterialMenuView) findViewById(R.id.material_menu_button);
+        this.materialMenu = findViewById(R.id.material_menu_button);
         this.logo = (TextView) findViewById(R.id.logo);
         this.search = (EditText) findViewById(R.id.search);
         this.context = context;
@@ -118,7 +114,7 @@ public class SearchBox extends RelativeLayout {
 
     // Functions to open and close the search interface
     public void openSearch() {
-        this.materialMenu.animateState(IconState.ARROW);
+        this.materialMenu.setImageResource(androidx.appcompat.R.drawable.abc_ic_ab_back_material);
         this.logo.setVisibility(View.GONE);
         this.search.setVisibility(View.VISIBLE);
         search.requestFocus();
@@ -174,7 +170,7 @@ public class SearchBox extends RelativeLayout {
 
     public void closeSearch() {
         setLogoText(TextUtils.isEmpty(getSearchText())? logoText : getSearchText());
-        this.materialMenu.animateState(IconState.BURGER);
+        this.materialMenu.setImageResource(android.R.drawable.ic_menu_sort_by_size);
         this.logo.setVisibility(View.VISIBLE);
         this.search.setVisibility(View.GONE);
 

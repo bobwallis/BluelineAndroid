@@ -35,11 +35,9 @@ apply plugin: 'com.android.application'
         implementation 'androidx.cardview:cardview:1.0.0'
         implementation 'androidx.preference:preference:1.2.1'
         implementation 'androidx.recyclerview:recyclerview:1.4.0'
-        implementation 'androidx.legacy:legacy-support-v13:1.0.0'
         implementation 'com.google.firebase:firebase-core:21.1.1'
         implementation 'com.google.firebase:firebase-appindexing:20.0.0'
         implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
-        implementation 'com.balysv.materialmenu:material-menu-toolbar:1.5.5'
 }
 
 java {
