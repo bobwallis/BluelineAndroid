@@ -4,7 +4,6 @@ build/
 /*/build/
 /*/release/
 gradle-app.setting
-!gradle-wrapper.jar
 
 # Local configuration file (sdk path, etc)
 local.properties

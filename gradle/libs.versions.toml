@@ -1,0 +1,36 @@
+[versions]
+appcompat = "1.8.0"
+cardview = "1.0.0"
+firebaseAppindexing = "20.0.0"
+firebaseCore = "21.1.1"
+googleServices = "4.5.0"
+gradle = "9.3.1"
+gradleToolchainsFoojayResolverConvention = "1.0.0"
+legacySupportV13 = "1.0.0"
+material = "1.14.0"
+materialMenuToolbar = "1.5.5"
+preference = "1.2.1"
+recyclerview = "1.4.0"
+sqliteassethelper = "2.0.1"
+vectordrawable = "1.2.0"
+
+[libraries]
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
+androidx-legacy-support-v13 = { group = "androidx.legacy", name = "legacy-support-v13", version.ref = "legacySupportV13" }
+androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+androidx-vectordrawable = { group = "androidx.vectordrawable", name = "vectordrawable", version.ref = "vectordrawable" }
+firebase-appindexing = { group = "com.google.firebase", name = "firebase-appindexing", version.ref = "firebaseAppindexing" }
+firebase-core = { group = "com.google.firebase", name = "firebase-core", version.ref = "firebaseCore" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
+gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+material-menu-toolbar = { group = "com.balysv.materialmenu", name = "material-menu-toolbar", version.ref = "materialMenuToolbar" }
+sqliteassethelper = { group = "com.readystatesoftware.sqliteasset", name = "sqliteassethelper", version.ref = "sqliteassethelper" }
+
+[plugins]
+foojay-resolver = { id = "org.gradle.toolchains.foojay-resolver-convention", version.ref = "gradleToolchainsFoojayResolverConvention" }
+
+
+

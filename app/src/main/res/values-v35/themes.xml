@@ -2,7 +2,8 @@
 <resources>
 
     <style name="Blueline" parent="Blueline.Base">
-        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+        <item name="android:statusBarColor">@color/darkerBlue</item>
+        <item name="android:navigationBarColor">@color/black</item>
     </style>
 
 </resources>
